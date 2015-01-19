@@ -29,5 +29,6 @@
 + ( instancetype )sharedInstance;
 - ( void )display;
 - ( void )displayWithError: ( NSError * )error;
+- ( void )displayWithErrorText: ( NSString * )error;
 
 @end
