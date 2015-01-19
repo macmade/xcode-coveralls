@@ -59,8 +59,13 @@ static XCCHelp *       __sharedInstance;
         "    --help       Shows this help dialog\n"
         "    --verbose    Turns on extra logging\n"
         "    --gcov       Path or command for invoking the gcov utility\n"
+        "                 (defaults to /usr/bin/gcov)\n"
         "    --include    Paths to include from the sources\n"
         "    --exclude    Paths to exclude from the sources\n"
+        "    --service    The service name to use\n"
+        "                 (defaults to 'travis-ci')\n"
+        "    --id         The service job ID\n"
+        "                 (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)\n"
     );
 }
 

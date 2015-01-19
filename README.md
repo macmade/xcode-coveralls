@@ -23,8 +23,13 @@ Usage
         --help       Shows this help dialog
         --verbose    Turns on extra logging
         --gcov       Path or command for invoking the gcov utility
+                     (defaults to /usr/bin/gcov)
         --include    Paths to include from the sources
         --exclude    Paths to exclude from the sources
+        --service    The service name to use
+                     (defaults to 'travis-ci')
+        --id         The service job ID
+                     (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)
 
 License
 -------

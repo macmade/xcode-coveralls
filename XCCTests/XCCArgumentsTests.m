@@ -146,4 +146,57 @@
     XCTAssertGreaterThan( args.excludedPaths.count, ( NSUInteger )0 );
 }
 
+- ( void )testInvalidID
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--id", "--verbose", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( args.showHelp );
+    XCTAssertEqual( args.jobID, ( NSUInteger )0 );
+}
+
+- ( void )testValidID
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--id", "1234", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertFalse( args.showHelp );
+    XCTAssertEqual( args.jobID, ( NSUInteger )1234 );
+}
+
+- ( void )testDefaultService
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    
+    XCTAssertTrue( [ args.service isEqualToString: @"travis-ci" ] );
+}
+
+- ( void )testInvalidService
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--service", "--verbose", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( args.showHelp );
+    XCTAssertNil( args.service );
+}
+
+- ( void )testCustomService
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--service", "xyz", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( [ args.service isEqualToString: @"xyz" ] );
+}
+
 @end

@@ -26,12 +26,14 @@
 
 @interface XCCArguments: NSObject
 
-@property( atomic, readonly ) BOOL       showHelp;
-@property( atomic, readonly ) BOOL       verbose;
-@property( atomic, readonly ) NSString * buildDirectory;
-@property( atomic, readonly ) NSString * gcov;
-@property( atomic, readonly ) NSArray  * excludedPaths;
-@property( atomic, readonly ) NSArray  * includedPaths;
+@property( atomic, readonly ) BOOL         showHelp;
+@property( atomic, readonly ) BOOL         verbose;
+@property( atomic, readonly ) NSString   * buildDirectory;
+@property( atomic, readonly ) NSString   * gcov;
+@property( atomic, readonly ) NSArray    * excludedPaths;
+@property( atomic, readonly ) NSArray    * includedPaths;
+@property( atomic, readonly ) NSUInteger   jobID;
+@property( atomic, readonly ) NSString   * service;
 
 - ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count NS_DESIGNATED_INITIALIZER;
 

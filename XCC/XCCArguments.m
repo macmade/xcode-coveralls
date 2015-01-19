@@ -32,6 +32,8 @@
 @property( atomic, readwrite, strong ) NSString * gcov;
 @property( atomic, readwrite, strong ) NSArray  * excludedPaths;
 @property( atomic, readwrite, strong ) NSArray  * includedPaths;
+@property( atomic, readwrite, assign ) NSUInteger jobID;
+@property( atomic, readwrite, strong ) NSString * service;
 
 @end
 
@@ -45,12 +47,14 @@
     NSString       * arg;
     NSString       * value;
     BOOL             valid;
+    BOOL             hasJobID;
     
     if( ( self = [ super init ] ) )
     {
         excPaths = [ NSMutableArray new ];
         incPaths = [ NSMutableArray new ];
         valid    = NO;
+        hasJobID = NO;
         
         if( count < 2 )
         {
@@ -121,6 +125,40 @@
                     
                     [ excPaths addObject: value ];
                 }
+                else if( [ arg isEqualToString: @"--id" ] )
+                {
+                    hasJobID = YES;
+                    
+                    if( i == count - 1 )
+                    {
+                        break;
+                    }
+                    
+                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+                    
+                    if( [ value hasPrefix: @"--" ] )
+                    {
+                        break;
+                    }
+                    
+                    self.jobID = ( NSUInteger )[ value integerValue ];
+                }
+                else if( [ arg isEqualToString: @"--service" ] )
+                {
+                    if( i == count - 1 )
+                    {
+                        break;
+                    }
+                    
+                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+                    
+                    if( [ value hasPrefix: @"--" ] )
+                    {
+                        break;
+                    }
+                    
+                    self.service = value;
+                }
             }
             else
             {
@@ -139,6 +177,23 @@
         if( valid == NO )
         {
             self.showHelp = YES;
+        }
+        else
+        {
+            if( hasJobID == NO )
+            {
+                {
+                    NSString * travisBuild;
+                    
+                    travisBuild = [ [ [ NSProcessInfo processInfo ]environment ] objectForKey: @"TRAVIS_JOB_ID" ];
+                    self.jobID  = ( NSUInteger )[ travisBuild integerValue ];
+                }
+            }
+            
+            if( self.service == nil )
+            {
+                self.service = @"travis-ci";
+            }
         }
     }
     
