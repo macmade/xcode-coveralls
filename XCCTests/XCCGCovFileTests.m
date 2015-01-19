@@ -150,7 +150,7 @@
 
 - ( void )testJSONRepresentation
 {
-    XCCGCovFile     * file;
+    XCCGCovFile * file;
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
