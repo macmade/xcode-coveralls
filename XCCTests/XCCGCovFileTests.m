@@ -22,14 +22,10 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCHelpTests.h"
+#import "XCCGCovFileTests.h"
 
-@implementation XCCHelpTests
+@implementation XCCGCovFileTests
 
-- ( void )testSharedInstance
-{
-    XCTAssertNotNil( [ XCCHelp sharedInstance ] );
-    XCTAssertEqual( [ XCCHelp sharedInstance ], [ XCCHelp sharedInstance ] );
-}
+
 
 @end

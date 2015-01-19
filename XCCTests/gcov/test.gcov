@@ -1,0 +1,153 @@
+        -:    0:Source:/Users/macmade/Desktop/xcode-coveralls/XCC/XCCArguments.m
+        -:    0:Graph:/private/var/folders/_3/zkbj2dg90k913_s_yl6_xnq80000gn/T/xcode-coveralls.upSE5/dir/test.gcno
+        -:    0:Data:/private/var/folders/_3/zkbj2dg90k913_s_yl6_xnq80000gn/T/xcode-coveralls.upSE5/dir/test.gcda
+        -:    0:Runs:53
+        -:    0:Programs:1
+        -:    1:/*******************************************************************************
+        -:    2: * The MIT License (MIT)
+        -:    3: * 
+        -:    4: * Copyright (c) 2014 Jean-David Gadina - www-xs-labs.com
+        -:    5: * 
+        -:    6: * Permission is hereby granted, free of charge, to any person obtaining a copy
+        -:    7: * of this software and associated documentation files (the "Software"), to deal
+        -:    8: * in the Software without restriction, including without limitation the rights
+        -:    9: * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        -:   10: * copies of the Software, and to permit persons to whom the Software is
+        -:   11: * furnished to do so, subject to the following conditions:
+        -:   12: * 
+        -:   13: * The above copyright notice and this permission notice shall be included in
+        -:   14: * all copies or substantial portions of the Software.
+        -:   15: * 
+        -:   16: * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        -:   17: * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        -:   18: * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        -:   19: * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        -:   20: * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        -:   21: * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        -:   22: * THE SOFTWARE.
+        -:   23: ******************************************************************************/
+        -:   24:
+        -:   25:#import "XCCArguments.h"
+        -:   26:
+        -:   27:@interface XCCArguments()
+        -:   28:
+      565:   29:@property( atomic, readwrite, assign ) BOOL       showHelp;
+      184:   30:@property( atomic, readwrite, assign ) BOOL       verbose;
+      386:   31:@property( atomic, readwrite, strong ) NSString * buildDirectory;
+       82:   32:@property( atomic, readwrite, strong ) NSString * gcov;
+      792:   33:@property( atomic, readwrite, strong ) NSArray  * excludedPaths;
+      792:   34:@property( atomic, readwrite, strong ) NSArray  * includedPaths;
+        -:   35:
+        -:   36:@end
+        -:   37:
+      791:   38:@implementation XCCArguments
+        -:   39:
+      792:   40:- ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count
+        -:   41:{
+      792:   42:    NSUInteger       i;
+      792:   43:    NSMutableArray * excPaths;
+      792:   44:    NSMutableArray * incPaths;
+      792:   45:    NSString       * arg;
+      792:   46:    NSString       * value;
+      792:   47:    BOOL             valid;
+        -:   48:    
+      792:   49:    if( ( self = [ super init ] ) )
+        -:   50:    {
+      792:   51:        excPaths = [ NSMutableArray new ];
+      792:   52:        incPaths = [ NSMutableArray new ];
+      792:   53:        valid    = NO;
+        -:   54:        
+      792:   55:        if( count < 2 )
+        -:   56:        {
+      106:   57:            self.showHelp = YES;
+        -:   58:            
+      106:   59:            goto end;
+        -:   60:        }
+        -:   61:        
+     2222:   62:        for( i = 1; i < count; i++ )
+        -:   63:        {
+      970:   64:            arg = [ NSString stringWithCString: arguments[ i ] encoding: NSUTF8StringEncoding ];
+        -:   65:            
+      970:   66:            if( [ arg hasPrefix: @"--" ] )
+        -:   67:            {
+      584:   68:                if( [ arg isEqualToString: @"--help" ] )
+        -:   69:                {
+       53:   70:                    self.showHelp = YES;
+       53:   71:                }
+      531:   72:                else if( [ arg isEqualToString: @"--verbose" ] )
+        -:   73:                {
+      184:   74:                    self.verbose = YES;
+      184:   75:                }
+      347:   76:                else if( [ arg isEqualToString: @"--gcov" ] )
+        -:   77:                {
+      135:   78:                    if( i == count - 1 )
+        -:   79:                    {
+    #####:   80:                        break;
+        -:   81:                    }
+        -:   82:                    
+      135:   83:                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+        -:   84:                    
+      135:   85:                    if( [ value hasPrefix: @"--" ] )
+        -:   86:                    {
+       53:   87:                        break;
+        -:   88:                    }
+        -:   89:                    
+       82:   90:                    self.gcov = value;
+       82:   91:                }
+      212:   92:                else if( [ arg isEqualToString: @"--include" ] )
+        -:   93:                {
+      106:   94:                    if( i == count - 1 )
+        -:   95:                    {
+    #####:   96:                        break;
+        -:   97:                    }
+        -:   98:                    
+      106:   99:                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+        -:  100:                    
+      106:  101:                    if( [ value hasPrefix: @"--" ] )
+        -:  102:                    {
+       53:  103:                        break;
+        -:  104:                    }
+        -:  105:                    
+       53:  106:                    [ incPaths addObject: value ];
+       53:  107:                }
+      106:  108:                else if( [ arg isEqualToString: @"--exclude" ] )
+        -:  109:                {
+      106:  110:                    if( i == count - 1 )
+        -:  111:                    {
+    #####:  112:                        break;
+        -:  113:                    }
+        -:  114:                    
+      106:  115:                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+        -:  116:                    
+      106:  117:                    if( [ value hasPrefix: @"--" ] )
+        -:  118:                    {
+       53:  119:                        break;
+        -:  120:                    }
+        -:  121:                    
+       53:  122:                    [ excPaths addObject: value ];
+       53:  123:                }
+      425:  124:            }
+        -:  125:            else
+        -:  126:            {
+      386:  127:                self.buildDirectory = arg;
+      386:  128:                valid               = i == count - 1;
+        -:  129:                
+      386:  130:                break;
+        -:  131:            }
+     1111:  132:        }
+        -:  133:        
+        -:  134:        end:
+        -:  135:        
+      792:  136:        self.excludedPaths = [ NSArray arrayWithArray: excPaths ];
+      792:  137:        self.includedPaths = [ NSArray arrayWithArray: incPaths ];
+        -:  138:        
+      792:  139:        if( valid == NO )
+        -:  140:        {
+      406:  141:            self.showHelp = YES;
+      406:  142:        }
+      792:  143:    }
+        -:  144:    
+      792:  145:    return self;
+      792:  146:}
+        -:  147:
+        -:  148:@end

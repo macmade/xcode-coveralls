@@ -20,6 +20,8 @@
 		054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C91A6D6953002B8F92 /* XCCGCovHelper.m */; };
 		054513CF1A6D76B5002B8F92 /* test.gcda in Resources */ = {isa = PBXBuildFile; fileRef = 054513CD1A6D76B5002B8F92 /* test.gcda */; };
 		054513D01A6D76B5002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513CE1A6D76B5002B8F92 /* test.gcno */; };
+		054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */; };
+		054513D51A6D7FCB002B8F92 /* test.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513D41A6D7FCB002B8F92 /* test.gcov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,9 @@
 		054513C91A6D6953002B8F92 /* XCCGCovHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovHelper.m; sourceTree = "<group>"; };
 		054513CD1A6D76B5002B8F92 /* test.gcda */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcda; sourceTree = "<group>"; };
 		054513CE1A6D76B5002B8F92 /* test.gcno */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcno; sourceTree = "<group>"; };
+		054513D11A6D7F8F002B8F92 /* XCCGCovFileTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFileTests.h; sourceTree = "<group>"; };
+		054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileTests.m; sourceTree = "<group>"; };
+		054513D41A6D7FCB002B8F92 /* test.gcov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.gcov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +167,8 @@
 				054513AF1A6D5752002B8F92 /* XCCHelpTests.m */,
 				054513C51A6D64C0002B8F92 /* XCCGCovHelperTests.h */,
 				054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */,
+				054513D11A6D7F8F002B8F92 /* XCCGCovFileTests.h */,
+				054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */,
 				054513971A6CA92A002B8F92 /* Supporting Files */,
 			);
 			path = XCCTests;
@@ -198,6 +205,7 @@
 			children = (
 				054513CD1A6D76B5002B8F92 /* test.gcda */,
 				054513CE1A6D76B5002B8F92 /* test.gcno */,
+				054513D41A6D7FCB002B8F92 /* test.gcov */,
 			);
 			path = gcov;
 			sourceTree = "<group>";
@@ -316,6 +324,7 @@
 			files = (
 				054513D01A6D76B5002B8F92 /* test.gcno in Resources */,
 				054513CF1A6D76B5002B8F92 /* test.gcda in Resources */,
+				054513D51A6D7FCB002B8F92 /* test.gcov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */,
+				054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */,
 				054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */,
 				054513A11A6CA962002B8F92 /* XCCArgumentsTests.m in Sources */,
 			);

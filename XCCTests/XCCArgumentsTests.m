@@ -23,7 +23,6 @@
  ******************************************************************************/
 
 #import "XCCArgumentsTests.h"
-#import "XCC.h"
 
 @implementation XCCArgumentsTests
 

@@ -37,6 +37,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Clang-Warnings.h"
+#import "XCC.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push

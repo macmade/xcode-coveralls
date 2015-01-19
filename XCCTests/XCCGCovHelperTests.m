@@ -23,7 +23,6 @@
  ******************************************************************************/
 
 #import "XCCGCovHelperTests.h"
-#import "XCC.h"
 
 @interface XCCGCovHelperTests()
 
