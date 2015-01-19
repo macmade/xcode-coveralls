@@ -34,6 +34,7 @@
 @property( atomic, readonly ) NSArray    * includedPaths;
 @property( atomic, readonly ) NSUInteger   jobID;
 @property( atomic, readonly ) NSString   * service;
+@property( atomic, readonly ) NSString   * token;
 
 - ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count NS_DESIGNATED_INITIALIZER;
 
