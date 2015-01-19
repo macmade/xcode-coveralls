@@ -22,37 +22,41 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCGCovFileTests.h"
+#import "XCCGCovFile.h"
 
-@interface XCCGCovFileTests()
+@interface XCCGCovFile()
 
 @property( atomic, readwrite, strong ) NSString * path;
 
+- ( BOOL )parse;
+
 @end
 
-@implementation XCCGCovFileTests
+@implementation XCCGCovFile
 
-- ( void )setUp
+- ( instancetype )initWithPath: ( NSString * )path
 {
-    self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcov" ];
+    BOOL isDir;
+    
+    if( [ [ NSFileManager defaultManager ] fileExistsAtPath: path isDirectory: &isDir ] == NO || isDir == YES )
+    {
+        return nil;
+    }
+    
+    if( ( self = [ super init ] ) )
+    {
+        if( [ self parse ] == NO )
+        {
+            return nil;
+        }
+    }
+    
+    return self;
 }
 
-- ( void )testInvalidFile
+- ( BOOL )parse
 {
-    XCCGCovFile * file;
-    
-    file = [ [ XCCGCovFile alloc ] initWithPath: @"" ];
-    
-    XCTAssertNil( file );
-}
-
-- ( void )testValidFile
-{
-    XCCGCovFile * file;
-    
-    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
-    
-    XCTAssertNotNil( file );
+    return YES;
 }
 
 @end

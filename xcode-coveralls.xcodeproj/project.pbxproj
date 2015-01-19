@@ -16,12 +16,12 @@
 		054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513B21A6D57B9002B8F92 /* XCCHelp.m */; };
 		054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513B71A6D5C68002B8F92 /* Clang-Warnings.h */; };
 		054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */; };
-		054513CA1A6D6953002B8F92 /* XCCGCovHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513C81A6D6953002B8F92 /* XCCGCovHelper.h */; };
 		054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C91A6D6953002B8F92 /* XCCGCovHelper.m */; };
 		054513CF1A6D76B5002B8F92 /* test.gcda in Resources */ = {isa = PBXBuildFile; fileRef = 054513CD1A6D76B5002B8F92 /* test.gcda */; };
 		054513D01A6D76B5002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513CE1A6D76B5002B8F92 /* test.gcno */; };
 		054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */; };
 		054513D51A6D7FCB002B8F92 /* test.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513D41A6D7FCB002B8F92 /* test.gcov */; };
+		054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D71A6D80F5002B8F92 /* XCCGCovFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +82,8 @@
 		054513D11A6D7F8F002B8F92 /* XCCGCovFileTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFileTests.h; sourceTree = "<group>"; };
 		054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileTests.m; sourceTree = "<group>"; };
 		054513D41A6D7FCB002B8F92 /* test.gcov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.gcov; sourceTree = "<group>"; };
+		054513D61A6D80F5002B8F92 /* XCCGCovFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFile.h; sourceTree = "<group>"; };
+		054513D71A6D80F5002B8F92 /* XCCGCovFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,8 @@
 				054513B21A6D57B9002B8F92 /* XCCHelp.m */,
 				054513C81A6D6953002B8F92 /* XCCGCovHelper.h */,
 				054513C91A6D6953002B8F92 /* XCCGCovHelper.m */,
+				054513D61A6D80F5002B8F92 /* XCCGCovFile.h */,
+				054513D71A6D80F5002B8F92 /* XCCGCovFile.m */,
 				054513BF1A6D5CB6002B8F92 /* Supporting Files */,
 			);
 			path = XCC;
@@ -217,7 +221,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054513CA1A6D6953002B8F92 /* XCCGCovHelper.h in Headers */,
 				054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513A51A6CA96E002B8F92 /* XCCArguments.m in Sources */,
+				054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */,
 				054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */,
 				054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */,
 			);

@@ -25,3 +25,4 @@
 #import "XCCArguments.h"
 #import "XCCHelp.h"
 #import "XCCGCovHelper.h"
+#import "XCCGCovFile.h"
