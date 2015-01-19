@@ -26,17 +26,6 @@
 
 #import "XCC.h"
 
-static void __cleanup( NSArray * files );
-static void __cleanup( NSArray * files )
-{
-    XCCGCovFile * file;
-    
-    for( file in files )
-    {
-        [ [ NSFileManager defaultManager ] removeItemAtPath: file.path error: nil ];
-    }
-}
-
 int main( int argc, const char * argv[] )
 {
     @autoreleasepool
@@ -64,8 +53,6 @@ int main( int argc, const char * argv[] )
             {
                 [ [ XCCHelp sharedInstance ] displayWithError: error ];
                 
-                __cleanup( gcov.files );
-                
                 return EXIT_FAILURE;
             }
             
@@ -75,21 +62,17 @@ int main( int argc, const char * argv[] )
             {
                 [ [ XCCHelp sharedInstance ] displayWithError: error ];
                 
-                __cleanup( gcov.files );
-                
                 return EXIT_FAILURE;
             }
-            
-            __cleanup( gcov.files );
             
             return EXIT_SUCCESS;
         }
         @catch( NSException * e )
         {
             [ [ XCCHelp sharedInstance ] displayWithErrorText: e.reason ];
-                
-            __cleanup( gcov.files );
         }
+            
+        return EXIT_FAILURE;
     }
     
 }
