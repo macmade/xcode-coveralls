@@ -18,6 +18,8 @@
 		054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */; };
 		054513CA1A6D6953002B8F92 /* XCCGCovHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513C81A6D6953002B8F92 /* XCCGCovHelper.h */; };
 		054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C91A6D6953002B8F92 /* XCCGCovHelper.m */; };
+		054513CF1A6D76B5002B8F92 /* test.gcda in Resources */ = {isa = PBXBuildFile; fileRef = 054513CD1A6D76B5002B8F92 /* test.gcda */; };
+		054513D01A6D76B5002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513CE1A6D76B5002B8F92 /* test.gcno */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovHelperTests.m; sourceTree = "<group>"; };
 		054513C81A6D6953002B8F92 /* XCCGCovHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovHelper.h; sourceTree = "<group>"; };
 		054513C91A6D6953002B8F92 /* XCCGCovHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovHelper.m; sourceTree = "<group>"; };
+		054513CD1A6D76B5002B8F92 /* test.gcda */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcda; sourceTree = "<group>"; };
+		054513CE1A6D76B5002B8F92 /* test.gcno */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcno; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 		054513971A6CA92A002B8F92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				054513CC1A6D76B5002B8F92 /* gcov */,
 				054513BD1A6D5CA1002B8F92 /* PrefixHeader.pch */,
 				054513981A6CA92A002B8F92 /* Info.plist */,
 			);
@@ -186,6 +191,15 @@
 				054513BB1A6D5C9C002B8F92 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		054513CC1A6D76B5002B8F92 /* gcov */ = {
+			isa = PBXGroup;
+			children = (
+				054513CD1A6D76B5002B8F92 /* test.gcda */,
+				054513CE1A6D76B5002B8F92 /* test.gcno */,
+			);
+			path = gcov;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +314,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054513D01A6D76B5002B8F92 /* test.gcno in Resources */,
+				054513CF1A6D76B5002B8F92 /* test.gcda in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

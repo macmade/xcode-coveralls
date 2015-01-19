@@ -30,6 +30,8 @@
 @property( atomic, readwrite, retain ) XCCArguments * arguments;
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
+- ( void )log: ( NSString * )message;
+- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
 
 @end
 
@@ -47,7 +49,9 @@
 
 - ( BOOL )run: ( NSError * __autoreleasing * )error
 {
-    BOOL isDir;
+    BOOL             isDir;
+    NSMutableArray * files;
+    NSString       * file;
     
     if( error != NULL )
     {
@@ -56,7 +60,7 @@
     
     isDir = NO;
     
-    if( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.arguments.buildDirectory isDirectory: &isDir ] )
+    if( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.arguments.buildDirectory isDirectory: &isDir ] == NO )
     {
         [ self createError: error withText: [ NSString stringWithFormat: @"Build directory does not exist: %@", self.arguments.buildDirectory ] ];
         
@@ -70,7 +74,32 @@
         return NO;
     }
     
-    return NO;
+    files = [ NSMutableArray new ];
+    
+    for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.arguments.buildDirectory error: NULL ] )
+    {
+        if( [ file.pathExtension isEqualToString: @"gcda" ] )
+        {
+            [ files addObject: file ];
+        }
+    }
+    
+    if( files.count == 0 )
+    {
+        [ self createError: error withText: [ NSString stringWithFormat: @"No .gcda files in build directory: %@", self.arguments.buildDirectory ] ];
+        
+        return NO;
+    }
+    
+    for( file in files )
+    {
+        if( [ self processFile: file error: error ] == NO )
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text
@@ -81,6 +110,69 @@
     }
     
     *( error ) = [ NSError errorWithDomain: @"com.xs-labs.xcode-coveralls" code: 0 userInfo: @{ NSLocalizedDescriptionKey: text } ];
+    
+    return YES;
+}
+
+- ( void )log: ( NSString * )message
+{
+    if( self.arguments.verbose )
+    {
+        fprintf( stdout, "%s\n", message.UTF8String );
+    }
+}
+
+- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error
+{
+    NSTask       * task;
+    NSPipe       * outPipe;
+    NSPipe       * errPipe;
+    NSFileHandle * fh;
+    NSData       * errorData;
+    NSString     * errorText;
+    NSData       * outData;
+    NSString     * outText;
+    
+    task    = [ NSTask new ];
+    outPipe = [ NSPipe pipe ];
+    errPipe = [ NSPipe pipe ];
+    
+    [ task setCurrentDirectoryPath: self.arguments.buildDirectory ];
+    [ task setStandardOutput: outPipe ];
+    [ task setStandardError: errPipe ];
+    [ task setLaunchPath: ( self.arguments.gcov == nil ) ? @"/usr/bin/gcov" : self.arguments.gcov ];
+    [ task setArguments: @[ file, @"-o", self.arguments.buildDirectory ] ];
+    
+    [ self log: [ NSString stringWithFormat: @"xcode-coveralls: Processing file: %@", file ] ];
+    
+    @try
+    {
+        [ task launch ];
+        [ task waitUntilExit ];
+    }
+    @catch( NSException * e )
+    {
+        [ self createError: error withText: e.reason ];
+        
+        return NO;
+    }
+    
+    fh        = [ errPipe fileHandleForReading ];
+    errorData = [ fh readDataToEndOfFile ];
+    errorText = [ [ NSString alloc ] initWithData: errorData encoding: NSUTF8StringEncoding ];
+    
+    fh      = [ outPipe fileHandleForReading ];
+    outData = [ fh readDataToEndOfFile ];
+    outText = [ [ NSString alloc ] initWithData: outData encoding: NSUTF8StringEncoding ];
+    
+    if( errorText.length > 0 )
+    {
+        [ self createError: error withText: [ NSString stringWithFormat: @"gcov returned an error:\n%@", errorText ] ];
+        
+        return NO;
+    }
+    
+    [ self log: outText ];
     
     return YES;
 }

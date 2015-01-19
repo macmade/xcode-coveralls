@@ -30,7 +30,9 @@ int main( int argc, const char * argv[] )
 {
     @autoreleasepool
     {
-        XCCArguments * args;
+        XCCArguments  *                 args;
+        XCCGCovHelper *                 gcov;
+        NSError       * __autoreleasing error;
         
         args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
         
@@ -38,7 +40,17 @@ int main( int argc, const char * argv[] )
         {
             [ [ XCCHelp sharedInstance ] display ];
             
-            return 0;
+            return EXIT_SUCCESS;
+        }
+        
+        error = nil;
+        gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+        
+        if( [ gcov run: &error ] == NO )
+        {
+            [ [ XCCHelp sharedInstance ] displayWithError: error ];
+            
+            return EXIT_FAILURE;
         }
     }
     

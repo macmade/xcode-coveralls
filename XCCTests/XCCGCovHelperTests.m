@@ -29,6 +29,7 @@
 
 @property( atomic, readwrite, retain ) NSString * tempPath;
 @property( atomic, readwrite, retain ) NSString * dirPath;
+@property( atomic, readwrite, retain ) NSString * invalidDirPath;
 @property( atomic, readwrite, retain ) NSString * emptyDirPath;
 @property( atomic, readwrite, retain ) NSString * filePath;
 
@@ -41,6 +42,8 @@
     NSString * template;
     char     * buf;
     char     * result;
+    NSData   * gcdaData;
+    NSData   * gcnoData;
     
     template = [ NSTemporaryDirectory() stringByAppendingPathComponent: @"xcode-coveralls.XXXXXX" ];
     buf      = malloc( strlen( template.fileSystemRepresentation ) + 1 );
@@ -65,13 +68,23 @@
     
     self.tempPath       = [ [ NSFileManager defaultManager ] stringWithFileSystemRepresentation: result length: strlen( result ) ];
     self.dirPath        = [ self.tempPath stringByAppendingPathComponent: @"dir" ];
+    self.invalidDirPath = [ self.tempPath stringByAppendingPathComponent: @"invalid" ];
     self.emptyDirPath   = [ self.tempPath stringByAppendingPathComponent: @"empty" ];
     self.filePath       = [ self.tempPath stringByAppendingPathComponent: @"file" ];
     
-    [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.dirPath withIntermediateDirectories: YES attributes: nil error: NULL ];
-    [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.emptyDirPath withIntermediateDirectories: YES attributes: nil error: NULL ];
+    gcdaData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcda" ] ];
+    gcnoData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcno" ] ];
+    
+    [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.dirPath        withIntermediateDirectories: YES attributes: nil error: NULL ];
+    [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.invalidDirPath withIntermediateDirectories: YES attributes: nil error: NULL ];
+    [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.emptyDirPath   withIntermediateDirectories: YES attributes: nil error: NULL ];
+    
     [ [ NSFileManager defaultManager ] createFileAtPath: self.filePath contents: nil attributes: nil ];
-    [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath stringByAppendingPathComponent: @"test.gcda" ] contents: nil attributes: nil ];
+    
+    [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath        stringByAppendingPathComponent: @"test.gcda" ] contents: gcdaData attributes: nil ];
+    [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath        stringByAppendingPathComponent: @"test.gcno" ] contents: gcnoData attributes: nil ];
+    [ [ NSFileManager defaultManager ] createFileAtPath: [ self.invalidDirPath stringByAppendingPathComponent: @"test.gcda" ] contents: nil attributes: nil ];
+    [ [ NSFileManager defaultManager ] createFileAtPath: [ self.invalidDirPath stringByAppendingPathComponent: @"test.gcno" ] contents: nil attributes: nil ];
 }
 
 - ( void )tearDown
@@ -98,6 +111,18 @@
     
     XCTAssertNotNil( self.dirPath );
     XCTAssertTrue( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.dirPath isDirectory: &isDir ] );
+    XCTAssertTrue( isDir );
+    XCTAssertGreaterThan( [ [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.dirPath error: NULL ] count ], ( NSUInteger )0 );
+}
+
+- ( void )testSetupInvalidDirPath
+{
+    BOOL isDir;
+    
+    isDir = NO;
+    
+    XCTAssertNotNil( self.dirPath );
+    XCTAssertTrue( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.invalidDirPath isDirectory: &isDir ] );
     XCTAssertTrue( isDir );
     XCTAssertGreaterThan( [ [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.dirPath error: NULL ] count ], ( NSUInteger )0 );
 }
@@ -129,15 +154,90 @@
 {
     XCCGCovHelper *                 gcov;
     XCCArguments  *                 args;
-    const char    *                 argv[] = { "--verbose", "test" };
+    const char    *                 argv[] = { "", "--verbose", "test" };
     NSError       * __autoreleasing error;
     
-    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
     gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
     error = nil;
     
     XCTAssertFalse( [ gcov run: &error ] );
     XCTAssertNotNil( error );
+}
+
+- ( void )testInvalidFilePath
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.filePath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error = nil;
+    
+    XCTAssertFalse( [ gcov run: &error ] );
+    XCTAssertNotNil( error );
+}
+
+- ( void )testEmptyDirectoryPath
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.emptyDirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error = nil;
+    
+    XCTAssertFalse( [ gcov run: &error ] );
+    XCTAssertNotNil( error );
+}
+
+- ( void )testInvalidDirectoryPath
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.invalidDirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error = nil;
+    
+    XCTAssertFalse( [ gcov run: &error ] );
+    XCTAssertNotNil( error );
+}
+
+- ( void )testInvalidGCov
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", "--gcov", "/bin/gcov", self.dirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 5 ];
+    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error = nil;
+    
+    XCTAssertFalse( [ gcov run: &error ] );
+    XCTAssertNotNil( error );
+}
+
+- ( void )testValidDirectoryPath
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.dirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error = nil;
+    
+    XCTAssertTrue( [ gcov run: &error ] );
+    XCTAssertNil( error );
 }
 
 @end
