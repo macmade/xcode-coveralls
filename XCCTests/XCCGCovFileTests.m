@@ -158,4 +158,20 @@
     XCTAssertGreaterThan( file.jsonRepresentation.length, ( NSUInteger )0 );
 }
 
+- ( void )testDictionaryRepresentation
+{
+    XCCGCovFile  * file;
+    NSDictionary * dict;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    dict = file.dictionaryRepresentation;
+    
+    XCTAssertNotNil( dict );
+    XCTAssertNotNil( [ dict objectForKey: @"name" ] );
+    XCTAssertNotNil( [ dict objectForKey: @"source" ] );
+    XCTAssertNotNil( [ dict objectForKey: @"coverage" ] );
+    XCTAssertTrue( [ [ dict objectForKey: @"coverage" ] isKindOfClass: [ NSArray class ] ] );
+    XCTAssertEqual( [ [ dict objectForKey: @"coverage" ] count ], ( NSUInteger )14 );
+}
+
 @end

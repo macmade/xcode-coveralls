@@ -234,7 +234,7 @@
         [ dict setObject: source   forKey: @"source" ];
         [ dict setObject: coverage forKey: @"coverage" ];
         
-        return dict;
+        return [ NSDictionary dictionaryWithDictionary: dict ];
     }
 }
 
