@@ -27,8 +27,14 @@
 @interface XCCGCovFile()
 
 @property( atomic, readwrite, strong ) NSString * path;
+@property( atomic, readwrite, strong ) NSString * sourcePath;
+@property( atomic, readwrite, strong ) NSString * graphPath;
+@property( atomic, readwrite, strong ) NSString * dataPath;
+@property( atomic, readwrite, assign ) NSUInteger runs;
+@property( atomic, readwrite, assign ) NSUInteger programs;
 
 - ( BOOL )parse;
+- ( BOOL )parseLine: ( NSString * )line;
 
 @end
 
@@ -45,6 +51,8 @@
     
     if( ( self = [ super init ] ) )
     {
+        self.path = path;
+        
         if( [ self parse ] == NO )
         {
             return nil;
@@ -56,6 +64,100 @@
 
 - ( BOOL )parse
 {
+    NSData   * data;
+    NSString * text;
+    NSString * line;
+    NSArray  * lines;
+    
+    data  = [ [ NSFileManager defaultManager ] contentsAtPath: self.path ];
+    text  = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+    lines = [ text componentsSeparatedByString: @"\n" ];
+    
+    for( line in lines )
+    {
+        if( line.length == 0 )
+        {
+            continue;
+        }
+        
+        if( [ self parseLine: line ] == NO )
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- ( BOOL )parseLine: ( NSString * )line
+{
+    NSRegularExpression  *                 expr;
+    NSError              * __autoreleasing error;
+    NSArray              *                 matches;
+    NSTextCheckingResult *                 result;
+    NSString             *                 match1;
+    NSString             *                 match2;
+    NSString             *                 match3;
+    NSUInteger                             coverage;
+    NSUInteger                             lineNumber;
+    
+    error = nil;
+    expr  = [ NSRegularExpression regularExpressionWithPattern: @"^([^:]+):([^:]+):(.*)" options: ( NSRegularExpressionOptions )0 error: &error ];
+    
+    if( error != nil )
+    {
+        return NO;
+    }
+    
+    matches = [ expr matchesInString: line options: ( NSMatchingOptions )0 range: NSMakeRange( 0, line.length ) ];
+    
+    if( matches.count != 1 )
+    {
+        return NO;
+    }
+    
+    result = matches[ 0 ];
+    
+    if( [ result numberOfRanges ] != 4 )
+    {
+        return NO;
+    }
+    
+    match1 = [ line substringWithRange: [ result rangeAtIndex: 1 ] ];
+    match2 = [ line substringWithRange: [ result rangeAtIndex: 2 ] ];
+    match3 = [ line substringWithRange: [ result rangeAtIndex: 3 ] ];
+    match1 = [ match1 stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceCharacterSet ] ];
+    match2 = [ match2 stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceCharacterSet ] ];
+    
+    coverage   = ( NSUInteger )[ match1 integerValue ];
+    lineNumber = ( NSUInteger )[ match2 integerValue ];
+    
+    if( lineNumber == 0 )
+    {
+        if( [ match3 hasPrefix: @"Source:" ] )
+        {
+            self.sourcePath = [ match3 substringFromIndex: 7 ];
+        }
+        else if( [ match3 hasPrefix: @"Graph:" ] )
+        {
+            self.graphPath = [ match3 substringFromIndex: 6 ];
+        }
+        else if( [ match3 hasPrefix: @"Data:" ] )
+        {
+            self.dataPath = [ match3 substringFromIndex: 5 ];
+        }
+        else if( [ match3 hasPrefix: @"Runs:" ] )
+        {
+            self.runs = ( NSUInteger )[ [ match3 substringFromIndex: 5 ] integerValue ];
+        }
+        else if( [ match3 hasPrefix: @"Programs:" ] )
+        {
+            self.programs = ( NSUInteger )[ [ match3 substringFromIndex: 9 ] integerValue ];
+        }
+        
+        return YES;
+    }
+    
     return YES;
 }
 

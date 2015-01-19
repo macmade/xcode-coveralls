@@ -55,4 +55,49 @@
     XCTAssertNotNil( file );
 }
 
+- ( void )testSourcePath
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertTrue( [ file.sourcePath containsString: @"/xcode-coveralls/XCC/XCCArguments.m" ] );
+}
+
+- ( void )testGraphPath
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertTrue( [ file.graphPath containsString: @"/dir/test.gcno" ] );
+}
+
+- ( void )testDataPath
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertTrue( [ file.dataPath containsString: @"/dir/test.gcda" ] );
+}
+
+- ( void )testRuns
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertEqual( file.runs, ( NSUInteger )53 );
+}
+
+- ( void )testPrograms
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertEqual( file.programs, ( NSUInteger )1 );
+}
+
 @end
