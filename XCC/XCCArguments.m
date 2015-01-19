@@ -50,6 +50,7 @@
     {
         excPaths = [ NSMutableArray new ];
         incPaths = [ NSMutableArray new ];
+        valid    = NO;
         
         if( count < 2 )
         {

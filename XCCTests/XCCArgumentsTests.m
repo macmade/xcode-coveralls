@@ -111,7 +111,7 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
     
     XCTAssertTrue( args.showHelp );
-    XCTAssertEqual( 0, args.includedPaths.count );
+    XCTAssertEqual( ( NSUInteger )0, args.includedPaths.count );
 }
 
 - ( void )testValidIncludeDir
@@ -122,7 +122,7 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
     
     XCTAssertFalse( args.showHelp );
-    XCTAssertGreaterThan( args.includedPaths.count, 0 );
+    XCTAssertGreaterThan( args.includedPaths.count, ( NSUInteger )0 );
 }
 
 - ( void )testInvalidExcludeDir
@@ -133,7 +133,7 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
     
     XCTAssertTrue( args.showHelp );
-    XCTAssertEqual( 0, args.excludedPaths.count );
+    XCTAssertEqual( ( NSUInteger )0, args.excludedPaths.count );
 }
 
 - ( void )testValidExcludeDir
@@ -144,7 +144,7 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
     
     XCTAssertFalse( args.showHelp );
-    XCTAssertGreaterThan( args.excludedPaths.count, 0 );
+    XCTAssertGreaterThan( args.excludedPaths.count, ( NSUInteger )0 );
 }
 
 @end

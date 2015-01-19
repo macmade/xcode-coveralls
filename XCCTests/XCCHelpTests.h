@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import XCTest;
-
 @interface XCCHelpTests: XCTestCase
 
 @end
