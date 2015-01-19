@@ -24,12 +24,16 @@
 
 #import "XCCCoverallsRequest.h"
 #import "XCCArguments.h"
+#import "XCCGCovFile.h"
 
 @interface XCCCoverallsRequest()
 
 @property( atomic, readwrite, strong ) NSDictionary * dictionary;
+@property( atomic, readwrite, strong ) XCCArguments * arguments;
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
+- ( void )log: ( NSString * )message;
+- ( void )setPOSTData: ( NSData * )data forRequest: ( NSMutableURLRequest * )request;
 
 @end
 
@@ -40,18 +44,27 @@
     NSMutableDictionary * dict;
     NSString            * service;
     NSNumber            * jobID;
-    NSArray             * sourceFiles;
+    NSMutableArray      * sourceFiles;
+    XCCGCovFile         * file;
     
     if( ( self = [ super init ] ) )
     {
         dict        = [ NSMutableDictionary new ];
         service     = ( args.service == nil ) ? @""               : args.service;
-        sourceFiles = ( files        == nil ) ? [ NSArray array ] : files;
         jobID       = [ NSNumber numberWithUnsignedInteger: args.jobID ];
+        sourceFiles = [ NSMutableArray new ];
+        
+        for( file in files )
+        {
+            [ sourceFiles addObject: file.dictionaryRepresentation ];
+        }
         
         [ dict setObject: service     forKey: @"service_name" ];
         [ dict setObject: jobID       forKey: @"service_job_id" ];
         [ dict setObject: sourceFiles forKey: @"source_files" ];
+        
+        self.dictionary = dict;
+        self.arguments  = args;
     }
     
     return self;
@@ -65,6 +78,7 @@
     NSString            *                 postText;
     NSData              *                 postData;
     NSHTTPURLResponse   * __autoreleasing response;
+    NSString            *                 statusText;
     
     if( *( error ) != NULL )
     {
@@ -72,7 +86,7 @@
     }
     
     req      = [ [ NSMutableURLRequest alloc ] initWithURL: [ NSURL URLWithString: @"https://coveralls.io/api/v1/jobs" ] ];
-    jsonData = nil;//[ NSJSONSerialization dataWithJSONObject: self.dictionary options: ( NSJSONWritingOptions )0 error: error ];
+    jsonData = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: ( NSJSONWritingOptions )0 error: error ];
     jsonText = [ [ NSString alloc ] initWithData: jsonData encoding: NSUTF8StringEncoding ];
     
     if( *( error ) != NULL && *( error ) != nil )
@@ -80,14 +94,13 @@
         return NO;
     }
     
-    postText = [ @"json_file=" stringByAppendingString: [ jsonText stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding ] ];
-    postData = [ postText dataUsingEncoding: NSUTF8StringEncoding allowLossyConversion: YES ];
+    postText = [ jsonText stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding ];
+    postData = [ postText dataUsingEncoding: NSUTF8StringEncoding ];
     
-    [ req setValue:      @"application/x-www-form-urlencoded"                                        forHTTPHeaderField: @"Content-Type" ];
-    [ req setValue:      [ NSString stringWithFormat: @"%lu", ( unsigned long )( postData.length ) ] forHTTPHeaderField: @"Content-Length" ];
-    [ req setHTTPMethod: @"POST" ];
-    [ req setHTTPBody: postData ];    
+    [ self log: jsonText ];
+    [ self setPOSTData: postData forRequest: req ]; 
     
+    [ req setTimeoutInterval: 0 ];
     [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
     
     if( *( error ) != NULL && *( error ) != nil )
@@ -104,12 +117,21 @@
     
     if( response.statusCode != 200 )
     {
-        [ self createError: error withText: [ NSString stringWithFormat: @"Bad response: %@", [ [ response allHeaderFields ] objectForKey: @"Status" ] ] ];
+        statusText = [ [ response allHeaderFields ] objectForKey: @"Status" ];
+        
+        [ self createError: error withText: [ NSString stringWithFormat: @"Bad response: %lu (%@)", ( unsigned long )( response.statusCode ), ( statusText ) ? statusText : @"unknown" ] ];
         
         return NO;
     }
     
     return YES;
+}
+
+- ( void )setPOSTData: ( NSData * )data forRequest: ( NSMutableURLRequest * )request
+{
+    [ request setHTTPMethod: @"POST" ];
+    
+    ( void )data;
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text
@@ -122,6 +144,14 @@
     *( error ) = [ NSError errorWithDomain: @"com.xs-labs.xcode-coveralls" code: 0 userInfo: @{ NSLocalizedDescriptionKey: text } ];
     
     return YES;
+}
+
+- ( void )log: ( NSString * )message
+{
+    if( self.arguments.verbose )
+    {
+        fprintf( stdout, "%s\n", message.UTF8String );
+    }
 }
 
 @end
