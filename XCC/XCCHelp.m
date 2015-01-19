@@ -64,9 +64,9 @@ static XCCHelp *       __sharedInstance;
     );
 }
 
-- ( void )displayWithError: ( NSString * )error
+- ( void )displayWithError: ( NSError * )error
 {
-    fprintf( stdout, "Error: %s\n\n", error.UTF8String );
+    fprintf( stdout, "Error: %s\n\n", error.localizedDescription.UTF8String );
     
     [ self display ];
 }
