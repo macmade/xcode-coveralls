@@ -23,15 +23,18 @@
  ******************************************************************************/
 
 #import "XCCGCovHelper.h"
+#import "XCCGCovFile.h"
 #import "XCCArguments.h"
 
 @interface XCCGCovHelper()
 
 @property( atomic, readwrite, strong ) XCCArguments * arguments;
+@property( atomic, readwrite, strong ) NSArray      * files;
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;
-- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
+- ( BOOL )processFile: ( NSString * )file files: ( NSMutableArray * )files error: ( NSError * __autoreleasing * )error;
+- ( NSString * )getGCovFile: ( NSString * )outText forFile: ( NSString * )file;
 
 @end
 
@@ -51,6 +54,7 @@
 {
     BOOL             isDir;
     NSMutableArray * files;
+    NSMutableArray * gcovFiles;
     NSString       * file;
     
     if( error != NULL )
@@ -74,13 +78,14 @@
         return NO;
     }
     
-    files = [ NSMutableArray new ];
+    files     = [ NSMutableArray new ];
+    gcovFiles = [ NSMutableArray new ];
     
     for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.arguments.buildDirectory error: NULL ] )
     {
         if( [ file.pathExtension isEqualToString: @"gcda" ] )
         {
-            [ files addObject: file ];
+            [ files addObject: [ self.arguments.buildDirectory stringByAppendingPathComponent: file ] ];
         }
     }
     
@@ -93,11 +98,13 @@
     
     for( file in files )
     {
-        if( [ self processFile: file error: error ] == NO )
+        if( [ self processFile: file files: gcovFiles error: error ] == NO )
         {
             return NO;
         }
     }
+    
+    self.files = [ NSArray arrayWithArray: gcovFiles ];
     
     return YES;
 }
@@ -122,7 +129,7 @@
     }
 }
 
-- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error
+- ( BOOL )processFile: ( NSString * )file files: ( NSMutableArray * )files error: ( NSError * __autoreleasing * )error
 {
     NSTask       * task;
     NSPipe       * outPipe;
@@ -132,6 +139,7 @@
     NSString     * errorText;
     NSData       * outData;
     NSString     * outText;
+    XCCGCovFile  * gcovFile;
     
     task    = [ NSTask new ];
     outPipe = [ NSPipe pipe ];
@@ -174,7 +182,49 @@
     
     [ self log: outText ];
     
+    gcovFile = [ [ XCCGCovFile alloc ] initWithPath: [ self getGCovFile: outText forFile: file ] ];
+    
+    if( gcovFile != nil )
+    {
+        [ files addObject: file ];
+    }
+    
     return YES;
+}
+
+- ( NSString * )getGCovFile: ( NSString * )outText forFile: ( NSString * )file
+{
+    NSRegularExpression  *                 expr;
+    NSError              * __autoreleasing error;
+    NSArray              *                 matches;
+    NSTextCheckingResult *                 result;
+    NSString             *                 match;
+    
+    error = nil;
+    expr  = [ NSRegularExpression regularExpressionWithPattern: @"creating '([^']+)'" options: ( NSRegularExpressionOptions )0 error: &error ];
+    
+    if( error != nil )
+    {
+        return nil;
+    }
+    
+    matches = [ expr matchesInString: outText options: ( NSMatchingOptions )0 range: NSMakeRange( 0, outText.length ) ];
+    
+    if( matches.count != 1 )
+    {
+        return nil;
+    }
+    
+    result = matches[ 0 ];
+    
+    if( [ result numberOfRanges ] != 2 )
+    {
+        return nil;
+    }
+    
+    match = [ outText substringWithRange: [ result rangeAtIndex: 1 ] ];
+    
+    return [ [ file stringByDeletingLastPathComponent ] stringByAppendingPathComponent: match ];
 }
 
 @end

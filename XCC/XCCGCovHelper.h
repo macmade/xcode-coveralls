@@ -28,6 +28,8 @@
 
 @interface XCCGCovHelper: NSObject
 
+@property( atomic, readonly ) NSArray * files;
+
 - ( instancetype )initWithArguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
 - ( BOOL )run: ( NSError * __autoreleasing * )error;
 

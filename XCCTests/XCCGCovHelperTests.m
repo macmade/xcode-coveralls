@@ -249,4 +249,20 @@
     XCTAssertNil( error );
 }
 
+- ( void )testFiles
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.dirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error   = nil;
+    
+    [ gcov run: nil ];
+    
+    XCTAssertEqual( gcov.files.count, ( NSUInteger )1 );
+}
+
 @end
