@@ -22,25 +22,46 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import Foundation;
+#import "XCCHelp.h"
 
-#import "XCC.h"
+static dispatch_once_t __once;
+static XCCHelp *       __sharedInstance;
 
-int main( int argc, const char * argv[] )
+@interface XCCHelp()
+
+@end
+
+@implementation XCCHelp
+
++ ( instancetype )sharedInstance
 {
-    @autoreleasepool
-    {
-        XCCArguments * args;
-        
-        args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
-        
-        if( args.showHelp )
+    dispatch_once
+    (
+        &__once,
+        ^( void )
         {
-            [ [ XCCHelp sharedInstance ] display ];
-            
-            return 0;
+            __sharedInstance = [ XCCHelp new ];
         }
-    }
+    );
     
-    return 0;
+    return __sharedInstance;
 }
+
+- ( void )display
+{
+    fprintf
+    (
+        stdout,
+        "Usage: xcodecoveralls [OPTIONS] BUILD_DIRECTORY\n"
+        "\n"
+        "Options:\n"
+        "\n"
+        "    --help       Shows this help dialog\n"
+        "    --verbose    Turns on extra logging\n"
+        "    --gcov       Path or command for invoking the gcov utility\n"
+        "    --include    Paths to include from the sources\n"
+        "    --exclude    Paths to exclude from the sources\n"
+    );
+}
+
+@end

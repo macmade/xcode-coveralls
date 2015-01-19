@@ -14,7 +14,9 @@
 		054513A41A6CA96E002B8F92 /* XCCArguments.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513A21A6CA96E002B8F92 /* XCCArguments.h */; };
 		054513A51A6CA96E002B8F92 /* XCCArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513A31A6CA96E002B8F92 /* XCCArguments.m */; };
 		054513A81A6CA9D3002B8F92 /* libXCC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 054513881A6CA92A002B8F92 /* libXCC.a */; };
-		054513AD1A6D55EC002B8F92 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 054513AC1A6D55EC002B8F92 /* README.md */; };
+		054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513AF1A6D5752002B8F92 /* XCCHelpTests.m */; };
+		054513B31A6D57B9002B8F92 /* XCCHelp.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513B11A6D57B9002B8F92 /* XCCHelp.h */; };
+		054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513B21A6D57B9002B8F92 /* XCCHelp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,10 @@
 		054513A21A6CA96E002B8F92 /* XCCArguments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCArguments.h; sourceTree = "<group>"; };
 		054513A31A6CA96E002B8F92 /* XCCArguments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCArguments.m; sourceTree = "<group>"; };
 		054513AC1A6D55EC002B8F92 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		054513AE1A6D5752002B8F92 /* XCCHelpTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCHelpTests.h; sourceTree = "<group>"; };
+		054513AF1A6D5752002B8F92 /* XCCHelpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCHelpTests.m; sourceTree = "<group>"; };
+		054513B11A6D57B9002B8F92 /* XCCHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCHelp.h; sourceTree = "<group>"; };
+		054513B21A6D57B9002B8F92 /* XCCHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCHelp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,8 @@
 				0545138A1A6CA92A002B8F92 /* XCC.h */,
 				054513A21A6CA96E002B8F92 /* XCCArguments.h */,
 				054513A31A6CA96E002B8F92 /* XCCArguments.m */,
+				054513B11A6D57B9002B8F92 /* XCCHelp.h */,
+				054513B21A6D57B9002B8F92 /* XCCHelp.m */,
 			);
 			path = XCC;
 			sourceTree = "<group>";
@@ -131,6 +139,8 @@
 			children = (
 				0545139F1A6CA962002B8F92 /* XCCArgumentsTests.h */,
 				054513A01A6CA962002B8F92 /* XCCArgumentsTests.m */,
+				054513AE1A6D5752002B8F92 /* XCCHelpTests.h */,
+				054513AF1A6D5752002B8F92 /* XCCHelpTests.m */,
 				054513971A6CA92A002B8F92 /* Supporting Files */,
 			);
 			path = XCCTests;
@@ -153,6 +163,7 @@
 			files = (
 				054513A41A6CA96E002B8F92 /* XCCArguments.h in Headers */,
 				0545138B1A6CA92A002B8F92 /* XCC.h in Headers */,
+				054513B31A6D57B9002B8F92 /* XCCHelp.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513A51A6CA96E002B8F92 /* XCCArguments.m in Sources */,
+				054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054513AD1A6D55EC002B8F92 /* README.md in Sources */,
+				054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */,
 				054513A11A6CA962002B8F92 /* XCCArgumentsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,25 +22,15 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import Foundation;
-
+#import "XCCHelpTests.h"
 #import "XCC.h"
 
-int main( int argc, const char * argv[] )
+@implementation XCCHelpTests
+
+- ( void )testSharedInstance
 {
-    @autoreleasepool
-    {
-        XCCArguments * args;
-        
-        args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
-        
-        if( args.showHelp )
-        {
-            [ [ XCCHelp sharedInstance ] display ];
-            
-            return 0;
-        }
-    }
-    
-    return 0;
+    XCTAssertNotNil( [ XCCHelp sharedInstance ] );
+    XCTAssertEqual( [ XCCHelp sharedInstance ], [ XCCHelp sharedInstance ] );
 }
+
+@end
