@@ -27,7 +27,7 @@
 
 @interface XCCGCovHelper()
 
-@property( atomic, readwrite, retain ) XCCArguments * arguments;
+@property( atomic, readwrite, strong ) XCCArguments * arguments;
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;

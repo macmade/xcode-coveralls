@@ -26,11 +26,11 @@
 
 @interface XCCGCovHelperTests()
 
-@property( atomic, readwrite, retain ) NSString * tempPath;
-@property( atomic, readwrite, retain ) NSString * dirPath;
-@property( atomic, readwrite, retain ) NSString * invalidDirPath;
-@property( atomic, readwrite, retain ) NSString * emptyDirPath;
-@property( atomic, readwrite, retain ) NSString * filePath;
+@property( atomic, readwrite, strong ) NSString * tempPath;
+@property( atomic, readwrite, strong ) NSString * dirPath;
+@property( atomic, readwrite, strong ) NSString * invalidDirPath;
+@property( atomic, readwrite, strong ) NSString * emptyDirPath;
+@property( atomic, readwrite, strong ) NSString * filePath;
 
 @end
 
