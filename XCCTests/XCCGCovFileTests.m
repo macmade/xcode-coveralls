@@ -100,4 +100,39 @@
     XCTAssertEqual( file.programs, ( NSUInteger )1 );
 }
 
+- ( void )testLineCount
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertEqual( file.lines.count, ( NSUInteger )148 );
+}
+
+- ( void )testLine1
+{
+    XCCGCovFile     * file;
+    XCCGCovFileLine * line;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    line = file.lines[ 0 ];
+    
+    XCTAssertEqual( line.hits,       ( NSUInteger )0 );
+    XCTAssertEqual( line.lineNumber, ( NSUInteger )1 );
+    XCTAssertFalse( line.relevant );
+}
+
+- ( void )testLine29
+{
+    XCCGCovFile     * file;
+    XCCGCovFileLine * line;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    line = file.lines[ 28 ];
+    
+    XCTAssertEqual( line.hits,       ( NSUInteger )565 );
+    XCTAssertEqual( line.lineNumber, ( NSUInteger )29 );
+    XCTAssertTrue( line.relevant );
+}
+
 @end

@@ -22,18 +22,30 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import Foundation;
+#import "XCCGCovFileLine.h"
 
-@interface XCCGCovFile: NSObject
+@interface XCCGCovFileLine()
 
-@property( atomic, readonly ) NSString * path;
-@property( atomic, readonly ) NSString * sourcePath;
-@property( atomic, readonly ) NSString * graphPath;
-@property( atomic, readonly ) NSString * dataPath;
-@property( atomic, readonly ) NSUInteger runs;
-@property( atomic, readonly ) NSUInteger programs;
-@property( atomic, readonly ) NSArray  * lines;
+@property( atomic, readwrite, strong ) NSString * code;
+@property( atomic, readwrite, assign ) NSUInteger hits;
+@property( atomic, readwrite, assign ) NSUInteger lineNumber;
+@property( atomic, readwrite, assign ) BOOL       relevant;
 
-- ( instancetype )initWithPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
+@end
+
+@implementation XCCGCovFileLine
+
+- ( instancetype )initWithCode: ( NSString * )code hits: ( NSUInteger )hits lineNumber: ( NSUInteger )lineNumber relevant: ( BOOL )relevant
+{
+    if( ( self = [ super init ] ) )
+    {
+        self.code       = code;
+        self.hits       = hits;
+        self.lineNumber = lineNumber;
+        self.relevant   = relevant;
+    }
+    
+    return self;
+}
 
 @end

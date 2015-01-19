@@ -22,6 +22,7 @@
 		054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */; };
 		054513D51A6D7FCB002B8F92 /* test.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513D41A6D7FCB002B8F92 /* test.gcov */; };
 		054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D71A6D80F5002B8F92 /* XCCGCovFile.m */; };
+		054513E01A6D8DFD002B8F92 /* XCCGCovFileLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,8 @@
 		054513D41A6D7FCB002B8F92 /* test.gcov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.gcov; sourceTree = "<group>"; };
 		054513D61A6D80F5002B8F92 /* XCCGCovFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFile.h; sourceTree = "<group>"; };
 		054513D71A6D80F5002B8F92 /* XCCGCovFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFile.m; sourceTree = "<group>"; };
+		054513DD1A6D8DFD002B8F92 /* XCCGCovFileLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFileLine.h; sourceTree = "<group>"; };
+		054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileLine.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				054513C91A6D6953002B8F92 /* XCCGCovHelper.m */,
 				054513D61A6D80F5002B8F92 /* XCCGCovFile.h */,
 				054513D71A6D80F5002B8F92 /* XCCGCovFile.m */,
+				054513DD1A6D8DFD002B8F92 /* XCCGCovFileLine.h */,
+				054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */,
 				054513BF1A6D5CB6002B8F92 /* Supporting Files */,
 			);
 			path = XCC;
@@ -347,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513A51A6CA96E002B8F92 /* XCCArguments.m in Sources */,
+				054513E01A6D8DFD002B8F92 /* XCCGCovFileLine.m in Sources */,
 				054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */,
 				054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */,
 				054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */,

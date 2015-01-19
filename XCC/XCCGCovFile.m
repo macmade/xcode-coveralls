@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #import "XCCGCovFile.h"
+#import "XCCGCovFileLine.h"
 
 @interface XCCGCovFile()
 
@@ -32,9 +33,10 @@
 @property( atomic, readwrite, strong ) NSString * dataPath;
 @property( atomic, readwrite, assign ) NSUInteger runs;
 @property( atomic, readwrite, assign ) NSUInteger programs;
+@property( atomic, readwrite, strong ) NSArray  * lines;
 
 - ( BOOL )parse;
-- ( BOOL )parseLine: ( NSString * )line;
+- ( BOOL )parseLine: ( NSString * )line array: ( NSMutableArray * )array;
 
 @end
 
@@ -64,14 +66,16 @@
 
 - ( BOOL )parse
 {
-    NSData   * data;
-    NSString * text;
-    NSString * line;
-    NSArray  * lines;
+    NSData         * data;
+    NSString       * text;
+    NSString       * line;
+    NSArray        * lines;
+    NSMutableArray * array;
     
     data  = [ [ NSFileManager defaultManager ] contentsAtPath: self.path ];
     text  = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
     lines = [ text componentsSeparatedByString: @"\n" ];
+    array = [ NSMutableArray array ];
     
     for( line in lines )
     {
@@ -80,16 +84,18 @@
             continue;
         }
         
-        if( [ self parseLine: line ] == NO )
+        if( [ self parseLine: line array: array ] == NO )
         {
             return NO;
         }
     }
     
+    self.lines = [ NSArray arrayWithArray: array ];
+    
     return YES;
 }
 
-- ( BOOL )parseLine: ( NSString * )line
+- ( BOOL )parseLine: ( NSString * )line array: ( NSMutableArray * )array
 {
     NSRegularExpression  *                 expr;
     NSError              * __autoreleasing error;
@@ -98,8 +104,10 @@
     NSString             *                 match1;
     NSString             *                 match2;
     NSString             *                 match3;
+    XCCGCovFileLine      *                 gcovLine;
     NSUInteger                             coverage;
     NSUInteger                             lineNumber;
+    BOOL                                   relevant;
     
     error = nil;
     expr  = [ NSRegularExpression regularExpressionWithPattern: @"^([^:]+):([^:]+):(.*)" options: ( NSRegularExpressionOptions )0 error: &error ];
@@ -157,6 +165,24 @@
         
         return YES;
     }
+    
+    if( [ match1 isEqualToString: @"-" ] )
+    {
+        relevant = NO;
+    }
+    else
+    {
+        relevant = YES;
+    }
+    
+    gcovLine = [ [ XCCGCovFileLine alloc ] initWithCode: match3 hits: coverage lineNumber: lineNumber relevant: relevant ];
+    
+    if( gcovLine == nil )
+    {
+        return NO;
+    }
+    
+    [ array addObject: gcovLine ];
     
     return YES;
 }

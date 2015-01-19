@@ -24,16 +24,13 @@
 
 @import Foundation;
 
-@interface XCCGCovFile: NSObject
+@interface XCCGCovFileLine: NSObject
 
-@property( atomic, readonly ) NSString * path;
-@property( atomic, readonly ) NSString * sourcePath;
-@property( atomic, readonly ) NSString * graphPath;
-@property( atomic, readonly ) NSString * dataPath;
-@property( atomic, readonly ) NSUInteger runs;
-@property( atomic, readonly ) NSUInteger programs;
-@property( atomic, readonly ) NSArray  * lines;
+@property( atomic, readonly ) NSString * code;
+@property( atomic, readonly ) NSUInteger hits;
+@property( atomic, readonly ) NSUInteger lineNumber;
+@property( atomic, readonly ) BOOL       relevant;
 
-- ( instancetype )initWithPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
+- ( instancetype )initWithCode: ( NSString * )code hits: ( NSUInteger )hits lineNumber: ( NSUInteger )lineNumber relevant: ( BOOL )relevant NS_DESIGNATED_INITIALIZER;
 
 @end
