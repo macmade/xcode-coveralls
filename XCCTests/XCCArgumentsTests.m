@@ -199,4 +199,26 @@
     XCTAssertTrue( [ args.service isEqualToString: @"xyz" ] );
 }
 
+- ( void )testInvalidToken
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--token", "--verbose", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( args.showHelp );
+    XCTAssertEqual( args.jobID, ( NSUInteger )0 );
+}
+
+- ( void )testValidToken
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--token", "1234", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertFalse( args.showHelp );
+    XCTAssertTrue( [ args.token isEqualToString: @"1234" ] );
+}
+
 @end

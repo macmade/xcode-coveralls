@@ -34,6 +34,7 @@
 @property( atomic, readwrite, strong ) NSArray  * includedPaths;
 @property( atomic, readwrite, assign ) NSUInteger jobID;
 @property( atomic, readwrite, strong ) NSString * service;
+@property( atomic, readwrite, strong ) NSString * token;
 
 @end
 
@@ -158,6 +159,22 @@
                     }
                     
                     self.service = value;
+                }
+                else if( [ arg isEqualToString: @"--token" ] )
+                {
+                    if( i == count - 1 )
+                    {
+                        break;
+                    }
+                    
+                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+                    
+                    if( [ value hasPrefix: @"--" ] )
+                    {
+                        break;
+                    }
+                    
+                    self.token = value;
                 }
             }
             else

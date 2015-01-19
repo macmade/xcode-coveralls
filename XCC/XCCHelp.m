@@ -66,6 +66,7 @@ static XCCHelp *       __sharedInstance;
         "                 (defaults to 'travis-ci')\n"
         "    --id         The service job ID\n"
         "                 (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)\n"
+        "    --token      The repository token (optional)\n"
     );
 }
 

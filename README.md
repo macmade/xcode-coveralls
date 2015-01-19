@@ -30,6 +30,7 @@ Usage
                      (defaults to 'travis-ci')
         --id         The service job ID
                      (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)
+        --token      The repository token (optional)
 
 License
 -------
