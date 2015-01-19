@@ -43,6 +43,7 @@
     char     * result;
     NSData   * gcdaData;
     NSData   * gcnoData;
+    NSData   * codeData;
     
     template = [ NSTemporaryDirectory() stringByAppendingPathComponent: @"xcode-coveralls.XXXXXX" ];
     buf      = malloc( strlen( template.fileSystemRepresentation ) + 1 );
@@ -73,6 +74,7 @@
     
     gcdaData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcda" ] ];
     gcnoData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcno" ] ];
+    codeData = [ [ NSFileManager defaultManager ] contentsAtPath: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"" ] ];
     
     [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.dirPath        withIntermediateDirectories: YES attributes: nil error: NULL ];
     [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.invalidDirPath withIntermediateDirectories: YES attributes: nil error: NULL ];
@@ -80,6 +82,7 @@
     
     [ [ NSFileManager defaultManager ] createFileAtPath: self.filePath contents: nil attributes: nil ];
     
+    [ [ NSFileManager defaultManager ] createFileAtPath: @"/tmp/test.m"                                                       contents: codeData attributes: nil ];
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath        stringByAppendingPathComponent: @"test.gcda" ] contents: gcdaData attributes: nil ];
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath        stringByAppendingPathComponent: @"test.gcno" ] contents: gcnoData attributes: nil ];
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.invalidDirPath stringByAppendingPathComponent: @"test.gcda" ] contents: nil attributes: nil ];

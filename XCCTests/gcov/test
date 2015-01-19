@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+/* C main entry point */
+int main( void )
+{
+    volatile int i = 0;
+    
+    printf( "hello, world\n" );
+    
+    if( i != 0 )
+    {
+        printf( "hello, universe\n" );
+    }
+}

@@ -34,7 +34,7 @@
 
 - ( void )setUp
 {
-    self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcov" ];
+    self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
 }
 
 - ( void )testInvalidFile
@@ -61,7 +61,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.sourcePath isEqualToString: @"/XCC/XCCArguments.m" ] );
+    XCTAssertTrue( [ file.sourcePath isEqualToString: @"/tmp/test.m" ] );
 }
 
 - ( void )testGraphPath
@@ -70,7 +70,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.graphPath containsString: @"/dir/test.gcno" ] );
+    XCTAssertTrue( [ file.graphPath containsString: @"test.gcno" ] );
 }
 
 - ( void )testDataPath
@@ -79,7 +79,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.dataPath containsString: @"/dir/test.gcda" ] );
+    XCTAssertTrue( [ file.dataPath containsString: @"test.gcda" ] );
 }
 
 - ( void )testRuns
@@ -88,7 +88,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertEqual( file.runs, ( NSUInteger )53 );
+    XCTAssertEqual( file.runs, ( NSUInteger )1 );
 }
 
 - ( void )testPrograms
@@ -106,7 +106,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertEqual( file.lines.count, ( NSUInteger )148 );
+    XCTAssertEqual( file.lines.count, ( NSUInteger )14 );
 }
 
 - ( void )testLine1
@@ -122,16 +122,29 @@
     XCTAssertFalse( line.relevant );
 }
 
-- ( void )testLine29
+- ( void )testLine8
 {
     XCCGCovFile     * file;
     XCCGCovFileLine * line;
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
-    line = file.lines[ 28 ];
+    line = file.lines[ 7 ];
     
-    XCTAssertEqual( line.hits,       ( NSUInteger )565 );
-    XCTAssertEqual( line.lineNumber, ( NSUInteger )29 );
+    XCTAssertEqual( line.hits,       ( NSUInteger )1 );
+    XCTAssertEqual( line.lineNumber, ( NSUInteger )8 );
+    XCTAssertTrue( line.relevant );
+}
+
+- ( void )testLine12
+{
+    XCCGCovFile     * file;
+    XCCGCovFileLine * line;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    line = file.lines[ 11 ];
+    
+    XCTAssertEqual( line.hits,       ( NSUInteger )0 );
+    XCTAssertEqual( line.lineNumber, ( NSUInteger )12 );
     XCTAssertTrue( line.relevant );
 }
 

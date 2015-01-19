@@ -17,12 +17,13 @@
 		054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513B71A6D5C68002B8F92 /* Clang-Warnings.h */; };
 		054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */; };
 		054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C91A6D6953002B8F92 /* XCCGCovHelper.m */; };
-		054513CF1A6D76B5002B8F92 /* test.gcda in Resources */ = {isa = PBXBuildFile; fileRef = 054513CD1A6D76B5002B8F92 /* test.gcda */; };
-		054513D01A6D76B5002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513CE1A6D76B5002B8F92 /* test.gcno */; };
 		054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */; };
-		054513D51A6D7FCB002B8F92 /* test.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513D41A6D7FCB002B8F92 /* test.gcov */; };
 		054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D71A6D80F5002B8F92 /* XCCGCovFile.m */; };
 		054513E01A6D8DFD002B8F92 /* XCCGCovFileLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */; };
+		054513F21A6D9A2A002B8F92 /* test.gcda in Resources */ = {isa = PBXBuildFile; fileRef = 054513EE1A6D9A22002B8F92 /* test.gcda */; };
+		054513F31A6D9A2A002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513EF1A6D9A22002B8F92 /* test.gcno */; };
+		054513F41A6D9A2A002B8F92 /* test in Resources */ = {isa = PBXBuildFile; fileRef = 054513F01A6D9A22002B8F92 /* test */; };
+		054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513F11A6D9A22002B8F92 /* test.m.gcov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,15 +79,16 @@
 		054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovHelperTests.m; sourceTree = "<group>"; };
 		054513C81A6D6953002B8F92 /* XCCGCovHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovHelper.h; sourceTree = "<group>"; };
 		054513C91A6D6953002B8F92 /* XCCGCovHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovHelper.m; sourceTree = "<group>"; };
-		054513CD1A6D76B5002B8F92 /* test.gcda */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcda; sourceTree = "<group>"; };
-		054513CE1A6D76B5002B8F92 /* test.gcno */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcno; sourceTree = "<group>"; };
 		054513D11A6D7F8F002B8F92 /* XCCGCovFileTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFileTests.h; sourceTree = "<group>"; };
 		054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileTests.m; sourceTree = "<group>"; };
-		054513D41A6D7FCB002B8F92 /* test.gcov */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.gcov; sourceTree = "<group>"; };
 		054513D61A6D80F5002B8F92 /* XCCGCovFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFile.h; sourceTree = "<group>"; };
 		054513D71A6D80F5002B8F92 /* XCCGCovFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFile.m; sourceTree = "<group>"; };
 		054513DD1A6D8DFD002B8F92 /* XCCGCovFileLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGCovFileLine.h; sourceTree = "<group>"; };
 		054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileLine.m; sourceTree = "<group>"; };
+		054513EE1A6D9A22002B8F92 /* test.gcda */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcda; sourceTree = "<group>"; };
+		054513EF1A6D9A22002B8F92 /* test.gcno */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcno; sourceTree = "<group>"; };
+		054513F01A6D9A22002B8F92 /* test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test; sourceTree = "<group>"; };
+		054513F11A6D9A22002B8F92 /* test.m.gcov */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.m.gcov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,9 +214,10 @@
 		054513CC1A6D76B5002B8F92 /* gcov */ = {
 			isa = PBXGroup;
 			children = (
-				054513CD1A6D76B5002B8F92 /* test.gcda */,
-				054513CE1A6D76B5002B8F92 /* test.gcno */,
-				054513D41A6D7FCB002B8F92 /* test.gcov */,
+				054513EE1A6D9A22002B8F92 /* test.gcda */,
+				054513EF1A6D9A22002B8F92 /* test.gcno */,
+				054513F01A6D9A22002B8F92 /* test */,
+				054513F11A6D9A22002B8F92 /* test.m.gcov */,
 			);
 			path = gcov;
 			sourceTree = "<group>";
@@ -330,9 +333,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054513D01A6D76B5002B8F92 /* test.gcno in Resources */,
-				054513CF1A6D76B5002B8F92 /* test.gcda in Resources */,
-				054513D51A6D7FCB002B8F92 /* test.gcov in Resources */,
+				054513F21A6D9A2A002B8F92 /* test.gcda in Resources */,
+				054513F31A6D9A2A002B8F92 /* test.gcno in Resources */,
+				054513F41A6D9A2A002B8F92 /* test in Resources */,
+				054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

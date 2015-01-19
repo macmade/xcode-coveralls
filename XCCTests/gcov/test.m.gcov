@@ -1,0 +1,19 @@
+        -:    0:Source:/tmp/test.m
+        -:    0:Graph:test.gcno
+        -:    0:Data:test.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:
+        -:    3:/* C main entry point */
+        -:    4:int main( void )
+        -:    5:{
+        1:    6:    volatile int i = 0;
+        -:    7:    
+        1:    8:    printf( "hello, world\n" );
+        -:    9:    
+        1:   10:    if( i != 0 )
+        -:   11:    {
+    #####:   12:        printf( "hello, universe\n" );
+    #####:   13:    }
+        1:   14:}
