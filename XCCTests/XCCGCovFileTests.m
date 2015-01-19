@@ -70,7 +70,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.graphPath containsString: @"test.gcno" ] );
+    XCTAssertTrue( [ file.graphPath hasSuffix: @"test.gcno" ] );
 }
 
 - ( void )testDataPath
@@ -79,7 +79,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.dataPath containsString: @"test.gcda" ] );
+    XCTAssertTrue( [ file.dataPath hasSuffix: @"test.gcda" ] );
 }
 
 - ( void )testRuns
