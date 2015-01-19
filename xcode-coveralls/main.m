@@ -31,12 +31,27 @@ int main( int argc, const char * argv[] )
     @autoreleasepool
     {
         XCCArguments * args;
+        BOOL           isDir;
         
         args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
         
         if( args.showHelp )
         {
             [ [ XCCHelp sharedInstance ] display ];
+            
+            return 0;
+        }
+        
+        if( [ [ NSFileManager defaultManager ] fileExistsAtPath: args.buildDirectory isDirectory: &isDir ] == NO )
+        {
+            [ [ XCCHelp sharedInstance ] displayWithError: [ NSString stringWithFormat: @"Build directory does not exists: '%@'", args.buildDirectory ] ];
+            
+            return 0;
+        }
+        
+        if( isDir == NO )
+        {
+            [ [ XCCHelp sharedInstance ] displayWithError: [ NSString stringWithFormat: @"Build directory is not a directory: '%@'", args.buildDirectory ] ];
             
             return 0;
         }
