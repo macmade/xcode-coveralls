@@ -113,6 +113,8 @@
         
         gcovFile = [ [ XCCGCovFile alloc ] initWithPath: file ];
         
+        [ [ NSFileManager defaultManager ] removeItemAtPath: file error: NULL ];
+        
         if( gcovFile != nil )
         {
             [ gcovFiles addObject: gcovFile ];
