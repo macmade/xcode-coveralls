@@ -24,6 +24,7 @@
 		054513F31A6D9A2A002B8F92 /* test.gcno in Resources */ = {isa = PBXBuildFile; fileRef = 054513EF1A6D9A22002B8F92 /* test.gcno */; };
 		054513F41A6D9A2A002B8F92 /* test in Resources */ = {isa = PBXBuildFile; fileRef = 054513F01A6D9A22002B8F92 /* test */; };
 		054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513F11A6D9A22002B8F92 /* test.m.gcov */; };
+		054513F91A6DA9A0002B8F92 /* XCCCoverallsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		054513EF1A6D9A22002B8F92 /* test.gcno */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.gcno; sourceTree = "<group>"; };
 		054513F01A6D9A22002B8F92 /* test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test; sourceTree = "<group>"; };
 		054513F11A6D9A22002B8F92 /* test.m.gcov */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.m.gcov; sourceTree = "<group>"; };
+		054513F61A6DA9A0002B8F92 /* XCCCoverallsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCCoverallsRequest.h; sourceTree = "<group>"; };
+		054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 				054513D71A6D80F5002B8F92 /* XCCGCovFile.m */,
 				054513DD1A6D8DFD002B8F92 /* XCCGCovFileLine.h */,
 				054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */,
+				054513F61A6DA9A0002B8F92 /* XCCCoverallsRequest.h */,
+				054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */,
 				054513BF1A6D5CB6002B8F92 /* Supporting Files */,
 			);
 			path = XCC;
@@ -357,6 +362,7 @@
 			files = (
 				054513A51A6CA96E002B8F92 /* XCCArguments.m in Sources */,
 				054513E01A6D8DFD002B8F92 /* XCCGCovFileLine.m in Sources */,
+				054513F91A6DA9A0002B8F92 /* XCCCoverallsRequest.m in Sources */,
 				054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */,
 				054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */,
 				054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */,

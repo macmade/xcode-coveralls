@@ -27,3 +27,4 @@
 #import "XCCGCovHelper.h"
 #import "XCCGCovFile.h"
 #import "XCCGCovFileLine.h"
+#import "XCCCoverallsRequest.h"
