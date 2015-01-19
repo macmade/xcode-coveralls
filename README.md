@@ -2,6 +2,7 @@ xcode-coveralls
 ===============
 
 [![Build Status](https://img.shields.io/travis/macmade/xcode-coveralls.svg?branch=master&style=flat)](https://travis-ci.org/macmade/xcode-coveralls)
+[![Coverage Status](https://img.shields.io/coveralls/macmade/xcode-coveralls.svg?branch=master&style=flat)](https://coveralls.io/r/macmade/xcode-coveralls)
 [![Issues](http://img.shields.io/github/issues/macmade/xcode-coveralls.svg?style=flat)](https://github.com/macmade/xcode-coveralls/issues)
 ![Status](https://img.shields.io/badge/status-active-brightgreen.svg?style=flat)
 ![License](https://img.shields.io/badge/license-mit-brightgreen.svg?style=flat)
