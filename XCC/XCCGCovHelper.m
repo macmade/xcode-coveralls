@@ -33,8 +33,7 @@
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;
-- ( BOOL )processFile: ( NSString * )file files: ( NSMutableArray * )files error: ( NSError * __autoreleasing * )error;
-- ( NSString * )getGCovFile: ( NSString * )outText forFile: ( NSString * )file;
+- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
 
 @end
 
@@ -56,6 +55,7 @@
     NSMutableArray * files;
     NSMutableArray * gcovFiles;
     NSString       * file;
+    XCCGCovFile    * gcovFile;
     
     if( error != NULL )
     {
@@ -98,9 +98,24 @@
     
     for( file in files )
     {
-        if( [ self processFile: file files: gcovFiles error: error ] == NO )
+        if( [ self processFile: file error: error ] == NO )
         {
             return NO;
+        }
+    }
+    
+    for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] error: NULL ] )
+    {
+        if( [ file.pathExtension isEqualToString: @"gcov" ] == NO )
+        {
+            continue;
+        }
+        
+        gcovFile = [ [ XCCGCovFile alloc ] initWithPath: file ];
+        
+        if( gcovFile != nil )
+        {
+            [ gcovFiles addObject: gcovFile ];
         }
     }
     
@@ -129,7 +144,7 @@
     }
 }
 
-- ( BOOL )processFile: ( NSString * )file files: ( NSMutableArray * )files error: ( NSError * __autoreleasing * )error
+- ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error
 {
     NSTask       * task;
     NSPipe       * outPipe;
@@ -139,13 +154,11 @@
     NSString     * errorText;
     NSData       * outData;
     NSString     * outText;
-    XCCGCovFile  * gcovFile;
     
     task    = [ NSTask new ];
     outPipe = [ NSPipe pipe ];
     errPipe = [ NSPipe pipe ];
     
-    [ task setCurrentDirectoryPath: self.arguments.buildDirectory ];
     [ task setStandardOutput: outPipe ];
     [ task setStandardError: errPipe ];
     [ task setLaunchPath: ( self.arguments.gcov == nil ) ? @"/usr/bin/gcov" : self.arguments.gcov ];
@@ -182,49 +195,7 @@
     
     [ self log: outText ];
     
-    gcovFile = [ [ XCCGCovFile alloc ] initWithPath: [ self getGCovFile: outText forFile: file ] ];
-    
-    if( gcovFile != nil )
-    {
-        [ files addObject: file ];
-    }
-    
     return YES;
-}
-
-- ( NSString * )getGCovFile: ( NSString * )outText forFile: ( NSString * )file
-{
-    NSRegularExpression  *                 expr;
-    NSError              * __autoreleasing error;
-    NSArray              *                 matches;
-    NSTextCheckingResult *                 result;
-    NSString             *                 match;
-    
-    error = nil;
-    expr  = [ NSRegularExpression regularExpressionWithPattern: @"creating '([^']+)'" options: ( NSRegularExpressionOptions )0 error: &error ];
-    
-    if( error != nil )
-    {
-        return nil;
-    }
-    
-    matches = [ expr matchesInString: outText options: ( NSMatchingOptions )0 range: NSMakeRange( 0, outText.length ) ];
-    
-    if( matches.count != 1 )
-    {
-        return nil;
-    }
-    
-    result = matches[ 0 ];
-    
-    if( [ result numberOfRanges ] != 2 )
-    {
-        return nil;
-    }
-    
-    match = [ outText substringWithRange: [ result rangeAtIndex: 1 ] ];
-    
-    return [ [ file stringByDeletingLastPathComponent ] stringByAppendingPathComponent: match ];
 }
 
 @end
