@@ -16,12 +16,20 @@ About
 Usage
 -----
 
-...
+    Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY
+    
+    Options:
+        
+        --help       Shows this help dialog
+        --verbose    Turns on extra logging
+        --gcov       Path or command for invoking the gcov utility
+        --include    Paths to include from the sources
+        --exclude    Paths to exclude from the sources
 
 License
 -------
 
-The XS-Labs C++ Utility Library is released under the terms of the MIT License.
+xcode-coveralls is released under the terms of the MIT License.
 
 Repository Infos
 ----------------
