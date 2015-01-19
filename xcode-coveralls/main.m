@@ -26,33 +26,70 @@
 
 #import "XCC.h"
 
+static void __cleanup( NSArray * files );
+static void __cleanup( NSArray * files )
+{
+    XCCGCovFile * file;
+    
+    for( file in files )
+    {
+        [ [ NSFileManager defaultManager ] removeItemAtPath: file.path error: nil ];
+    }
+}
+
 int main( int argc, const char * argv[] )
 {
     @autoreleasepool
     {
-        XCCArguments  *                 args;
-        XCCGCovHelper *                 gcov;
-        NSError       * __autoreleasing error;
+        XCCArguments        *                 args;
+        XCCGCovHelper       *                 gcov;
+        XCCCoverallsRequest *                 request;
+        NSError             * __autoreleasing error;
         
-        args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
-        
-        if( args.showHelp )
+        @try
         {
-            [ [ XCCHelp sharedInstance ] display ];
+            args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
+            
+            if( args.showHelp )
+            {
+                [ [ XCCHelp sharedInstance ] display ];
+                
+                return EXIT_SUCCESS;
+            }
+            
+            error = nil;
+            gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+            
+            if( [ gcov run: &error ] == NO )
+            {
+                [ [ XCCHelp sharedInstance ] displayWithError: error ];
+                
+                __cleanup( gcov.files );
+                
+                return EXIT_FAILURE;
+            }
+            
+            request = [ [ XCCCoverallsRequest alloc ] initWithFiles: gcov.files arguments: args ];
+            
+            if( [ request post: &error ] == NO )
+            {
+                [ [ XCCHelp sharedInstance ] displayWithError: error ];
+                
+                __cleanup( gcov.files );
+                
+                return EXIT_FAILURE;
+            }
+            
+            __cleanup( gcov.files );
             
             return EXIT_SUCCESS;
         }
-        
-        error = nil;
-        gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
-        
-        if( [ gcov run: &error ] == NO )
+        @catch( NSException * e )
         {
-            [ [ XCCHelp sharedInstance ] displayWithError: error ];
-            
-            return EXIT_FAILURE;
+            [ [ XCCHelp sharedInstance ] displayWithErrorText: e.reason ];
+                
+            __cleanup( gcov.files );
         }
     }
     
-    return 0;
 }
