@@ -49,7 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		054513371A6C9FD4002B8F92 /* xcodecoverall */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcodecoverall; sourceTree = BUILT_PRODUCTS_DIR; };
+		054513371A6C9FD4002B8F92 /* xcode-coveralls */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-coveralls"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0545133A1A6C9FD4002B8F92 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		054513881A6CA92A002B8F92 /* libXCC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXCC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0545138A1A6CA92A002B8F92 /* XCC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCC.h; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				054513AC1A6D55EC002B8F92 /* README.md */,
-				054513391A6C9FD4002B8F92 /* xcodecoverall */,
+				054513391A6C9FD4002B8F92 /* xcode-coverall */,
 				054513891A6CA92A002B8F92 /* XCC */,
 				054513961A6CA92A002B8F92 /* XCCTests */,
 				054513381A6C9FD4002B8F92 /* Products */,
@@ -107,19 +107,19 @@
 		054513381A6C9FD4002B8F92 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				054513371A6C9FD4002B8F92 /* xcodecoverall */,
+				054513371A6C9FD4002B8F92 /* xcode-coveralls */,
 				054513881A6CA92A002B8F92 /* libXCC.a */,
 				054513921A6CA92A002B8F92 /* XCCTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		054513391A6C9FD4002B8F92 /* xcodecoverall */ = {
+		054513391A6C9FD4002B8F92 /* xcode-coverall */ = {
 			isa = PBXGroup;
 			children = (
 				0545133A1A6C9FD4002B8F92 /* main.m */,
 			);
-			path = xcodecoverall;
+			path = "xcode-coverall";
 			sourceTree = "<group>";
 		};
 		054513891A6CA92A002B8F92 /* XCC */ = {
@@ -170,9 +170,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		054513361A6C9FD4002B8F92 /* xcodecoverall */ = {
+		054513361A6C9FD4002B8F92 /* xcode-coveralls */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0545133E1A6C9FD4002B8F92 /* Build configuration list for PBXNativeTarget "xcodecoverall" */;
+			buildConfigurationList = 0545133E1A6C9FD4002B8F92 /* Build configuration list for PBXNativeTarget "xcode-coveralls" */;
 			buildPhases = (
 				054513331A6C9FD4002B8F92 /* Sources */,
 				054513341A6C9FD4002B8F92 /* Frameworks */,
@@ -183,9 +183,9 @@
 			dependencies = (
 				054513A71A6CA9CF002B8F92 /* PBXTargetDependency */,
 			);
-			name = xcodecoverall;
+			name = "xcode-coveralls";
 			productName = xcodecoverall;
-			productReference = 054513371A6C9FD4002B8F92 /* xcodecoverall */;
+			productReference = 054513371A6C9FD4002B8F92 /* xcode-coveralls */;
 			productType = "com.apple.product-type.tool";
 		};
 		054513871A6CA92A002B8F92 /* XCC */ = {
@@ -243,7 +243,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 054513321A6C9FD4002B8F92 /* Build configuration list for PBXProject "xcodecoverall" */;
+			buildConfigurationList = 054513321A6C9FD4002B8F92 /* Build configuration list for PBXProject "xcode-coveralls" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -255,7 +255,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				054513361A6C9FD4002B8F92 /* xcodecoverall */,
+				054513361A6C9FD4002B8F92 /* xcode-coveralls */,
 				054513871A6CA92A002B8F92 /* XCC */,
 				054513911A6CA92A002B8F92 /* XCCTests */,
 			);
@@ -392,14 +392,14 @@
 		0545133F1A6C9FD4002B8F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "xcode-coveralls";
 			};
 			name = Debug;
 		};
 		054513401A6C9FD4002B8F92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "xcode-coveralls";
 			};
 			name = Release;
 		};
@@ -458,7 +458,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		054513321A6C9FD4002B8F92 /* Build configuration list for PBXProject "xcodecoverall" */ = {
+		054513321A6C9FD4002B8F92 /* Build configuration list for PBXProject "xcode-coveralls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0545133C1A6C9FD4002B8F92 /* Debug */,
@@ -467,7 +467,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0545133E1A6C9FD4002B8F92 /* Build configuration list for PBXNativeTarget "xcodecoverall" */ = {
+		0545133E1A6C9FD4002B8F92 /* Build configuration list for PBXNativeTarget "xcode-coveralls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0545133F1A6C9FD4002B8F92 /* Debug */,

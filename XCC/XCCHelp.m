@@ -52,7 +52,7 @@ static XCCHelp *       __sharedInstance;
     fprintf
     (
         stdout,
-        "Usage: xcodecoveralls [OPTIONS] BUILD_DIRECTORY\n"
+        "Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY\n"
         "\n"
         "Options:\n"
         "\n"

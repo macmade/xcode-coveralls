@@ -17,7 +17,7 @@
                BlueprintIdentifier = "054513871A6CA92A002B8F92"
                BuildableName = "libXCC.a"
                BlueprintName = "XCC"
-               ReferencedContainer = "container:xcodecoverall.xcodeproj">
+               ReferencedContainer = "container:xcode-coveralls.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "054513911A6CA92A002B8F92"
                BuildableName = "XCCTests.xctest"
                BlueprintName = "XCCTests"
-               ReferencedContainer = "container:xcodecoverall.xcodeproj">
+               ReferencedContainer = "container:xcode-coveralls.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "054513911A6CA92A002B8F92"
                BuildableName = "XCCTests.xctest"
                BlueprintName = "XCCTests"
-               ReferencedContainer = "container:xcodecoverall.xcodeproj">
+               ReferencedContainer = "container:xcode-coveralls.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -59,7 +59,7 @@
             BlueprintIdentifier = "054513871A6CA92A002B8F92"
             BuildableName = "libXCC.a"
             BlueprintName = "XCC"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "054513871A6CA92A002B8F92"
             BuildableName = "libXCC.a"
             BlueprintName = "XCC"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -96,7 +96,7 @@
             BlueprintIdentifier = "054513871A6CA92A002B8F92"
             BuildableName = "libXCC.a"
             BlueprintName = "XCC"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

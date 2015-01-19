@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "054513361A6C9FD4002B8F92"
-               BuildableName = "xcodecoverall"
-               BlueprintName = "xcodecoverall"
-               ReferencedContainer = "container:xcodecoverall.xcodeproj">
+               BuildableName = "xcode-coveralls"
+               BlueprintName = "xcode-coveralls"
+               ReferencedContainer = "container:xcode-coveralls.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "054513911A6CA92A002B8F92"
                BuildableName = "XCCTests.xctest"
                BlueprintName = "XCCTests"
-               ReferencedContainer = "container:xcodecoverall.xcodeproj">
+               ReferencedContainer = "container:xcode-coveralls.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "054513361A6C9FD4002B8F92"
-            BuildableName = "xcodecoverall"
-            BlueprintName = "xcodecoverall"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            BuildableName = "xcode-coveralls"
+            BlueprintName = "xcode-coveralls"
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "054513361A6C9FD4002B8F92"
-            BuildableName = "xcodecoverall"
-            BlueprintName = "xcodecoverall"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            BuildableName = "xcode-coveralls"
+            BlueprintName = "xcode-coveralls"
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "054513361A6C9FD4002B8F92"
-            BuildableName = "xcodecoverall"
-            BlueprintName = "xcodecoverall"
-            ReferencedContainer = "container:xcodecoverall.xcodeproj">
+            BuildableName = "xcode-coveralls"
+            BlueprintName = "xcode-coveralls"
+            ReferencedContainer = "container:xcode-coveralls.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
