@@ -2,4 +2,4 @@ language: objective-c
 xcode_project: xcode-coveralls.xcodeproj
 xcode_scheme: xcode-coveralls
 before_script:
-- su && ln -s `which gcov-4.2` /usr/bin/gcov
+- sudo ln -s `which gcov-4.2` /usr/bin/gcov
