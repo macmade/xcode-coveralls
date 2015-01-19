@@ -230,12 +230,19 @@
     XCCArguments  *                 args;
     const char    *                 argv[] = { "", "--verbose", self.dirPath.UTF8String };
     NSError       * __autoreleasing error;
+    BOOL                            success;
     
-    args  = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
-    gcov  = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
-    error = nil;
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error   = nil;
+    success = [ gcov run: &error ];
     
-    XCTAssertTrue( [ gcov run: &error ] );
+    if( success == NO )
+    {
+        NSLog( @"%@", error );
+    }
+    
+    XCTAssertTrue( success );
     XCTAssertNil( error );
 }
 
