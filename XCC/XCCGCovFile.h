@@ -26,14 +26,15 @@
 
 @interface XCCGCovFile: NSObject
 
-@property( atomic, readonly ) NSString * path;
-@property( atomic, readonly ) NSString * sourcePath;
-@property( atomic, readonly ) NSString * graphPath;
-@property( atomic, readonly ) NSString * dataPath;
-@property( atomic, readonly ) NSUInteger runs;
-@property( atomic, readonly ) NSUInteger programs;
-@property( atomic, readonly ) NSArray  * lines;
-@property( atomic, readonly ) NSString * jsonRepresentation;
+@property( atomic, readonly ) NSString     * path;
+@property( atomic, readonly ) NSString     * sourcePath;
+@property( atomic, readonly ) NSString     * graphPath;
+@property( atomic, readonly ) NSString     * dataPath;
+@property( atomic, readonly ) NSUInteger     runs;
+@property( atomic, readonly ) NSUInteger     programs;
+@property( atomic, readonly ) NSArray      * lines;
+@property( atomic, readonly ) NSString     * jsonRepresentation;
+@property( atomic, readonly ) NSDictionary * dictionaryRepresentation;
 
 - ( instancetype )initWithPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
 

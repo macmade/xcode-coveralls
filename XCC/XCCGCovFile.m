@@ -192,13 +192,24 @@
 
 - ( NSString * )jsonRepresentation
 {
+    NSData * data;
+    
+    @synchronized( self )
+    {
+        data = [ NSJSONSerialization dataWithJSONObject: [ self dictionaryRepresentation ] options: NSJSONWritingPrettyPrinted error: nil ];
+        
+        return [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+    }
+}
+
+- ( NSDictionary * )dictionaryRepresentation
+{
     @synchronized( self )
     {
         NSMutableDictionary * dict;
         XCCGCovFileLine     * line;
         NSMutableString     * source;
         NSMutableArray      * coverage;
-        NSData              * data;
         
         dict     = [ NSMutableDictionary new ];
         source   = [ NSMutableString     new ];
@@ -223,9 +234,7 @@
         [ dict setObject: source   forKey: @"source" ];
         [ dict setObject: coverage forKey: @"coverage" ];
         
-        data = [ NSJSONSerialization dataWithJSONObject: dict options: NSJSONWritingPrettyPrinted error: nil ];
-        
-        return [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+        return dict;
     }
 }
 
