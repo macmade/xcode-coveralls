@@ -22,6 +22,13 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCArguments.h"
-#import "XCCHelp.h"
-#import "XCCGCovHelper.h"
+@import Foundation;
+
+@class XCCArguments;
+
+@interface XCCGCovHelper: NSObject
+
+- ( instancetype )initWithArguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
+- ( BOOL )run: ( NSError * __autoreleasing * )error;
+
+@end

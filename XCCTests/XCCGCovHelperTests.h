@@ -22,6 +22,6 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCArguments.h"
-#import "XCCHelp.h"
-#import "XCCGCovHelper.h"
+@interface XCCGCovHelperTests: XCTestCase
+
+@end
