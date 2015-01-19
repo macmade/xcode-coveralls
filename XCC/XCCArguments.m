@@ -37,7 +37,7 @@
 
 @implementation XCCArguments
 
-- ( id )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count
+- ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count
 {
     NSUInteger       i;
     NSMutableArray * excPaths;

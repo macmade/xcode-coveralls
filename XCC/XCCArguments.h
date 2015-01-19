@@ -33,6 +33,6 @@
 @property( atomic, readonly ) NSArray  * excludedPaths;
 @property( atomic, readonly ) NSArray  * includedPaths;
 
-- ( id )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count NS_DESIGNATED_INITIALIZER;
+- ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count NS_DESIGNATED_INITIALIZER;
 
 @end
