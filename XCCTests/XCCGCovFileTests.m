@@ -61,7 +61,7 @@
     
     file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
     
-    XCTAssertTrue( [ file.sourcePath containsString: @"/xcode-coveralls/XCC/XCCArguments.m" ] );
+    XCTAssertTrue( [ file.sourcePath isEqualToString: @"/XCC/XCCArguments.m" ] );
 }
 
 - ( void )testGraphPath
@@ -133,6 +133,16 @@
     XCTAssertEqual( line.hits,       ( NSUInteger )565 );
     XCTAssertEqual( line.lineNumber, ( NSUInteger )29 );
     XCTAssertTrue( line.relevant );
+}
+
+- ( void )testJSONRepresentation
+{
+    XCCGCovFile     * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertNotNil( file.jsonRepresentation );
+    XCTAssertGreaterThan( file.jsonRepresentation.length, ( NSUInteger )0 );
 }
 
 @end

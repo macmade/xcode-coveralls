@@ -33,6 +33,7 @@
 @property( atomic, readonly ) NSUInteger runs;
 @property( atomic, readonly ) NSUInteger programs;
 @property( atomic, readonly ) NSArray  * lines;
+@property( atomic, readonly ) NSString * jsonRepresentation;
 
 - ( instancetype )initWithPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
 

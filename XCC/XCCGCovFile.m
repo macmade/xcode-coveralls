@@ -104,6 +104,7 @@
     NSString             *                 match1;
     NSString             *                 match2;
     NSString             *                 match3;
+    NSString             *                 pwd;
     XCCGCovFileLine      *                 gcovLine;
     NSUInteger                             coverage;
     NSUInteger                             lineNumber;
@@ -131,6 +132,8 @@
         return NO;
     }
     
+    pwd = [ [ NSFileManager defaultManager ] currentDirectoryPath ];
+    
     match1 = [ line substringWithRange: [ result rangeAtIndex: 1 ] ];
     match2 = [ line substringWithRange: [ result rangeAtIndex: 2 ] ];
     match3 = [ line substringWithRange: [ result rangeAtIndex: 3 ] ];
@@ -144,7 +147,7 @@
     {
         if( [ match3 hasPrefix: @"Source:" ] )
         {
-            self.sourcePath = [ match3 substringFromIndex: 7 ];
+            self.sourcePath = [ [ match3 substringFromIndex: 7 ] stringByReplacingOccurrencesOfString: pwd withString: @"" ];
         }
         else if( [ match3 hasPrefix: @"Graph:" ] )
         {
@@ -185,6 +188,45 @@
     [ array addObject: gcovLine ];
     
     return YES;
+}
+
+- ( NSString * )jsonRepresentation
+{
+    @synchronized( self )
+    {
+        NSMutableDictionary * dict;
+        XCCGCovFileLine     * line;
+        NSMutableString     * source;
+        NSMutableArray      * coverage;
+        NSData              * data;
+        
+        dict     = [ NSMutableDictionary new ];
+        source   = [ NSMutableString     new ];
+        coverage = [ NSMutableArray      new ];
+        
+        [ dict setObject: self.sourcePath forKey: @"name" ];
+        
+        for( line in self.lines )
+        {
+            [ source appendFormat: @"%@\n", line.code ];
+            
+            if( line.relevant )
+            {
+                [ coverage addObject: [ NSNumber numberWithUnsignedInteger: line.hits ] ];
+            }
+            else
+            {
+                [ coverage addObject: [ NSNull null ] ];
+            }
+        }
+        
+        [ dict setObject: source   forKey: @"source" ];
+        [ dict setObject: coverage forKey: @"coverage" ];
+        
+        data = [ NSJSONSerialization dataWithJSONObject: dict options: NSJSONWritingPrettyPrinted error: nil ];
+        
+        return [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+    }
 }
 
 @end
