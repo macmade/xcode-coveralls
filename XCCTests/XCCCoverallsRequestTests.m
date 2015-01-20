@@ -67,6 +67,27 @@
     [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningValidResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
 }
 
+- ( void )testBadPost
+{
+    XCCGCovFile         *                 file;
+    XCCCoverallsRequest *                 request;
+    XCCArguments        *                 args;
+    NSError             * __autoreleasing error;
+    const char          *                 argv[] = { "", "" };
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    file    = [ [ XCCGCovFile alloc ] initWithPath: self.gcovFilePath ];
+    request = [ [ XCCCoverallsRequest alloc ] initWithFiles: @[ file ] arguments: args ];
+    error   = nil;
+    
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningBadResponse:error: ) ofClass: [ self class ] ];
+    
+    XCTAssertFalse( [ request post: &error ] );
+    XCTAssertNotNil( error );
+    
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningBadResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+}
+
 - ( void )testInvalidPost
 {
     XCCGCovFile         *                 file;
@@ -105,7 +126,7 @@
     return nil;
 }
 
-+ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningInvalidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningBadResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
 {
     ( void )request;
     
@@ -117,6 +138,23 @@
     if( response != NULL )
     {
         *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: nil statusCode: 404 HTTPVersion: nil headerFields: nil ];
+    }
+    
+    return nil;
+}
+
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningInvalidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
+{
+    ( void )request;
+    
+    if( error != NULL )
+    {
+        *( error ) = [ NSError errorWithDomain: @"" code: 0 userInfo: nil ];
+    }
+    
+    if( response != NULL )
+    {
+        *( response ) = ( NSURLResponse * )[ NSObject new ];
     }
     
     return nil;
