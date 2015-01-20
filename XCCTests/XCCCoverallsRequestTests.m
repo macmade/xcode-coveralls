@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@interface XCCGCovFileTests: XCTestCase
+@interface XCCCoverallsRequestTests: XCTestCase
+
+@end
+
+@implementation XCCCoverallsRequestTests
 
 @end

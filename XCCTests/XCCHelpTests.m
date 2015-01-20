@@ -22,7 +22,9 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCHelpTests.h"
+@interface XCCHelpTests: XCTestCase
+
+@end
 
 @implementation XCCHelpTests
 

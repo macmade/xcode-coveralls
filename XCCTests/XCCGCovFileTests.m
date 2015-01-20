@@ -22,9 +22,7 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCGCovFileTests.h"
-
-@interface XCCGCovFileTests()
+@interface XCCGCovFileTests: XCTestCase
 
 @property( atomic, readwrite, strong ) NSString * path;
 

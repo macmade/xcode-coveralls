@@ -22,7 +22,9 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import "XCCArgumentsTests.h"
+@interface XCCArgumentsTests: XCTestCase
+
+@end
 
 @implementation XCCArgumentsTests
 
