@@ -24,6 +24,8 @@
 
 @import Foundation;
 
+@class XCCArguments;
+
 @interface XCCGCovFile: NSObject
 
 @property( atomic, readonly ) NSString     * path;
@@ -36,6 +38,7 @@
 @property( atomic, readonly ) NSString     * jsonRepresentation;
 @property( atomic, readonly ) NSDictionary * dictionaryRepresentation;
 
-- ( instancetype )initWithPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
+- ( instancetype )initWithPath: ( NSString * )path;
+- ( instancetype )initWithPath: ( NSString * )path arguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
 
 @end

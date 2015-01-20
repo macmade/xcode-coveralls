@@ -24,16 +24,18 @@
 
 #import "XCCGCovFile.h"
 #import "XCCGCovFileLine.h"
+#import "XCCArguments.h"
 
 @interface XCCGCovFile()
 
-@property( atomic, readwrite, strong ) NSString * path;
-@property( atomic, readwrite, strong ) NSString * sourcePath;
-@property( atomic, readwrite, strong ) NSString * graphPath;
-@property( atomic, readwrite, strong ) NSString * dataPath;
-@property( atomic, readwrite, assign ) NSUInteger runs;
-@property( atomic, readwrite, assign ) NSUInteger programs;
-@property( atomic, readwrite, strong ) NSArray  * lines;
+@property( atomic, readwrite, strong ) NSString     * path;
+@property( atomic, readwrite, strong ) NSString     * sourcePath;
+@property( atomic, readwrite, strong ) NSString     * graphPath;
+@property( atomic, readwrite, strong ) NSString     * dataPath;
+@property( atomic, readwrite, assign ) NSUInteger     runs;
+@property( atomic, readwrite, assign ) NSUInteger     programs;
+@property( atomic, readwrite, strong ) NSArray      * lines;
+@property( atomic, readwrite, strong ) XCCArguments * arguments;
 
 - ( BOOL )parse;
 - ( BOOL )parseLine: ( NSString * )line array: ( NSMutableArray * )array;
@@ -44,6 +46,11 @@
 
 - ( instancetype )initWithPath: ( NSString * )path
 {
+    return [ self initWithPath: path arguments: nil ];
+}
+
+- ( instancetype )initWithPath: ( NSString * )path arguments: ( XCCArguments * )args
+{
     BOOL isDir;
     
     if( [ [ NSFileManager defaultManager ] fileExistsAtPath: path isDirectory: &isDir ] == NO || isDir == YES )
@@ -53,7 +60,8 @@
     
     if( ( self = [ super init ] ) )
     {
-        self.path = path;
+        self.path      = path;
+        self.arguments = args;
         
         if( [ self parse ] == NO )
         {
@@ -151,10 +159,27 @@
                 
                 if( [ sourcePath hasPrefix: @"/" ] == NO )
                 {
+                    if( self.arguments.project != nil )
+                    {
+                        sourcePath = [ [ self.arguments.project stringByDeletingLastPathComponent ] stringByAppendingPathComponent: sourcePath ];
+                    }
+                    
                     sourcePath = [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: sourcePath ];
                 }
                 
-                self.sourcePath = [ sourcePath stringByStandardizingPath ];
+                sourcePath = [ sourcePath stringByStandardizingPath ];
+                
+                if( [ sourcePath hasPrefix: [ [ NSFileManager defaultManager ] currentDirectoryPath ] ] )
+                {
+                    sourcePath = [ sourcePath stringByReplacingOccurrencesOfString: [ [ NSFileManager defaultManager ] currentDirectoryPath ] withString: @"" ];
+                    
+                    if( [ sourcePath hasPrefix: @"/" ] )
+                    {
+                        sourcePath = [ sourcePath substringFromIndex: 1 ];
+                    }
+                }
+                
+                self.sourcePath = sourcePath;
             }
         }
         else if( [ match3 hasPrefix: @"Graph:" ] )

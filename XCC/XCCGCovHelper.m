@@ -34,7 +34,6 @@
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;
 - ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
-- ( void )getGCovFiles;
 
 @end
 
@@ -55,6 +54,9 @@
     BOOL             isDir;
     NSMutableArray * files;
     NSString       * file;
+    NSString       * pwd;
+    NSMutableArray * gcovFiles;
+    XCCGCovFile    * gcovFile;
     
     if( error != NULL )
     {
@@ -62,6 +64,19 @@
     }
     
     isDir = NO;
+    pwd   = [ [ NSFileManager defaultManager ] currentDirectoryPath ];
+    
+    if( self.arguments.project != nil )
+    {
+        if( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.arguments.project ] == NO )
+        {
+            [ self createError: error withText: [ NSString stringWithFormat: @"Xcode project file does not exist: %@", self.arguments.project ] ];
+            
+            return NO;
+        }
+        
+        [ [ NSFileManager defaultManager ] changeCurrentDirectoryPath: [ self.arguments.project stringByDeletingLastPathComponent ] ];
+    }
     
     if( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.arguments.buildDirectory isDirectory: &isDir ] == NO )
     {
@@ -102,41 +117,36 @@
         }
     }
     
-    [ self getGCovFiles ];
-    
-    return YES;
-}
-
-- ( void )getGCovFiles
-{
-    NSArray        * files;
-    NSMutableArray * gcovFiles;
-    NSString       * file;
-    NSString       * pwd;
-    XCCGCovFile    * gcovFile;
-    
-    pwd       = [ [ NSFileManager defaultManager ] currentDirectoryPath ];
-    files     = [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: pwd error: NULL ];
+    files     = [ NSMutableArray new ];
     gcovFiles = [ NSMutableArray new ];
     
-    for( file in files )
+    for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] error: NULL ] )
     {
         if( [ file.pathExtension isEqualToString: @"gcov" ] == NO )
         {
             continue;
         }
         
-        gcovFile = [ [ XCCGCovFile alloc ] initWithPath: file ];
+        [ gcovFiles addObject: [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: file ] ];
+    }
+    
+    [ [ NSFileManager defaultManager ] changeCurrentDirectoryPath: pwd ];
+    
+    for( file in gcovFiles )
+    {
+        gcovFile = [ [ XCCGCovFile alloc ] initWithPath: file arguments: self.arguments ];
         
         [ [ NSFileManager defaultManager ] removeItemAtPath: file error: NULL ];
         
         if( gcovFile != nil )
         {
-            [ gcovFiles addObject: gcovFile ];
+            [ files addObject: gcovFile ];
         }
     }
     
-    self.files = [ NSArray arrayWithArray: gcovFiles ];
+    self.files = [ NSArray arrayWithArray: files ];
+    
+    return YES;
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text
