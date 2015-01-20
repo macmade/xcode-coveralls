@@ -91,17 +91,10 @@ Installation
 
 The default location is `/usr/local/bin`.
 
-Here's an example with `xcodebuild`:
-
-    git clone https://github.com/macmade/xcode-coveralls.git
-    cd xcode-coveralls
-    sudo xcodebuild DSTROOT=/ install
-
 Here's an example with `xctool`:
 
-    git clone https://github.com/macmade/xcode-coveralls.git
-    cd xcode-coveralls
-    sudo xctool --project xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
+    git clone https://github.com/macmade/xcode-coveralls.git /tmp/xcode-coveralls
+    sudo xctool --project /tmp/xcode-coveralls/xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
     
 Note that you can use this on Travis builds (for instance in `before_install`) in order to get coverage reports for your project.
 
