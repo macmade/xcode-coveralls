@@ -32,6 +32,7 @@
 @property( atomic, readonly ) NSString   * gcov;
 @property( atomic, readonly ) NSArray    * excludedPaths;
 @property( atomic, readonly ) NSArray    * includedPaths;
+@property( atomic, readonly ) NSString   * project;
 @property( atomic, readonly ) NSUInteger   jobID;
 @property( atomic, readonly ) NSString   * service;
 @property( atomic, readonly ) NSString   * token;

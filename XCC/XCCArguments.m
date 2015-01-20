@@ -32,6 +32,7 @@
 @property( atomic, readwrite, strong ) NSString * gcov;
 @property( atomic, readwrite, strong ) NSArray  * excludedPaths;
 @property( atomic, readwrite, strong ) NSArray  * includedPaths;
+@property( atomic, readwrite, strong ) NSString * project;
 @property( atomic, readwrite, assign ) NSUInteger jobID;
 @property( atomic, readwrite, strong ) NSString * service;
 @property( atomic, readwrite, strong ) NSString * token;
@@ -125,6 +126,22 @@
                     }
                     
                     [ excPaths addObject: value ];
+                }
+                else if( [ arg isEqualToString: @"--project" ] )
+                {
+                    if( i == count - 1 )
+                    {
+                        break;
+                    }
+                    
+                    value = [ NSString stringWithCString: arguments[ ++i ] encoding: NSUTF8StringEncoding ];
+                    
+                    if( [ value hasPrefix: @"--" ] )
+                    {
+                        break;
+                    }
+                    
+                    self.project = value;
                 }
                 else if( [ arg isEqualToString: @"--id" ] )
                 {

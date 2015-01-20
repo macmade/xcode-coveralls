@@ -207,7 +207,7 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
     
     XCTAssertTrue( args.showHelp );
-    XCTAssertEqual( args.jobID, ( NSUInteger )0 );
+    XCTAssertNil( args.token );
 }
 
 - ( void )testValidToken
@@ -219,6 +219,28 @@
     
     XCTAssertFalse( args.showHelp );
     XCTAssertTrue( [ args.token isEqualToString: @"1234" ] );
+}
+
+- ( void )testInvalidProject
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--project", "--verbose", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( args.showHelp );
+    XCTAssertNil( args.project );
+}
+
+- ( void )testValidProject
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--project", "test", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertFalse( args.showHelp );
+    XCTAssertTrue( [ args.project isEqualToString: @"test" ] );
 }
 
 @end

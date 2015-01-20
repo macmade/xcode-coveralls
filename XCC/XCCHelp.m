@@ -62,6 +62,7 @@ static XCCHelp *       __sharedInstance;
         "                 (defaults to /usr/bin/gcov)\n"
         "    --include    Paths to include from the sources\n"
         "    --exclude    Paths to exclude from the sources\n"
+        "    --project    Path to the Xcode project file, if not at the directory root\n"
         "    --service    The service name to use\n"
         "                 (defaults to 'travis-ci')\n"
         "    --id         The service job ID\n"

@@ -26,6 +26,7 @@ Usage
                      (defaults to /usr/bin/gcov)
         --include    Paths to include from the sources
         --exclude    Paths to exclude from the sources
+        --project    Path to the Xcode project file, if not at the directory root
         --service    The service name to use
                      (defaults to 'travis-ci')
         --id         The service job ID
