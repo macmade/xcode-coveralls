@@ -30,6 +30,7 @@
 
 @property( atomic, readonly ) NSString     * path;
 @property( atomic, readonly ) NSString     * sourcePath;
+@property( atomic, readonly ) NSString     * name;
 @property( atomic, readonly ) NSString     * graphPath;
 @property( atomic, readonly ) NSString     * dataPath;
 @property( atomic, readonly ) NSUInteger     runs;

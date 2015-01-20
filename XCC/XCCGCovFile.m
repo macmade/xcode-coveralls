@@ -30,6 +30,7 @@
 
 @property( atomic, readwrite, strong ) NSString     * path;
 @property( atomic, readwrite, strong ) NSString     * sourcePath;
+@property( atomic, readwrite, strong ) NSString     * name;
 @property( atomic, readwrite, strong ) NSString     * graphPath;
 @property( atomic, readwrite, strong ) NSString     * dataPath;
 @property( atomic, readwrite, assign ) NSUInteger     runs;
@@ -167,19 +168,17 @@
                     sourcePath = [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: sourcePath ];
                 }
                 
-                sourcePath = [ sourcePath stringByStandardizingPath ];
-                
-                if( [ sourcePath hasPrefix: [ [ NSFileManager defaultManager ] currentDirectoryPath ] ] )
-                {
-                    sourcePath = [ sourcePath stringByReplacingOccurrencesOfString: [ [ NSFileManager defaultManager ] currentDirectoryPath ] withString: @"" ];
-                    
-                    if( [ sourcePath hasPrefix: @"/" ] )
-                    {
-                        sourcePath = [ sourcePath substringFromIndex: 1 ];
-                    }
-                }
-                
+                sourcePath      = [ sourcePath stringByStandardizingPath ];
                 self.sourcePath = sourcePath;
+                
+                if( [ self.sourcePath hasPrefix: [ [ NSFileManager defaultManager ] currentDirectoryPath ] ] )
+                {
+                    self.name = [ self.sourcePath stringByReplacingOccurrencesOfString: [ [ NSFileManager defaultManager ] currentDirectoryPath ] withString: @"" ];
+                }
+                else
+                {
+                    self.name = self.sourcePath;
+                }
             }
         }
         else if( [ match3 hasPrefix: @"Graph:" ] )
@@ -248,7 +247,7 @@
         source   = [ NSMutableString     new ];
         coverage = [ NSMutableArray      new ];
         
-        [ dict setObject: self.sourcePath forKey: @"name" ];
+        [ dict setObject: self.name forKey: @"name" ];
         
         for( line in self.lines )
         {

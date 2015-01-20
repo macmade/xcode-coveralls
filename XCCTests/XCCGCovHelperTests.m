@@ -265,4 +265,86 @@
     XCTAssertEqual( gcov.files.count, ( NSUInteger )1 );
 }
 
+- ( void )testFilesWithIncludedDir
+{
+    {
+        XCCGCovHelper *                 gcov;
+        XCCArguments  *                 args;
+        const char    *                 argv[] = { "", "--verbose", "--include", "/tmp/", self.dirPath.UTF8String };
+        NSError       * __autoreleasing error;
+        
+        args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 5 ];
+        gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+        error   = nil;
+        
+        [ gcov run: nil ];
+        
+        XCTAssertEqual( gcov.files.count, ( NSUInteger )1 );
+    }
+    
+    {
+        XCCGCovHelper *                 gcov;
+        XCCArguments  *                 args;
+        const char    *                 argv[] = { "", "--verbose", "--include", "/var/", self.dirPath.UTF8String };
+        NSError       * __autoreleasing error;
+        
+        args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 5 ];
+        gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+        error   = nil;
+        
+        [ gcov run: nil ];
+        
+        XCTAssertEqual( gcov.files.count, ( NSUInteger )0 );
+    }
+}
+
+- ( void )testFilesWithExcludedDir
+{
+    {
+        XCCGCovHelper *                 gcov;
+        XCCArguments  *                 args;
+        const char    *                 argv[] = { "", "--verbose", "--exclude", "/var/", self.dirPath.UTF8String };
+        NSError       * __autoreleasing error;
+        
+        args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 5 ];
+        gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+        error   = nil;
+        
+        [ gcov run: nil ];
+        
+        XCTAssertEqual( gcov.files.count, ( NSUInteger )1 );
+    }
+    
+    {
+        XCCGCovHelper *                 gcov;
+        XCCArguments  *                 args;
+        const char    *                 argv[] = { "", "--verbose", "--exclude", "/tmp/", self.dirPath.UTF8String };
+        NSError       * __autoreleasing error;
+        
+        args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 5 ];
+        gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+        error   = nil;
+        
+        [ gcov run: nil ];
+        
+        XCTAssertEqual( gcov.files.count, ( NSUInteger )0 );
+    }
+}
+
+- ( void )testFilesWithIncludedAndExcludedDir
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", "--include", "/tmp/", "--exclude", "/tmp/", self.dirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 7 ];
+    gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error   = nil;
+    
+    [ gcov run: nil ];
+    
+    XCTAssertEqual( gcov.files.count, ( NSUInteger )0 );
+}
+
 @end

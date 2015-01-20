@@ -34,6 +34,8 @@
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;
 - ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
+- ( void )filterIncludedFiles: ( NSMutableArray * )files;
+- ( void )filterExcludedFiles: ( NSMutableArray * )files;
 
 @end
 
@@ -144,9 +146,96 @@
         }
     }
     
+    [ self filterIncludedFiles: files ];
+    [ self filterExcludedFiles: files ];
+    
     self.files = [ NSArray arrayWithArray: files ];
     
     return YES;
+}
+
+- ( void )filterIncludedFiles: ( NSMutableArray * )files
+{
+    NSPredicate * predicate;
+    
+    if( self.arguments.includedPaths.count == 0 )
+    {
+        return;
+    }
+    
+    predicate = [ NSPredicate predicateWithBlock: ^ BOOL( XCCGCovFile * file, NSDictionary * bindings )
+        {
+            NSString * path;
+            
+            ( void )bindings;
+            
+            for( path in self.arguments.includedPaths )
+            {
+                if( [ path hasPrefix: @"/" ] == NO )
+                {
+                    path = [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: path ];
+                }
+                
+                path = [ path stringByStandardizingPath ];
+                
+                if( [ path hasSuffix: @"/" ] == NO )
+                {
+                    path = [ path stringByAppendingString: @"/" ];
+                }
+                
+                if( [ file.sourcePath hasPrefix: path ] )
+                {
+                    return YES;
+                }
+            }
+            
+            return NO;
+        }
+    ];
+    
+    [ files filterUsingPredicate: predicate ];
+}
+
+- ( void )filterExcludedFiles: ( NSMutableArray * )files
+{
+    NSPredicate * predicate;
+    
+    if( self.arguments.excludedPaths.count == 0 )
+    {
+        return;
+    }
+    
+    predicate = [ NSPredicate predicateWithBlock: ^ BOOL( XCCGCovFile * file, NSDictionary * bindings )
+        {
+            NSString * path;
+            
+            ( void )bindings;
+            
+            for( path in self.arguments.excludedPaths )
+            {
+                if( [ path hasPrefix: @"/" ] == NO )
+                {
+                    path = [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: path ];
+                }
+                
+                path = [ path stringByStandardizingPath ];
+                
+                if( [ path hasSuffix: @"/" ] == NO )
+                {
+                    path = [ path stringByAppendingString: @"/" ];
+                }
+                
+                if( [ file.sourcePath hasPrefix: path ] )
+                {
+                    return NO;
+                }
+            }
+            
+            return YES;
+        }
+    ];
+    
+    [ files filterUsingPredicate: predicate ];
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text
