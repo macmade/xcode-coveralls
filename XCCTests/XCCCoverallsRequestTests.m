@@ -110,7 +110,7 @@
     
     if( error != NULL )
     {
-        *( error ) = [ NSError errorWithDomain: @"com.xs-labs.test" code: 42 userInfo: nil ];
+        *( error ) = nil;
     }
     
     if( response != NULL )
