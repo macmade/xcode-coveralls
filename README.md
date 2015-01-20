@@ -59,9 +59,9 @@ You may then use this variables in a shell script, in order to invoke `xcode-cov
 
     #!/bin/bash
     
-    source Scripts/xcenv.sh
+    source xcenv.sh
     declare -r DIR_BUILD="${OBJECT_FILE_DIR_normal}/${CURRENT_ARCH}/"
-    xcode-coveralls $(DIR_BUILD)
+    xcode-coveralls "${DIR_BUILD}"
 
 Command Options
 ---------------
