@@ -59,8 +59,16 @@
             [ sourceFiles addObject: file.dictionaryRepresentation ];
         }
         
-        [ dict setObject: service     forKey: @"service_name" ];
-        [ dict setObject: jobID       forKey: @"service_job_id" ];
+        if( args.token != nil )
+        {
+            [ dict setObject: args.token forKey: @"repo_token" ];
+        }
+        else
+        {
+            [ dict setObject: service forKey: @"service_name" ];
+            [ dict setObject: jobID   forKey: @"service_job_id" ];
+        }
+        
         [ dict setObject: sourceFiles forKey: @"source_files" ];
         
         self.dictionary = dict;
@@ -75,8 +83,6 @@
     NSMutableURLRequest *                 req;
     NSString            *                 jsonText;
     NSData              *                 jsonData;
-    NSString            *                 postText;
-    NSData              *                 postData;
     NSHTTPURLResponse   * __autoreleasing response;
     NSString            *                 statusText;
     
@@ -94,11 +100,8 @@
         return NO;
     }
     
-    postText = [ jsonText stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding ];
-    postData = [ postText dataUsingEncoding: NSUTF8StringEncoding ];
-    
     [ self log: jsonText ];
-    [ self setPOSTData: postData forRequest: req ]; 
+    [ self setPOSTData: jsonData forRequest: req ]; 
     
     [ req setTimeoutInterval: 0 ];
     [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
@@ -129,9 +132,26 @@
 
 - ( void )setPOSTData: ( NSData * )data forRequest: ( NSMutableURLRequest * )request
 {
+    NSString      * boundary;
+    NSString      * contentType;
+    NSMutableData * body;
+    
     [ request setHTTPMethod: @"POST" ];
     
-    ( void )data;
+    boundary    = [ @"XCODE-COVERALLS-" stringByAppendingString: [ [ NSUUID UUID ] UUIDString ] ];
+    contentType = [ NSString stringWithFormat: @"multipart/form-data; boundary=%@", boundary ];
+    
+    [ request addValue: contentType forHTTPHeaderField: @"Content-Type" ];
+    
+    body = [ NSMutableData new ];
+    
+    [ body appendData: [ [ NSString stringWithFormat: @"\r\n--%@\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: [ @"Content-Disposition: form-data; name=\"json_file\"; filename=\"json_file\"\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: [ @"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: data ];
+    [ body appendData: [ [ NSString stringWithFormat: @"\r\n--%@--\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
+    
+    [ request setHTTPBody: body ];
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text
