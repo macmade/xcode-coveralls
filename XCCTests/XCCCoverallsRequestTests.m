@@ -64,7 +64,7 @@
     XCTAssertTrue( [ request post: &error ] );
     XCTAssertNil( error );
     
-    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningValidResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningValidResponse:error: ) ofClass: [ self class ] ];
 }
 
 - ( void )testBadPost
@@ -85,7 +85,7 @@
     XCTAssertFalse( [ request post: &error ] );
     XCTAssertNotNil( error );
     
-    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningBadResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningBadResponse:error: ) ofClass: [ self class ] ];
 }
 
 - ( void )testInvalidPost
@@ -106,7 +106,7 @@
     XCTAssertFalse( [ request post: &error ] );
     XCTAssertNotNil( error );
     
-    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningInvalidResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningInvalidResponse:error: ) ofClass: [ self class ] ];
 }
 
 + ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningValidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
