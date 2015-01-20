@@ -24,8 +24,34 @@
 
 @interface XCCCoverallsRequestTests: XCTestCase
 
+@property( atomic, readwrite, strong ) NSString * gcovFilePath;
+
 @end
 
 @implementation XCCCoverallsRequestTests
+
+- ( void )setUp
+{
+    [ super setUp ];
+    
+    self.gcovFilePath = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
+}
+
+- ( void )testValidPost
+{
+    XCCGCovFile         *                 file;
+    XCCCoverallsRequest *                 request;
+    XCCArguments        *                 args;
+    NSError             * __autoreleasing error;
+    const char          *                 argv[] = { "", "--dry-run", "" };
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    file    = [ [ XCCGCovFile alloc ] initWithPath: self.gcovFilePath ];
+    request = [ [ XCCCoverallsRequest alloc ] initWithFiles: @[ file ] arguments: args ];
+    error   = nil;
+    
+    XCTAssertTrue( [ request post: &error ] );
+    XCTAssertNil( error );
+}
 
 @end
