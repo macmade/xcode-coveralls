@@ -92,6 +92,8 @@
 - ( void )tearDown
 {
     [ [ NSFileManager defaultManager ] removeItemAtPath: self.tempPath error: nil ];
+    
+    [ super tearDown ];
 }
 
 - ( void )testSetupTempPath
