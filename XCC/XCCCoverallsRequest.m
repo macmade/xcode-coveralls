@@ -50,7 +50,7 @@
     if( ( self = [ super init ] ) )
     {
         dict        = [ NSMutableDictionary new ];
-        service     = ( args.service == nil ) ? @""               : args.service;
+        service     = ( args.service == nil ) ? @"" : args.service;
         jobID       = [ NSNumber numberWithUnsignedInteger: args.jobID ];
         sourceFiles = [ NSMutableArray new ];
         
