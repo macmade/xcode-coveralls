@@ -34,6 +34,7 @@
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text;
 - ( void )log: ( NSString * )message;
 - ( BOOL )processFile: ( NSString * )file error: ( NSError * __autoreleasing * )error;
+- ( void )getGCovFiles;
 
 @end
 
@@ -53,9 +54,7 @@
 {
     BOOL             isDir;
     NSMutableArray * files;
-    NSMutableArray * gcovFiles;
     NSString       * file;
-    XCCGCovFile    * gcovFile;
     
     if( error != NULL )
     {
@@ -78,8 +77,7 @@
         return NO;
     }
     
-    files     = [ NSMutableArray new ];
-    gcovFiles = [ NSMutableArray new ];
+    files = [ NSMutableArray new ];
     
     for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.arguments.buildDirectory error: NULL ] )
     {
@@ -104,7 +102,24 @@
         }
     }
     
-    for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] error: NULL ] )
+    [ self getGCovFiles ];
+    
+    return YES;
+}
+
+- ( void )getGCovFiles
+{
+    NSArray        * files;
+    NSMutableArray * gcovFiles;
+    NSString       * file;
+    NSString       * pwd;
+    XCCGCovFile    * gcovFile;
+    
+    pwd       = [ [ NSFileManager defaultManager ] currentDirectoryPath ];
+    files     = [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: pwd error: NULL ];
+    gcovFiles = [ NSMutableArray new ];
+    
+    for( file in files )
     {
         if( [ file.pathExtension isEqualToString: @"gcov" ] == NO )
         {
@@ -122,8 +137,6 @@
     }
     
     self.files = [ NSArray arrayWithArray: gcovFiles ];
-    
-    return YES;
 }
 
 - ( BOOL )createError: ( NSError * __autoreleasing * )error withText: ( NSString * )text

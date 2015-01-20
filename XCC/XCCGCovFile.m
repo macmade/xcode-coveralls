@@ -104,7 +104,6 @@
     NSString             *                 match1;
     NSString             *                 match2;
     NSString             *                 match3;
-    NSString             *                 pwd;
     XCCGCovFileLine      *                 gcovLine;
     NSUInteger                             coverage;
     NSUInteger                             lineNumber;
@@ -132,8 +131,6 @@
         return NO;
     }
     
-    pwd = [ [ NSFileManager defaultManager ] currentDirectoryPath ];
-    
     match1 = [ line substringWithRange: [ result rangeAtIndex: 1 ] ];
     match2 = [ line substringWithRange: [ result rangeAtIndex: 2 ] ];
     match3 = [ line substringWithRange: [ result rangeAtIndex: 3 ] ];
@@ -147,7 +144,18 @@
     {
         if( [ match3 hasPrefix: @"Source:" ] )
         {
-            self.sourcePath = [ [ match3 substringFromIndex: 7 ] stringByReplacingOccurrencesOfString: pwd withString: @"" ];
+            {
+                NSString * sourcePath;
+                
+                sourcePath = [ match3 substringFromIndex: 7 ];
+                
+                if( [ sourcePath hasPrefix: @"/" ] == NO )
+                {
+                    sourcePath = [ [ [ NSFileManager defaultManager ] currentDirectoryPath ] stringByAppendingPathComponent: sourcePath ];
+                }
+                
+                self.sourcePath = [ sourcePath stringByStandardizingPath ];
+            }
         }
         else if( [ match3 hasPrefix: @"Graph:" ] )
         {
