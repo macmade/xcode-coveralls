@@ -28,6 +28,7 @@
 
 @property( atomic, readwrite, assign ) BOOL       showHelp;
 @property( atomic, readwrite, assign ) BOOL       verbose;
+@property( atomic, readwrite, assign ) BOOL       dryRun;
 @property( atomic, readwrite, strong ) NSString * buildDirectory;
 @property( atomic, readwrite, strong ) NSString * gcov;
 @property( atomic, readwrite, strong ) NSArray  * excludedPaths;
@@ -78,6 +79,10 @@
                 else if( [ arg isEqualToString: @"--verbose" ] )
                 {
                     self.verbose = YES;
+                }
+                else if( [ arg isEqualToString: @"--dry-run" ] )
+                {
+                    self.dryRun = YES;
                 }
                 else if( [ arg isEqualToString: @"--gcov" ] )
                 {

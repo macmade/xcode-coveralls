@@ -82,6 +82,7 @@ Command Options
         --id         The service job ID
                      (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)
         --token      The repository token (optional)
+        --dry-run    Do not actually send data to coveralls.io
 
 Installation
 ------------

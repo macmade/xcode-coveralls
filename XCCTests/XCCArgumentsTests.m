@@ -70,6 +70,16 @@
     XCTAssertTrue( args.verbose );
 }
 
+- ( void )testDryRun
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--dry-run" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    
+    XCTAssertTrue( args.dryRun );
+}
+
 - ( void )testBuildDirectory
 {
     XCCArguments * args;

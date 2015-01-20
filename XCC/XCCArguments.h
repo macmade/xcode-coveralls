@@ -28,6 +28,7 @@
 
 @property( atomic, readonly ) BOOL         showHelp;
 @property( atomic, readonly ) BOOL         verbose;
+@property( atomic, readonly ) BOOL         dryRun;
 @property( atomic, readonly ) NSString   * buildDirectory;
 @property( atomic, readonly ) NSString   * gcov;
 @property( atomic, readonly ) NSArray    * excludedPaths;

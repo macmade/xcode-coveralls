@@ -68,6 +68,7 @@ static XCCHelp *       __sharedInstance;
         "    --id         The service job ID\n"
         "                 (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)\n"
         "    --token      The repository token (optional)\n"
+        "    --dry-run    Do not actually send data to coveralls.io\n"
     );
 }
 
