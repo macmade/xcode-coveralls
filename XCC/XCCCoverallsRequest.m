@@ -106,21 +106,25 @@
     [ self setPOSTData: jsonData forRequest: req ]; 
     
     [ req setTimeoutInterval: 0 ];
-    [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
+    
+    if( self.arguments.dryRun == NO )
+    {
+        [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
+    }
     
     if( *( error ) != NULL && *( error ) != nil )
     {
         return NO;
     }
     
-    if( [ response isKindOfClass: [ NSHTTPURLResponse class ] ] == NO )
+    if( self.arguments.dryRun == NO && [ response isKindOfClass: [ NSHTTPURLResponse class ] ] == NO )
     {
         [ self createError: error withText: @"Bad response" ];
         
         return NO;
     }
     
-    if( response.statusCode != 200 )
+    if( self.arguments.dryRun == NO && response.statusCode != 200 )
     {
         statusText = [ [ response allHeaderFields ] objectForKey: @"Status" ];
         
