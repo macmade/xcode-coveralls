@@ -83,6 +83,27 @@ Command Options
                      (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)
         --token      The repository token (optional)
 
+Installation
+------------
+
+`xcode-coveralls` may be installed by cloning its [GitHub repository](https://github.com/macmade/xcode-coveralls) and running `xcodebuild` or `xctool`.
+
+The default location is `/usr/local/bin`.
+
+Here's an example with `xcodebuild`:
+
+    git clone https://github.com/macmade/xcode-coveralls.git
+    cd xcode-coveralls
+    sudo xcodebuild DSTROOT=/ install
+
+Here's an example with `xctool`:
+
+    git clone https://github.com/macmade/xcode-coveralls.git
+    cd xcode-coveralls
+    sudo xctool --project xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
+    
+Note that you can use this on Travis builds (for instance in `after_success`) in order to get coverage reports for your project.
+
 License
 -------
 
