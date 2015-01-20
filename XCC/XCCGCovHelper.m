@@ -98,7 +98,7 @@
     
     for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.arguments.buildDirectory error: NULL ] )
     {
-        if( [ file.pathExtension isEqualToString: @"gcda" ] )
+        if( [ file.pathExtension isEqualToString: @"gcno" ] )
         {
             [ files addObject: [ self.arguments.buildDirectory stringByAppendingPathComponent: file ] ];
         }
@@ -106,7 +106,7 @@
     
     if( files.count == 0 )
     {
-        [ self createError: error withText: [ NSString stringWithFormat: @"No .gcda files in build directory: %@", self.arguments.buildDirectory ] ];
+        [ self createError: error withText: [ NSString stringWithFormat: @"No .gcno files in build directory: %@", self.arguments.buildDirectory ] ];
         
         return NO;
     }
