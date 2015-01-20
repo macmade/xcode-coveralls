@@ -43,6 +43,8 @@
     NSData   * gcnoData;
     NSData   * codeData;
     
+    [ super setUp ];
+    
     template = [ NSTemporaryDirectory() stringByAppendingPathComponent: @"xcode-coveralls.XXXXXX" ];
     buf      = malloc( strlen( template.fileSystemRepresentation ) + 1 );
     

@@ -32,6 +32,8 @@
 
 - ( void )setUp
 {
+    [ super setUp ];
+    
     self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
 }
 
