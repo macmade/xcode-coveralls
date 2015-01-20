@@ -48,7 +48,7 @@ Note that turning those options on will reduce the compilation time, so you migh
 
 The `xcode-coveralls` command needs to be invoked with the Xcode build directory, usually in `~/Library/Developer/Xcode/DerivedData/`.
 
-The best way to get this directory is to add a **Run Script** phase in your unit test target with the following:
+The best way to get this directory is to add a **Run Script** phase in the target for which you want coverage reports:
 
     export | egrep '(BUILT_PRODUCTS_DIR)|(CURRENT_ARCH)|(OBJECT_FILE_DIR_normal)|(SRCROOT)|(OBJROOT)' > xcenv.sh
 
