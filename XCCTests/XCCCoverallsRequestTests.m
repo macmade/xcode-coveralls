@@ -22,9 +22,18 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
+@import ObjectiveC.runtime;
+
+#pragma clang diagnostic ignored "-Wselector"
+
 @interface XCCCoverallsRequestTests: XCTestCase
 
 @property( atomic, readwrite, strong ) NSString * gcovFilePath;
+
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningValidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error;
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningInvalidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error;
+- ( void )swizzleSelector: ( SEL )s1 ofClass: ( Class )cls1 withSelector: ( SEL )s2 ofClass: ( Class )cls2;
+- ( void )swizzleClassSelector: ( SEL )s1 ofClass: ( Class )cls1 withSelector: ( SEL )s2 ofClass: ( Class )cls2;
 
 @end
 
@@ -43,15 +52,96 @@
     XCCCoverallsRequest *                 request;
     XCCArguments        *                 args;
     NSError             * __autoreleasing error;
-    const char          *                 argv[] = { "", "--dry-run", "" };
+    const char          *                 argv[] = { "", "" };
     
-    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
     file    = [ [ XCCGCovFile alloc ] initWithPath: self.gcovFilePath ];
     request = [ [ XCCCoverallsRequest alloc ] initWithFiles: @[ file ] arguments: args ];
     error   = nil;
     
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningValidResponse:error: ) ofClass: [ self class ] ];
+    
     XCTAssertTrue( [ request post: &error ] );
     XCTAssertNil( error );
+    
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningValidResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+}
+
+- ( void )testInvalidPost
+{
+    XCCGCovFile         *                 file;
+    XCCCoverallsRequest *                 request;
+    XCCArguments        *                 args;
+    NSError             * __autoreleasing error;
+    const char          *                 argv[] = { "", "" };
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    file    = [ [ XCCGCovFile alloc ] initWithPath: self.gcovFilePath ];
+    request = [ [ XCCCoverallsRequest alloc ] initWithFiles: @[ file ] arguments: args ];
+    error   = nil;
+    
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] withSelector: @selector( sendSynchronousRequest:returningInvalidResponse:error: ) ofClass: [ self class ] ];
+    
+    XCTAssertFalse( [ request post: &error ] );
+    XCTAssertNotNil( error );
+    
+    [ self swizzleClassSelector: @selector( sendSynchronousRequest:returningInvalidResponse:error: ) ofClass: [ self class ] withSelector: @selector( sendSynchronousRequest:returningResponse:error: ) ofClass: [ NSURLConnection class ] ];
+}
+
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningValidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
+{
+    ( void )request;
+    
+    if( error != NULL )
+    {
+        *( error ) = nil;
+    }
+    
+    if( response != NULL )
+    {
+        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: nil statusCode: 200 HTTPVersion: nil headerFields: nil ];
+    }
+    
+    return nil;
+}
+
++ ( NSData * )sendSynchronousRequest: ( NSURLRequest * )request returningInvalidResponse: ( NSURLResponse * __autoreleasing * )response error: ( NSError * __autoreleasing * )error
+{
+    ( void )request;
+    
+    if( error != NULL )
+    {
+        *( error ) = [ NSError errorWithDomain: @"" code: 0 userInfo: nil ];
+    }
+    
+    if( response != NULL )
+    {
+        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: nil statusCode: 404 HTTPVersion: nil headerFields: nil ];
+    }
+    
+    return nil;
+}
+
+- ( void )swizzleSelector: ( SEL )s1 ofClass: ( Class )cls1 withSelector: ( SEL )s2 ofClass: ( Class )cls2
+{
+    Method m1;
+    Method m2;
+    
+    m1 = class_getInstanceMethod( cls1, s1 );
+    m2 = class_getInstanceMethod( cls2, s2 );
+    
+    method_exchangeImplementations( m1, m2 );
+}
+
+- ( void )swizzleClassSelector: ( SEL )s1 ofClass: ( Class )cls1 withSelector: ( SEL )s2 ofClass: ( Class )cls2
+{
+    Method m1;
+    Method m2;
+    
+    m1 = class_getClassMethod( cls1, s1 );
+    m2 = class_getClassMethod( cls2, s2 );
+    
+    method_exchangeImplementations( m1, m2 );
 }
 
 @end
