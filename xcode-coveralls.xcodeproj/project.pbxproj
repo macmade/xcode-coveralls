@@ -92,6 +92,7 @@
 		054513F11A6D9A22002B8F92 /* test.m.gcov */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.m.gcov; sourceTree = "<group>"; };
 		054513F61A6DA9A0002B8F92 /* XCCCoverallsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCCoverallsRequest.h; sourceTree = "<group>"; };
 		054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequest.m; sourceTree = "<group>"; };
+		0552BFA41A6ED80A007F1099 /* coveralls.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = coveralls.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +130,7 @@
 				054513391A6C9FD4002B8F92 /* xcode-coverall */,
 				054513891A6CA92A002B8F92 /* XCC */,
 				054513961A6CA92A002B8F92 /* XCCTests */,
+				0552BFA21A6ED80A007F1099 /* Scripts */,
 				054513381A6C9FD4002B8F92 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,6 +227,14 @@
 				054513F11A6D9A22002B8F92 /* test.m.gcov */,
 			);
 			path = gcov;
+			sourceTree = "<group>";
+		};
+		0552BFA21A6ED80A007F1099 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0552BFA41A6ED80A007F1099 /* coveralls.sh */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
