@@ -3,4 +3,4 @@ xcode_project: xcode-coveralls.xcodeproj
 xcode_scheme: xcode-coveralls
 after_success:
 - sudo xctool --project xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
-- ./Scripts/coveralls.sh
+- bash Scripts/coveralls.sh
