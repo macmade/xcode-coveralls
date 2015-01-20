@@ -81,8 +81,9 @@
 - ( BOOL )post: ( NSError * __autoreleasing * )error
 {
     NSMutableURLRequest *                 req;
-    NSString            *                 jsonText;
     NSData              *                 jsonData;
+    NSString            *                 jsonTextPretty;
+    NSData              *                 jsonDataPretty;
     NSHTTPURLResponse   * __autoreleasing response;
     NSString            *                 statusText;
     
@@ -91,16 +92,17 @@
         *( error ) = nil;
     }
     
-    req      = [ [ NSMutableURLRequest alloc ] initWithURL: [ NSURL URLWithString: @"https://coveralls.io/api/v1/jobs" ] ];
-    jsonData = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: ( NSJSONWritingOptions )0 error: error ];
-    jsonText = [ [ NSString alloc ] initWithData: jsonData encoding: NSUTF8StringEncoding ];
+    req            = [ [ NSMutableURLRequest alloc ] initWithURL: [ NSURL URLWithString: @"https://coveralls.io/api/v1/jobs" ] ];
+    jsonData       = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: ( NSJSONWritingOptions )0 error: error ];
+    jsonDataPretty = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: NSJSONWritingPrettyPrinted error: error ];
+    jsonTextPretty = [ [ NSString alloc ] initWithData: jsonDataPretty encoding: NSUTF8StringEncoding ];
     
     if( *( error ) != NULL && *( error ) != nil )
     {
         return NO;
     }
     
-    [ self log: jsonText ];
+    [ self log: jsonTextPretty ];
     [ self setPOSTData: jsonData forRequest: req ]; 
     
     [ req setTimeoutInterval: 0 ];
