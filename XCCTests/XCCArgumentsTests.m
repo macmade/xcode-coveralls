@@ -90,6 +90,29 @@
     args = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
     
     XCTAssertFalse( args.showHelp );
+    XCTAssertEqual( args.buildDirectories.count, ( NSUInteger )1 );
+}
+
+- ( void )testMultipleBuildDirectories
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 3 ];
+    
+    XCTAssertFalse( args.showHelp );
+    XCTAssertEqual( args.buildDirectories.count, ( NSUInteger )2 );
+}
+
+- ( void )testMultipleBuildDirectoriesWithInvalidOption
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "", "--verbose", "" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    
+    XCTAssertTrue( args.showHelp );
+    XCTAssertEqual( args.buildDirectories.count, ( NSUInteger )0 );
 }
 
 - ( void )testInvalidGCov

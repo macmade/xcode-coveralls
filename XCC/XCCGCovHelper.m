@@ -55,10 +55,12 @@
 {
     BOOL             isDir;
     NSMutableArray * files;
+    NSMutableArray * allFiles;
     NSString       * file;
     NSString       * pwd;
     NSMutableArray * gcovFiles;
     XCCGCovFile    * gcovFile;
+    NSString       * buildDirectory;
     
     if( error != NULL )
     {
@@ -80,38 +82,45 @@
         [ [ NSFileManager defaultManager ] changeCurrentDirectoryPath: [ self.arguments.project stringByDeletingLastPathComponent ] ];
     }
     
-    if( [ [ NSFileManager defaultManager ] fileExistsAtPath: self.arguments.buildDirectory isDirectory: &isDir ] == NO )
+    allFiles = [ NSMutableArray new ];
+    
+    for( buildDirectory in self.arguments.buildDirectories )
     {
-        [ self createError: error withText: [ NSString stringWithFormat: @"Build directory does not exist: %@", self.arguments.buildDirectory ] ];
+        files = [ NSMutableArray new ];
         
-        return NO;
-    }
-    
-    if( isDir == NO )
-    {
-        [ self createError: error withText: [ NSString stringWithFormat: @"Build directory is not a directory: %@", self.arguments.buildDirectory ] ];
-        
-        return NO;
-    }
-    
-    files = [ NSMutableArray new ];
-    
-    for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.arguments.buildDirectory error: NULL ] )
-    {
-        if( [ file.pathExtension isEqualToString: @"gcno" ] )
+        if( [ [ NSFileManager defaultManager ] fileExistsAtPath: buildDirectory isDirectory: &isDir ] == NO )
         {
-            [ files addObject: [ self.arguments.buildDirectory stringByAppendingPathComponent: file ] ];
+            [ self createError: error withText: [ NSString stringWithFormat: @"Build directory does not exist: %@", buildDirectory ] ];
+            
+            return NO;
         }
-    }
-    
-    if( files.count == 0 )
-    {
-        [ self createError: error withText: [ NSString stringWithFormat: @"No .gcno files in build directory: %@", self.arguments.buildDirectory ] ];
         
-        return NO;
+        if( isDir == NO )
+        {
+            [ self createError: error withText: [ NSString stringWithFormat: @"Build directory is not a directory: %@", buildDirectory ] ];
+            
+            return NO;
+        }
+        
+        for( file in [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: buildDirectory error: NULL ] )
+        {
+            if( [ file.pathExtension isEqualToString: @"gcno" ] )
+            {
+                [ files addObject: [ buildDirectory stringByAppendingPathComponent: file ] ];
+            }
+        }
+        
+        if( files.count == 0 )
+        {
+            [ self createError: error withText: [ NSString stringWithFormat: @"No .gcno files in build directory: %@", buildDirectory ] ];
+            
+            return NO;
+        }
+        
+        [ allFiles addObjectsFromArray: files ];
     }
     
-    for( file in files )
+    for( file in allFiles )
     {
         if( [ self processFile: file error: error ] == NO )
         {
@@ -276,7 +285,7 @@
     [ task setStandardOutput: outPipe ];
     [ task setStandardError: errPipe ];
     [ task setLaunchPath: ( self.arguments.gcov == nil ) ? @"/usr/bin/gcov" : self.arguments.gcov ];
-    [ task setArguments: @[ file, @"-o", self.arguments.buildDirectory ] ];
+    [ task setArguments: @[ file, @"-o", [ file stringByDeletingLastPathComponent ] ] ];
     
     [ self log: [ NSString stringWithFormat: @"xcode-coveralls: Processing file: %@", file ] ];
     

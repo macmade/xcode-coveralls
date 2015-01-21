@@ -29,7 +29,7 @@
 @property( atomic, readwrite, assign ) BOOL       showHelp;
 @property( atomic, readwrite, assign ) BOOL       verbose;
 @property( atomic, readwrite, assign ) BOOL       dryRun;
-@property( atomic, readwrite, strong ) NSString * buildDirectory;
+@property( atomic, readwrite, strong ) NSArray  * buildDirectories;
 @property( atomic, readwrite, strong ) NSString * gcov;
 @property( atomic, readwrite, strong ) NSArray  * excludedPaths;
 @property( atomic, readwrite, strong ) NSArray  * includedPaths;
@@ -47,6 +47,7 @@
     NSUInteger       i;
     NSMutableArray * excPaths;
     NSMutableArray * incPaths;
+    NSMutableArray * buildDirectories;
     NSString       * arg;
     NSString       * value;
     BOOL             valid;
@@ -54,10 +55,11 @@
     
     if( ( self = [ super init ] ) )
     {
-        excPaths = [ NSMutableArray new ];
-        incPaths = [ NSMutableArray new ];
-        valid    = NO;
-        hasJobID = NO;
+        excPaths         = [ NSMutableArray new ];
+        incPaths         = [ NSMutableArray new ];
+        buildDirectories = [ NSMutableArray new ];
+        valid            = NO;
+        hasJobID         = NO;
         
         if( count < 2 )
         {
@@ -72,6 +74,13 @@
             
             if( [ arg hasPrefix: @"--" ] )
             {
+                if( buildDirectories.count > 0 )
+                {
+                    valid = NO;
+                    
+                    break;
+                }
+                
                 if( [ arg isEqualToString: @"--help" ] )
                 {
                     self.showHelp = YES;
@@ -201,10 +210,9 @@
             }
             else
             {
-                self.buildDirectory = arg;
-                valid               = i == count - 1;
+                [ buildDirectories addObject: arg ];
                 
-                break;
+                valid = YES;
             }
         }
         
@@ -219,6 +227,8 @@
         }
         else
         {
+            self.buildDirectories = [ NSArray arrayWithArray: buildDirectories ];
+            
             if( hasJobID == NO )
             {
                 {

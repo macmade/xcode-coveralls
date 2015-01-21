@@ -251,6 +251,28 @@
     XCTAssertNil( error );
 }
 
+- ( void )testMultipleValidDirectoryPaths
+{
+    XCCGCovHelper *                 gcov;
+    XCCArguments  *                 args;
+    const char    *                 argv[] = { "", "--verbose", self.dirPath.UTF8String, self.dirPath.UTF8String };
+    NSError       * __autoreleasing error;
+    BOOL                            success;
+    
+    args    = [ [ XCCArguments alloc ] initWithArguments: argv count: 4 ];
+    gcov    = [ [ XCCGCovHelper alloc ] initWithArguments: args ];
+    error   = nil;
+    success = [ gcov run: &error ];
+    
+    if( success == NO )
+    {
+        NSLog( @"%@", error );
+    }
+    
+    XCTAssertTrue( success );
+    XCTAssertNil( error );
+}
+
 - ( void )testFiles
 {
     XCCGCovHelper *                 gcov;

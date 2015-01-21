@@ -66,7 +66,7 @@ You may then use this variables in a shell script, in order to invoke `xcode-cov
 Command Options
 ---------------
 
-    Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY
+    Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY [BUILD_DIRECTORY ...]
     
     Options:
         
