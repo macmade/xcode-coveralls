@@ -1,18 +1,18 @@
 /*******************************************************************************
  * The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2015 Jean-David Gadina - www-xs-labs.com
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,6 +70,7 @@
         }
         
         [ dict setObject: sourceFiles forKey: @"source_files" ];
+        dict = [self generateGitInformation:dict];
         
         self.dictionary = dict;
         self.arguments  = args;
@@ -77,6 +78,121 @@
     
     return self;
 }
+
+-(NSMutableDictionary*)generateGitInformation:(NSMutableDictionary*)dictionary {
+    //    "git": {
+    //        "head": {
+    //            "id": "5e837ce92220be64821128a70f6093f836dd2c05",
+    //            "author_name": "Wil Gieseler",
+    //            "author_email": "wil@example.com",
+    //            "committer_name": "Wil Gieseler",
+    //            "committer_email": "wil@example.com",
+    //            "message": "depend on simplecov >= 0.7"
+    //        },
+    //        "branch": "master",
+    //        "remotes": [{
+    //            "name": "origin",
+    //            "url": "https://github.com/lemurheavy/coveralls-ruby.git"
+    //        }]
+    //    }
+    
+    NSString* branch = [self launch:@"/usr/bin/git"
+                                cwd:@"."
+                          arguments:@[@"branch"]];
+    
+    NSString* hash = [self launch:@"/usr/bin/git"
+                              cwd:@"."
+                        arguments:@[@"rev-list", @"--max-count=1", @"HEAD"]];
+    
+    
+    NSString* authorString = [self launch:@"/usr/bin/git"
+                                      cwd:@"."
+                                arguments:@[@"--no-pager", @"show", @"-s", @"--format='%an %ae'", @"HEAD"]];
+    
+    NSMutableArray* authorPieces = [[authorString componentsSeparatedByString:@" "] mutableCopy];
+    NSString* authorEmail = [authorPieces lastObject];
+    [authorPieces removeObject:authorEmail];
+    
+    NSString* authorName = [authorPieces componentsJoinedByString:@" "];
+    
+    
+    NSString* commitMessage = [self launch:@"/usr/bin/git"
+                                       cwd:@"."
+                                 arguments:@[@"log", @"-1", @"HEAD", @"--pretty=format:%s"]];
+    
+    NSString* remoteList = [self launch:@"/usr/bin/git"
+                                    cwd:@"."
+                              arguments:@[@"remote", @"-v"]];
+    
+    NSMutableArray* remotesForPackage = [NSMutableArray new];
+    
+    NSArray* remotes = [remoteList componentsSeparatedByString:@"\n"];
+    NSMutableDictionary* remoteDict = [NSMutableDictionary new];
+    for (NSString* remote in remotes) {
+        NSArray* components = [remote componentsSeparatedByString:@"\t"];
+        if (components.count > 1){
+            NSString* url  = [[components[1] componentsSeparatedByString:@" "] firstObject];
+            [remoteDict setObject:url forKey:components[0]];
+        }
+    }
+    
+    for (NSString* key in remoteDict) {
+        NSString* value = [remoteDict objectForKey:key];
+        [remotesForPackage addObject:@{
+                                       @"name" : key,
+                                       @"url" : value
+                                       }];
+    }
+    
+    branch = [branch stringByReplacingOccurrencesOfString:@"*" withString:@""];
+    branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""];
+    branch = [branch stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    hash = [hash stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    authorName = [[authorName stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"'" withString:@""];
+    authorEmail = [[authorEmail stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"'" withString:@""];
+    
+    
+    NSDictionary* gitInfo =
+    @{
+      @"head" : @{
+              @"id" : hash,
+              @"author_name" : authorName,
+              @"author_email" : authorEmail,
+              @"committer_name" : authorName,
+              @"committer_email" : authorEmail,
+              @"message" : commitMessage
+              },
+      @"branch" : branch,
+      @"remotes" : remotesForPackage
+      
+      };
+    
+    NSLog(@"Git Info: %@", gitInfo);
+    [dictionary setObject:gitInfo forKey:@"git"];
+    return dictionary;
+}
+
+-(NSString*)launch:(NSString*)app
+               cwd: (NSString*)cwd
+         arguments: (NSArray*)arguments{
+    NSTask * list = [[NSTask alloc] init];
+    [list setLaunchPath:app];
+    [list setArguments:arguments];
+    [list setCurrentDirectoryPath:cwd];
+    
+    NSPipe * out = [NSPipe pipe];
+    [list setStandardOutput:out];
+    
+    [list launch];
+    [list waitUntilExit];
+    
+    NSFileHandle * read = [out fileHandleForReading];
+    NSData * dataRead = [read readDataToEndOfFile];
+    NSString * stringRead = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
+    return stringRead;
+}
+
 
 - ( BOOL )post: ( NSError * __autoreleasing * )error
 {
@@ -103,7 +219,7 @@
     }
     
     [ self log: jsonTextPretty ];
-    [ self setPOSTData: jsonData forRequest: req ]; 
+    [ self setPOSTData: jsonData forRequest: req ];
     
     [ req setTimeoutInterval: 0 ];
     
