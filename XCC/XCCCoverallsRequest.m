@@ -98,7 +98,7 @@
     
     NSString* branch = [self launch:@"/usr/bin/git"
                                 cwd:@"."
-                          arguments:@[@"branch"]];
+                          arguments:@[@"name-rev", @"--name-only", @"HEAD"]];
     
     NSString* hash = [self launch:@"/usr/bin/git"
                               cwd:@"."
@@ -147,6 +147,7 @@
     branch = [branch stringByReplacingOccurrencesOfString:@"*" withString:@""];
     branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""];
     branch = [branch stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    branch = [[branch componentsSeparatedByString:@"~"] firstObject];
     
     hash = [hash stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     authorName = [[authorName stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"'" withString:@""];
