@@ -148,6 +148,7 @@
     branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""];
     branch = [branch stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     branch = [[branch componentsSeparatedByString:@"~"] firstObject];
+    branch = [[branch componentsSeparatedByString:@"/"] lastObject];
     
     hash = [hash stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     authorName = [[authorName stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"'" withString:@""];
