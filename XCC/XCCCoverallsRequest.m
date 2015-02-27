@@ -237,11 +237,10 @@
                           arguments:@[@"name-rev", @"--name-only", @"HEAD"]];
     
     //Sanitize branch. Git has a ton of corner cases round this.
-    branch = [branch stringByReplacingOccurrencesOfString:@"*" withString:@""];
-    branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""];
-    branch = [branch stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    branch = [[branch componentsSeparatedByString:@"~"] firstObject];
-    branch = [[branch componentsSeparatedByString:@"/"] lastObject];
+    branch = [branch stringByReplacingOccurrencesOfString:@"*" withString:@""]; //Dumb git stuff
+    branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""]; //Dumb git stuff
+    branch = [[branch componentsSeparatedByString:@"~"] firstObject]; //master~2 means 2 commits behind master. Reflect "master"
+    branch = [[branch componentsSeparatedByString:@"/"] lastObject]; // refs/origin/master. Reflect "master"
     
     
     NSDictionary* gitInfo =
