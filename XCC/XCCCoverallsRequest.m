@@ -70,7 +70,9 @@
         }
         
         [ dict setObject: sourceFiles forKey: @"source_files" ];
-        dict = [self generateGitInformation:dict];
+        
+        NSDictionary* gitInfo = [self generateGitInformation];
+        [ dict setObject: gitInfo forKey: @"git" ];
         
         self.dictionary = dict;
         self.arguments  = args;
@@ -183,7 +185,7 @@
 
 
 
--(NSMutableDictionary*)generateGitInformation:(NSMutableDictionary*)dictionary {
+-(NSDictionary*)generateGitInformation {
     //Taken from some python coveralls repo
     //    "git": {
     //        "head": {
@@ -256,10 +258,7 @@
       @"remotes" : remotes
       
       };
-    
-    NSLog(@"Git Info: %@", gitInfo);
-    [dictionary setObject:gitInfo forKey:@"git"];
-    return dictionary;
+    return gitInfo;
 }
 
 -(NSString*)launch:(NSString*)app
