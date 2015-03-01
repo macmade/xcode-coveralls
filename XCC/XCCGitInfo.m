@@ -36,16 +36,37 @@
 #pragma clang diagnostic pop
 #endif
 
+@interface XCCGitInfo()
+
+@property( nonatomic, readwrite, assign ) git_repository * repository;
+
+@end
+
 @implementation XCCGitInfo
 
 - ( instancetype )initWithRepositoryPath: ( NSString * )path
 {
+    git_repository * repos;
+    int              err;
+    
     if( ( self = [ super init ] ) )
     {
-        ( void )path;
+        err = git_repository_open( &repos, path.UTF8String );
+        
+        if( err || repos == NULL )
+        {
+            return nil;
+        }
+        
+        self.repository = repos;
     }
     
     return self;
+}
+
+- ( void )dealloc
+{
+    git_repository_free( self.repository );
 }
 
 @end

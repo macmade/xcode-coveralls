@@ -117,4 +117,22 @@
     XCTAssertEqual( [ [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.invalidReposPath error: NULL ] count ], ( NSUInteger )0 );
 }
 
+- ( void )testGitInfoValidRepos
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertNotNil( git );
+}
+
+- ( void )testGitInfoInvalidRepos
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.invalidReposPath ];
+    
+    XCTAssertNil( git );
+}
+
 @end
