@@ -30,6 +30,14 @@
 		058258C91AA310B20024B3AE /* repos in Resources */ = {isa = PBXBuildFile; fileRef = 058258C81AA310B20024B3AE /* repos */; };
 		058258CC1AA316B30024B3AE /* XCCGitInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 058258CA1AA316B30024B3AE /* XCCGitInfo.h */; };
 		058258CD1AA316B30024B3AE /* XCCGitInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258CB1AA316B30024B3AE /* XCCGitInfo.m */; };
+		058258CF1AA31E0D0024B3AE /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258CE1AA31E0D0024B3AE /* libiconv.dylib */; };
+		058258D01AA31E140024B3AE /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258CE1AA31E0D0024B3AE /* libiconv.dylib */; };
+		058258D21AA31E3C0024B3AE /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D11AA31E3C0024B3AE /* libcrypto.dylib */; };
+		058258D41AA31E4B0024B3AE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D31AA31E4B0024B3AE /* libz.dylib */; };
+		058258D61AA31E5B0024B3AE /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D51AA31E5B0024B3AE /* libssl.dylib */; };
+		058258D71AA31E6A0024B3AE /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D51AA31E5B0024B3AE /* libssl.dylib */; };
+		058258D81AA31E6F0024B3AE /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D11AA31E3C0024B3AE /* libcrypto.dylib */; };
+		058258D91AA31E730024B3AE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 058258D31AA31E4B0024B3AE /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +107,10 @@
 		058258C81AA310B20024B3AE /* repos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = repos; sourceTree = "<group>"; };
 		058258CA1AA316B30024B3AE /* XCCGitInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGitInfo.h; sourceTree = "<group>"; };
 		058258CB1AA316B30024B3AE /* XCCGitInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfo.m; sourceTree = "<group>"; };
+		058258CE1AA31E0D0024B3AE /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		058258D11AA31E3C0024B3AE /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		058258D31AA31E4B0024B3AE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		058258D51AA31E5B0024B3AE /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +118,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058258D91AA31E730024B3AE /* libz.dylib in Frameworks */,
+				058258D81AA31E6F0024B3AE /* libcrypto.dylib in Frameworks */,
+				058258D71AA31E6A0024B3AE /* libssl.dylib in Frameworks */,
+				058258CF1AA31E0D0024B3AE /* libiconv.dylib in Frameworks */,
 				054513A81A6CA9D3002B8F92 /* libXCC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +137,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058258D61AA31E5B0024B3AE /* libssl.dylib in Frameworks */,
+				058258D41AA31E4B0024B3AE /* libz.dylib in Frameworks */,
+				058258D21AA31E3C0024B3AE /* libcrypto.dylib in Frameworks */,
+				058258D01AA31E140024B3AE /* libiconv.dylib in Frameworks */,
 				054513931A6CA92A002B8F92 /* libXCC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,6 +151,10 @@
 		0545132E1A6C9FD4002B8F92 = {
 			isa = PBXGroup;
 			children = (
+				058258D51AA31E5B0024B3AE /* libssl.dylib */,
+				058258D31AA31E4B0024B3AE /* libz.dylib */,
+				058258D11AA31E3C0024B3AE /* libcrypto.dylib */,
+				058258CE1AA31E0D0024B3AE /* libiconv.dylib */,
 				054513B71A6D5C68002B8F92 /* Clang-Warnings.h */,
 				054513AC1A6D55EC002B8F92 /* README.md */,
 				054513391A6C9FD4002B8F92 /* xcode-coverall */,
@@ -531,11 +555,13 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = Libraries/libgit2/;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -631,10 +657,12 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = Libraries/libgit2/;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -643,6 +671,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xcode-coveralls/PrefixHeader.pch";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "xcode-coveralls";
 			};
 			name = Debug;
@@ -652,6 +681,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xcode-coveralls/PrefixHeader.pch";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "xcode-coveralls";
 			};
 			name = Release;
@@ -700,6 +730,7 @@
 				);
 				INFOPLIST_FILE = XCCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -716,6 +747,7 @@
 				GCC_PREFIX_HEADER = XCCTests/PrefixHeader.pch;
 				INFOPLIST_FILE = XCCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -816,11 +848,13 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = Libraries/libgit2/;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = GCov;
 		};
@@ -829,6 +863,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "xcode-coveralls/PrefixHeader.pch";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "xcode-coveralls";
 			};
 			name = GCov;
@@ -865,6 +900,7 @@
 				);
 				INFOPLIST_FILE = XCCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = "-lgit2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = GCov;
