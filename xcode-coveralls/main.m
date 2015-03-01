@@ -22,8 +22,7 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import Foundation;
-
+#import <Foundation/Foundation.h>
 #import "XCC.h"
 
 int main( int argc, const char * argv[] )

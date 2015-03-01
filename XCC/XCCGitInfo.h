@@ -24,13 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class XCCArguments;
+@interface XCCGitInfo: NSObject
 
-@interface XCCGCovHelper: NSObject
-
-@property( atomic, readonly ) NSArray * files;
-
-- ( instancetype )initWithArguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
-- ( BOOL )run: ( NSError * __autoreleasing * )error;
+- ( instancetype )initWithRepositoryPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
 
 @end

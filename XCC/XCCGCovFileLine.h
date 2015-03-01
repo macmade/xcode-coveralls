@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @interface XCCGCovFileLine: NSObject
 

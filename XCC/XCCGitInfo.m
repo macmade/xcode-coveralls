@@ -22,15 +22,30 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-#import <Foundation/Foundation.h>
+#import "XCCGitInfo.h"
 
-@class XCCArguments;
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wdocumentation"
+#endif
 
-@interface XCCGCovHelper: NSObject
+#include "git2.h"
 
-@property( atomic, readonly ) NSArray * files;
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
-- ( instancetype )initWithArguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
-- ( BOOL )run: ( NSError * __autoreleasing * )error;
+@implementation XCCGitInfo
+
+- ( instancetype )initWithRepositoryPath: ( NSString * )path
+{
+    if( ( self = [ super init ] ) )
+    {
+        ( void )path;
+    }
+    
+    return self;
+}
 
 @end

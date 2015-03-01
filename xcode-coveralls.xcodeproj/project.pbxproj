@@ -28,6 +28,8 @@
 		0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */; };
 		058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258C61AA30F780024B3AE /* XCCGitInfoTests.m */; };
 		058258C91AA310B20024B3AE /* repos in Resources */ = {isa = PBXBuildFile; fileRef = 058258C81AA310B20024B3AE /* repos */; };
+		058258CC1AA316B30024B3AE /* XCCGitInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 058258CA1AA316B30024B3AE /* XCCGitInfo.h */; };
+		058258CD1AA316B30024B3AE /* XCCGitInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258CB1AA316B30024B3AE /* XCCGitInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequestTests.m; sourceTree = "<group>"; };
 		058258C61AA30F780024B3AE /* XCCGitInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfoTests.m; sourceTree = "<group>"; };
 		058258C81AA310B20024B3AE /* repos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = repos; sourceTree = "<group>"; };
+		058258CA1AA316B30024B3AE /* XCCGitInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCGitInfo.h; sourceTree = "<group>"; };
+		058258CB1AA316B30024B3AE /* XCCGitInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,8 @@
 				054513DE1A6D8DFD002B8F92 /* XCCGCovFileLine.m */,
 				054513F61A6DA9A0002B8F92 /* XCCCoverallsRequest.h */,
 				054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */,
+				058258CA1AA316B30024B3AE /* XCCGitInfo.h */,
+				058258CB1AA316B30024B3AE /* XCCGitInfo.m */,
 				054513BF1A6D5CB6002B8F92 /* Supporting Files */,
 			);
 			path = XCC;
@@ -245,6 +251,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058258CC1AA316B30024B3AE /* XCCGitInfo.h in Headers */,
 				054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +402,7 @@
 				054513D91A6D80F5002B8F92 /* XCCGCovFile.m in Sources */,
 				054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */,
 				054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */,
+				058258CD1AA316B30024B3AE /* XCCGitInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +459,7 @@
 				CLANG_ANALYZER_SECURITY_KEYCHAIN_API = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
@@ -555,7 +563,7 @@
 				CLANG_ANALYZER_SECURITY_KEYCHAIN_API = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
@@ -660,6 +668,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = Libraries/libgit2/include/;
 			};
 			name = Debug;
 		};
@@ -671,6 +680,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XCC/PrefixHeader.pch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = Libraries/libgit2/include/;
 			};
 			name = Release;
 		};
@@ -734,7 +744,7 @@
 				CLANG_ANALYZER_SECURITY_KEYCHAIN_API = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_STATIC_ANALYZER_MODE = deep;
 				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
@@ -835,6 +845,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = Libraries/libgit2/include/;
 			};
 			name = GCov;
 		};

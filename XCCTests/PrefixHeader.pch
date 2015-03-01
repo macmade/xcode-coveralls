@@ -41,6 +41,6 @@
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
-@import XCTest;
+#import <XCTest/XCTest.h>
 
 #endif /* __XCC_TESTS_PREFIX_H__ */

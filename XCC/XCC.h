@@ -28,3 +28,4 @@
 #import "XCCGCovFile.h"
 #import "XCCGCovFileLine.h"
 #import "XCCCoverallsRequest.h"
+#import "XCCGitInfo.h"

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  ******************************************************************************/
 
-@import ObjectiveC.runtime;
+#import <objc/runtime.h>
 
 #pragma clang diagnostic ignored "-Wselector"
 
