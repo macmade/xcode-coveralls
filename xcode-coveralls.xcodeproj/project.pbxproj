@@ -26,6 +26,7 @@
 		054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513F11A6D9A22002B8F92 /* test.m.gcov */; };
 		054513F91A6DA9A0002B8F92 /* XCCCoverallsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */; };
 		0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */; };
+		058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258C61AA30F780024B3AE /* XCCGitInfoTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequest.m; sourceTree = "<group>"; };
 		0552BFA41A6ED80A007F1099 /* coveralls.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = coveralls.sh; sourceTree = "<group>"; };
 		0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequestTests.m; sourceTree = "<group>"; };
+		058258C61AA30F780024B3AE /* XCCGitInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfoTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */,
 				054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */,
 				0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */,
+				058258C61AA30F780024B3AE /* XCCGitInfoTests.m */,
 				054513971A6CA92A002B8F92 /* Supporting Files */,
 			);
 			path = XCCTests;
@@ -306,7 +309,7 @@
 		0545132F1A6C9FD4002B8F92 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "XS-Labs";
 				TargetAttributes = {
 					054513361A6C9FD4002B8F92 = {
@@ -396,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */,
+				058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */,
 				054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */,
 				0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */,
 				054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */,
@@ -643,6 +647,7 @@
 		0545139A1A6CA92A002B8F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XCC/PrefixHeader.pch;
@@ -657,6 +662,7 @@
 		0545139B1A6CA92A002B8F92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XCC/PrefixHeader.pch;
@@ -816,6 +822,7 @@
 		054513C31A6D6247002B8F92 /* GCov */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = XCC/PrefixHeader.pch;
