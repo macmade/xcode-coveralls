@@ -27,6 +27,7 @@
 		054513F91A6DA9A0002B8F92 /* XCCCoverallsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */; };
 		0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */; };
 		058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258C61AA30F780024B3AE /* XCCGitInfoTests.m */; };
+		058258C91AA310B20024B3AE /* repos in Resources */ = {isa = PBXBuildFile; fileRef = 058258C81AA310B20024B3AE /* repos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		0552BFA41A6ED80A007F1099 /* coveralls.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = coveralls.sh; sourceTree = "<group>"; };
 		0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequestTests.m; sourceTree = "<group>"; };
 		058258C61AA30F780024B3AE /* XCCGitInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfoTests.m; sourceTree = "<group>"; };
+		058258C81AA310B20024B3AE /* repos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = repos; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 		054513971A6CA92A002B8F92 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				058258C81AA310B20024B3AE /* repos */,
 				054513CC1A6D76B5002B8F92 /* gcov */,
 				054513BD1A6D5CA1002B8F92 /* PrefixHeader.pch */,
 				054513981A6CA92A002B8F92 /* Info.plist */,
@@ -348,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				054513F21A6D9A2A002B8F92 /* test.gcda in Resources */,
+				058258C91AA310B20024B3AE /* repos in Resources */,
 				054513F31A6D9A2A002B8F92 /* test.gcno in Resources */,
 				054513F41A6D9A2A002B8F92 /* test in Resources */,
 				054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */,
