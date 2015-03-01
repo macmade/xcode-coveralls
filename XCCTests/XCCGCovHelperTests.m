@@ -64,8 +64,6 @@
         return;
     }
     
-    free( buf );
-    
     self.tempPath       = [ [ NSFileManager defaultManager ] stringWithFileSystemRepresentation: result length: strlen( result ) ];
     self.dirPath        = [ self.tempPath stringByAppendingPathComponent: @"dir" ];
     self.invalidDirPath = [ self.tempPath stringByAppendingPathComponent: @"invalid" ];
@@ -87,6 +85,8 @@
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.dirPath        stringByAppendingPathComponent: @"test.gcno" ] contents: gcnoData attributes: nil ];
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.invalidDirPath stringByAppendingPathComponent: @"test.gcda" ] contents: nil attributes: nil ];
     [ [ NSFileManager defaultManager ] createFileAtPath: [ self.invalidDirPath stringByAppendingPathComponent: @"test.gcno" ] contents: nil attributes: nil ];
+    
+    free( buf );
 }
 
 - ( void )tearDown
