@@ -38,7 +38,16 @@
 
 @interface XCCGitInfo()
 
-@property( nonatomic, readwrite, assign ) git_repository * repository;
+@property( atomic, readwrite, assign ) git_repository * repository;
+@property( atomic, readwrite, strong ) NSString       * sha1;
+@property( atomic, readwrite, strong ) NSString       * authorName;
+@property( atomic, readwrite, strong ) NSString       * authorEmail;
+@property( atomic, readwrite, strong ) NSString       * committerName;
+@property( atomic, readwrite, strong ) NSString       * committerEmail;
+@property( atomic, readwrite, assign ) NSInteger        time;
+@property( atomic, readwrite, strong ) NSString       * message;
+
+- ( BOOL )getGitInfos: ( NSString * )path;
 
 @end
 
@@ -46,19 +55,12 @@
 
 - ( instancetype )initWithRepositoryPath: ( NSString * )path
 {
-    git_repository * repos;
-    int              err;
-    
     if( ( self = [ super init ] ) )
     {
-        err = git_repository_open( &repos, path.UTF8String );
-        
-        if( err || repos == NULL )
+        if( [ self getGitInfos: path ] == NO )
         {
             return nil;
         }
-        
-        self.repository = repos;
     }
     
     return self;
@@ -67,6 +69,118 @@
 - ( void )dealloc
 {
     git_repository_free( self.repository );
+}
+
+- ( BOOL )getGitInfos: ( NSString * )path
+{
+    int                   err;
+    git_repository      * repos;
+    git_reference       * head;
+    git_commit          * commit;
+    git_remote          * remote;
+    git_strarray          remoteNames;
+    const git_oid       * oid; 
+    const git_signature * author;
+    const git_signature * committer;
+    const char          * message;
+    const char          * branchName;
+    char                  sha[ 256 ];
+    size_t                i;
+    BOOL                  ret;
+    
+    repos       = NULL;
+    head        = NULL;
+    commit      = NULL;
+    branchName  = NULL;
+    
+    memset( &remoteNames, 0, sizeof( git_strarray ) );
+    
+    err = git_repository_open( &repos, path.UTF8String );
+    
+    if( err || repos == NULL )
+    {
+        goto fail;
+    }
+    
+    err = git_repository_head( &head, repos );
+    
+    if( err || head == NULL )
+    {
+        goto fail;
+    }
+    
+    oid = git_reference_target( head );
+    err = git_commit_lookup( &commit, repos, oid );
+    
+    if( err || commit == NULL )
+    {
+        goto fail;
+    }
+    
+    memset( sha, 0, sizeof( sha ) );
+    git_oid_tostr( sha, sizeof( sha ) - 1, oid );
+    
+    author    = git_commit_author( commit );
+    committer = git_commit_committer( commit );
+    message   = git_commit_message( commit );
+    
+    self.sha1           = [ NSString stringWithCString: sha              encoding: NSUTF8StringEncoding ];
+    self.authorName     = [ NSString stringWithCString: author->name     encoding: NSUTF8StringEncoding ];
+    self.authorEmail    = [ NSString stringWithCString: author->email    encoding: NSUTF8StringEncoding ];
+    self.committerName  = [ NSString stringWithCString: committer->name  encoding: NSUTF8StringEncoding ];
+    self.committerEmail = [ NSString stringWithCString: committer->email encoding: NSUTF8StringEncoding ];
+    self.message        = [ NSString stringWithCString: message          encoding: NSUTF8StringEncoding ];
+    self.time           = ( NSInteger )( committer->when.time );
+    
+    if( git_reference_is_branch( head ) )
+    {
+        err = git_branch_name( &branchName, head );
+        
+        if( err || branchName == NULL )
+        {
+            goto fail;
+        }
+    }
+    
+    err = git_remote_list( &remoteNames, repos );
+    
+    if( err )
+    {
+        goto fail;
+    }
+    
+    for( i = 0; i < remoteNames.count; i++ )
+    {
+        err = git_remote_load( &remote, repos, remoteNames.strings[ i ] );
+        
+        if( err )
+        {
+            goto fail;
+        }
+        
+        git_remote_free( remote );
+    }
+    
+    ret = YES;
+    
+    goto cleanup;
+    
+    fail:
+    
+    ret = NO;
+    
+    cleanup:
+    
+    if( remoteNames.count )
+    {
+        git_strarray_free( &remoteNames );
+    }
+    
+    git_commit_free( commit );
+    git_reference_free( head );
+    git_repository_free( repos );
+    
+    return ret;
 }
 
 @end

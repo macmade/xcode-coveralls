@@ -117,7 +117,7 @@
     XCTAssertEqual( [ [ [ NSFileManager defaultManager ] contentsOfDirectoryAtPath: self.invalidReposPath error: NULL ] count ], ( NSUInteger )0 );
 }
 
-- ( void )testGitInfoValidRepos
+- ( void )testValidRepos
 {
     XCCGitInfo * git;
     
@@ -126,13 +126,79 @@
     XCTAssertNotNil( git );
 }
 
-- ( void )testGitInfoInvalidRepos
+- ( void )testInvalidRepos
 {
     XCCGitInfo * git;
     
     git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.invalidReposPath ];
     
     XCTAssertNil( git );
+}
+
+- ( void )testSHA1
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertTrue( [ git.sha1 isEqualToString: @"d6cfda0806def20a442b7378bc1b8bdb113df65f" ] );
+}
+
+- ( void )testAuthorName
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertTrue( [ git.authorName isEqualToString: @"macmade" ] );
+}
+
+- ( void )testAuthorEmail
+{
+    XCCGitInfo * git;
+    NSString   * email;
+    
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    email = [ git.authorEmail stringByReplacingOccurrencesOfString: @"@" withString: @"." ];
+    
+    XCTAssertTrue( [ email isEqualToString: @"macmade.xs-labs.com" ] );
+}
+
+- ( void )testCommitterName
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertTrue( [ git.committerName isEqualToString: @"macmade" ] );
+}
+
+- ( void )testCommitterEmail
+{
+    XCCGitInfo * git;
+    NSString   * email;
+    
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    email = [ git.committerEmail stringByReplacingOccurrencesOfString: @"@" withString: @"." ];
+    
+    XCTAssertTrue( [ email isEqualToString: @"macmade.xs-labs.com" ] );
+}
+
+- ( void )testTime
+{
+    XCCGitInfo * git;
+    
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    XCTAssertEqual( git.time, 1425201366 );
+}
+
+- ( void )testMessage
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertTrue( [ git.message isEqualToString: @"Initial commit...\n" ] );
 }
 
 @end
