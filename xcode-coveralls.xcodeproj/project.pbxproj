@@ -151,16 +151,13 @@
 		0545132E1A6C9FD4002B8F92 = {
 			isa = PBXGroup;
 			children = (
-				058258D51AA31E5B0024B3AE /* libssl.dylib */,
-				058258D31AA31E4B0024B3AE /* libz.dylib */,
-				058258D11AA31E3C0024B3AE /* libcrypto.dylib */,
-				058258CE1AA31E0D0024B3AE /* libiconv.dylib */,
 				054513B71A6D5C68002B8F92 /* Clang-Warnings.h */,
 				054513AC1A6D55EC002B8F92 /* README.md */,
 				054513391A6C9FD4002B8F92 /* xcode-coverall */,
 				054513891A6CA92A002B8F92 /* XCC */,
 				054513961A6CA92A002B8F92 /* XCCTests */,
 				0552BFA21A6ED80A007F1099 /* Scripts */,
+				058258DA1AA323090024B3AE /* Frameworks */,
 				054513381A6C9FD4002B8F92 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -266,6 +263,17 @@
 				0552BFA41A6ED80A007F1099 /* coveralls.sh */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		058258DA1AA323090024B3AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				058258D51AA31E5B0024B3AE /* libssl.dylib */,
+				058258D31AA31E4B0024B3AE /* libz.dylib */,
+				058258D11AA31E3C0024B3AE /* libcrypto.dylib */,
+				058258CE1AA31E0D0024B3AE /* libiconv.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
