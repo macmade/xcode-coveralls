@@ -46,6 +46,8 @@
 @property( atomic, readwrite, strong ) NSString       * committerEmail;
 @property( atomic, readwrite, assign ) NSInteger        time;
 @property( atomic, readwrite, strong ) NSString       * message;
+@property( atomic, readwrite, strong ) NSString       * branch;
+@property( atomic, readwrite, strong ) NSArray        * remotes;
 
 - ( BOOL )getGitInfos: ( NSString * )path;
 
@@ -87,6 +89,7 @@
     char                  sha[ 256 ];
     size_t                i;
     BOOL                  ret;
+    NSMutableArray      * remotes;
     
     repos       = NULL;
     head        = NULL;
@@ -140,6 +143,8 @@
         {
             goto fail;
         }
+        
+        self.branch = [ NSString stringWithCString: branchName encoding: NSUTF8StringEncoding ];
     }
     
     err = git_remote_list( &remoteNames, repos );
@@ -148,6 +153,8 @@
     {
         goto fail;
     }
+    
+    remotes = [ [ NSMutableArray alloc ] initWithCapacity: ( NSUInteger )( remoteNames.count ) ];
     
     for( i = 0; i < remoteNames.count; i++ )
     {
@@ -158,8 +165,23 @@
             goto fail;
         }
         
+        {
+            NSString * name;
+            NSString * url;
+            
+            name = [ NSString stringWithCString: git_remote_name( remote ) encoding: NSUTF8StringEncoding ];
+            url  = [ NSString stringWithCString: git_remote_url( remote ) encoding: NSUTF8StringEncoding ];
+        
+            if( name != nil && url != nil )
+            {
+                [ remotes addObject: @{ @"name": name, @"url": url } ];
+            }
+        }
+        
         git_remote_free( remote );
     }
+    
+    self.remotes = [ NSArray arrayWithArray: remotes ];
     
     ret = YES;
     
@@ -181,6 +203,48 @@
     git_repository_free( repos );
     
     return ret;
+}
+
+- ( NSDictionary * )dictionaryRepresentation
+{
+    @synchronized( self )
+    {
+        NSMutableDictionary * git;
+        NSMutableDictionary * head;
+        NSString            * sha1;
+        NSString            * aName;
+        NSString            * aEmail;
+        NSString            * cName;
+        NSString            * cEmail;
+        NSString            * msg;
+        NSString            * branch;
+        NSArray             * remotes;
+        
+        git     = [ NSMutableDictionary new ];
+        head    = [ NSMutableDictionary new ];
+        sha1    = self.sha1;
+        aName   = self.authorName;
+        aEmail  = self.authorEmail;
+        cName   = self.committerName;
+        cEmail  = self.committerEmail;
+        msg     = self.message;
+        branch  = self.branch;
+        remotes = self.remotes;
+        
+        if( sha1    ) { [ head setObject: sha1   forKey: @"id" ]; }
+        if( aName   ) { [ head setObject: aName  forKey: @"author_name" ]; }
+        if( aEmail  ) { [ head setObject: aEmail forKey: @"author_email" ]; }
+        if( cName   ) { [ head setObject: cName  forKey: @"committer_name" ]; }
+        if( cEmail  ) { [ head setObject: cEmail forKey: @"committer_email" ]; }
+        if( msg     ) { [ head setObject: msg    forKey: @"message" ]; }
+        
+        [ git setObject: [ NSDictionary dictionaryWithDictionary: head ] forKey: @"head" ];
+        
+        if( branch  ) { [ git setObject: branch  forKey: @"branch" ]; }
+        if( remotes ) { [ git setObject: remotes forKey: @"remotes" ]; }
+        
+        return @{ @"git" : [ NSDictionary dictionaryWithDictionary: git ] };
+    }
 }
 
 @end

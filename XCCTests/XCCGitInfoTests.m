@@ -201,4 +201,63 @@
     XCTAssertTrue( [ git.message isEqualToString: @"Initial commit...\n" ] );
 }
 
+- ( void )testBranch
+{
+    XCCGitInfo * git;
+    
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    
+    XCTAssertTrue( [ git.branch isEqualToString: @"master" ] );
+}
+
+- ( void )testRemotes
+{
+    XCCGitInfo   * git;
+    NSArray      * remotes;
+    NSDictionary * remote;
+    
+    git     = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    remotes = git.remotes;
+    remote  = git.remotes.firstObject;
+    
+    XCTAssertEqual( remotes.count, ( NSUInteger )1 );
+    XCTAssertTrue( [ remote[ @"name" ] isEqualToString: @"origin" ] );
+    XCTAssertTrue( [ remote[ @"url" ]  isEqualToString: @"https://github.com/macmade/test.git" ] );
+}
+
+- ( void )testDictionaryRepresentation
+{
+    XCCGitInfo   * git;
+    NSDictionary * dict;
+    NSDictionary * gitDict;
+    NSDictionary * headDict;
+    NSArray      * remotes;
+    NSDictionary * remoteDict;
+    NSString     * email;
+    
+    git         = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    dict        = git.dictionaryRepresentation;
+    gitDict     = dict[ @"git" ];
+    headDict    = gitDict[ @"head" ];
+    remotes     = gitDict[ @"remotes" ];
+    remoteDict  = remotes.firstObject;
+    
+    XCTAssertNotNil( gitDict );
+    XCTAssertNotNil( headDict );
+    XCTAssertNotNil( remotes );
+    XCTAssertNotNil( remoteDict );
+    
+    email = [ @"macmade/xs-labs.com" stringByReplacingOccurrencesOfString: @"/" withString: @"@" ];
+    
+    XCTAssertTrue( [ headDict[ @"id" ]              isEqualToString: @"d6cfda0806def20a442b7378bc1b8bdb113df65f" ] );
+    XCTAssertTrue( [ headDict[ @"author_name" ]     isEqualToString: @"macmade" ] );
+    XCTAssertTrue( [ headDict[ @"author_email" ]    isEqualToString: email ] );
+    XCTAssertTrue( [ headDict[ @"committer_name" ]  isEqualToString: @"macmade" ] );
+    XCTAssertTrue( [ headDict[ @"committer_email" ] isEqualToString: email ] );
+    XCTAssertTrue( [ headDict[ @"message" ]         isEqualToString: @"Initial commit...\n" ] );
+    XCTAssertTrue( [ gitDict[ @"branch" ]           isEqualToString: @"master" ] );
+    XCTAssertTrue( [ remoteDict[ @"name" ]          isEqualToString: @"origin" ] );
+    XCTAssertTrue( [ remoteDict[ @"url" ]           isEqualToString: @"https://github.com/macmade/test.git" ] );
+}
+
 @end

@@ -26,13 +26,16 @@
 
 @interface XCCGitInfo: NSObject
 
-@property( atomic, readonly ) NSString * sha1;
-@property( atomic, readonly ) NSString * authorName;
-@property( atomic, readonly ) NSString * authorEmail;
-@property( atomic, readonly ) NSString * committerName;
-@property( atomic, readonly ) NSString * committerEmail;
-@property( atomic, readonly ) NSInteger  time;
-@property( atomic, readonly ) NSString * message;
+@property( atomic, readonly ) NSString      * sha1;
+@property( atomic, readonly ) NSString      * authorName;
+@property( atomic, readonly ) NSString      * authorEmail;
+@property( atomic, readonly ) NSString      * committerName;
+@property( atomic, readonly ) NSString      * committerEmail;
+@property( atomic, readonly ) NSInteger       time;
+@property( atomic, readonly ) NSString      * message;
+@property( atomic, readonly ) NSString      * branch;
+@property( atomic, readonly ) NSArray       * remotes;
+@property( atomic, readonly ) NSDictionary  * dictionaryRepresentation;
 
 - ( instancetype )initWithRepositoryPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
 
