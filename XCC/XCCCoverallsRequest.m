@@ -25,6 +25,7 @@
 #import "XCCCoverallsRequest.h"
 #import "XCCArguments.h"
 #import "XCCGCovFile.h"
+#import "XCCGitInfo.h"
 
 @interface XCCCoverallsRequest()
 
@@ -46,6 +47,8 @@
     NSNumber            * jobID;
     NSMutableArray      * sourceFiles;
     XCCGCovFile         * file;
+    NSDictionary        * info;
+    XCCGitInfo          * gitInfo;
     
     if( ( self = [ super init ] ) )
     {
@@ -71,8 +74,13 @@
         
         [ dict setObject: sourceFiles forKey: @"source_files" ];
         
-        NSDictionary* gitInfo = [self generateGitInformation];
-        [ dict setObject: gitInfo forKey: @"git" ];
+        gitInfo = [ [ XCCGitInfo alloc ] initWithRepositoryPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] ];
+        info    = gitInfo.dictionaryRepresentation;
+        
+        if( info )
+        {
+            [ dict setObject: info forKey: @"git" ];
+        }
         
         self.dictionary = dict;
         self.arguments  = args;
@@ -181,103 +189,6 @@
     {
         fprintf( stdout, "%s\n", message.UTF8String );
     }
-}
-
-
-
--(NSDictionary*)generateGitInformation {
-    //Taken from some python coveralls repo
-    //    "git": {
-    //        "head": {
-    //            "id": "5e837ce92220be64821128a70f6093f836dd2c05",
-    //            "author_name": "Wil Gieseler",
-    //            "author_email": "wil@example.com",
-    //            "committer_name": "Wil Gieseler",
-    //            "committer_email": "wil@example.com",
-    //            "message": "depend on simplecov >= 0.7"
-    //        },
-    //        "branch": "master",
-    //        "remotes": [{
-    //            "name": "origin",
-    //            "url": "https://github.com/lemurheavy/coveralls-ruby.git"
-    //        }]
-    //    }
-    
-    NSString* gitLocation = @"/usr/bin/git";
-    
-    //Query remote list
-    NSString* remoteList = [self launch:@"/usr/bin/git"
-                                    cwd:@"."
-                              arguments:@[@"remote", @"-v"]];
-    
-    NSArray* remotesQuery = [remoteList componentsSeparatedByString:@"\n"];
-    
-    //Package into Dictionary for unique-ness.
-    NSMutableDictionary* uniqueRemotes = [NSMutableDictionary new];
-    for (NSString* remote in remotesQuery) {
-        NSArray* components = [remote componentsSeparatedByString:@"\t"];
-        if (components.count > 1){
-            NSString* url  = [[components[1] componentsSeparatedByString:@" "] firstObject];
-            [uniqueRemotes setObject:url forKey:components[0]];
-        }
-    }
-    
-    //Construct into the gitinfo format
-    NSMutableArray* remotes = [NSMutableArray new];
-    for (NSString* key in uniqueRemotes) {
-        NSString* value = [uniqueRemotes objectForKey:key];
-        [remotes addObject:@{
-                             @"name" : key,
-                             @"url" : value
-                             }];
-    }
-    
-    NSString* branch = [self launch: gitLocation
-                                cwd:@"."
-                          arguments:@[@"name-rev", @"--name-only", @"HEAD"]];
-    
-    //Sanitize branch. Git has a ton of corner cases round this.
-    branch = [branch stringByReplacingOccurrencesOfString:@"*" withString:@""]; //Dumb git stuff
-    branch = [branch stringByReplacingOccurrencesOfString:@" " withString:@""]; //Dumb git stuff
-    branch = [[branch componentsSeparatedByString:@"~"] firstObject]; //master~2 means 2 commits behind master. Reflect "master"
-    branch = [[branch componentsSeparatedByString:@"/"] lastObject]; // refs/origin/master. Reflect "master"
-    
-    
-    NSDictionary* gitInfo =
-    @{
-      @"head" : @{
-              @"id" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%H"]],
-              @"author_name" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%aN"]],
-              @"author_email" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%ae"]],
-              @"committer_name" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%cN"]],
-              @"committer_email" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%ce"]],
-              @"message" : [self launch:gitLocation cwd:@"." arguments:@[@"--no-pager", @"log", @"-1", @"--pretty=%s"]]
-              },
-      @"branch" : branch,
-      @"remotes" : remotes
-      
-      };
-    return gitInfo;
-}
-
--(NSString*)launch:(NSString*)app
-               cwd: (NSString*)cwd
-         arguments: (NSArray*)arguments{
-    NSTask * list = [[NSTask alloc] init];
-    [list setLaunchPath:app];
-    [list setArguments:arguments];
-    [list setCurrentDirectoryPath:cwd];
-    
-    NSPipe * out = [NSPipe pipe];
-    [list setStandardOutput:out];
-    
-    [list launch];
-    [list waitUntilExit];
-    
-    NSFileHandle * read = [out fileHandleForReading];
-    NSData * dataRead = [read readDataToEndOfFile];
-    NSString * stringRead = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
-    return [stringRead stringByReplacingCharactersInRange:NSMakeRange(stringRead.length-1, 1) withString:@""]; //Replace final character (\n) with empty string.
 }
 
 @end

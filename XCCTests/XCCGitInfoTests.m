@@ -228,7 +228,6 @@
 - ( void )testDictionaryRepresentation
 {
     XCCGitInfo   * git;
-    NSDictionary * dict;
     NSDictionary * gitDict;
     NSDictionary * headDict;
     NSArray      * remotes;
@@ -236,8 +235,7 @@
     NSString     * email;
     
     git         = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
-    dict        = git.dictionaryRepresentation;
-    gitDict     = dict[ @"git" ];
+    gitDict     = git.dictionaryRepresentation;
     headDict    = gitDict[ @"head" ];
     remotes     = gitDict[ @"remotes" ];
     remoteDict  = remotes.firstObject;

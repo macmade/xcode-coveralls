@@ -243,7 +243,7 @@
         if( branch  ) { [ git setObject: branch  forKey: @"branch" ]; }
         if( remotes ) { [ git setObject: remotes forKey: @"remotes" ]; }
         
-        return @{ @"git" : [ NSDictionary dictionaryWithDictionary: git ] };
+        return [ NSDictionary dictionaryWithDictionary: git ];
     }
 }
 
