@@ -11,7 +11,7 @@ xcode-coveralls
 About
 -----
 
-`code-coveralls` is a command line helper tool to upload code coverage data from Xcode projects to [coveralls.io](https://coveralls.io).
+`xcode-coveralls` is a command line helper tool to upload code coverage data from Xcode projects to [coveralls.io](https://coveralls.io).
 
 Usage
 -----
