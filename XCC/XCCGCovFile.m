@@ -73,6 +73,11 @@
     return self;
 }
 
+- ( NSString * )description
+{
+    return [ [ super description ] stringByAppendingFormat: @" %@", self.path ];
+}
+
 - ( BOOL )parse
 {
     NSData         * data;
