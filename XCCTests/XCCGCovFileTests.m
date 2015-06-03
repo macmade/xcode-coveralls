@@ -58,10 +58,12 @@
 - ( void )testDescription
 {
     XCCGCovFile * file;
+    NSRange       range;
     
-    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    file  = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    range = [ file.description rangeOfString: file.path ];
     
-    XCTAssertTrue( [ file.description containsString: file.path ] );
+    XCTAssertNotEqual( range.location, NSNotFound );
 }
 
 - ( void )testSourcePath
