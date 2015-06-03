@@ -55,6 +55,15 @@
     XCTAssertNotNil( file );
 }
 
+- ( void )testDescription
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] initWithPath: self.path ];
+    
+    XCTAssertTrue( [ file.description containsString: file.path ] );
+}
+
 - ( void )testSourcePath
 {
     XCCGCovFile * file;
