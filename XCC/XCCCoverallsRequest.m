@@ -97,6 +97,7 @@
     NSData              *                 jsonDataPretty;
     NSHTTPURLResponse   * __autoreleasing response;
     NSString            *                 statusText;
+    NSData              *                 data;
     
     if( *( error ) != NULL )
     {
@@ -120,7 +121,7 @@
     
     if( self.arguments.dryRun == NO )
     {
-        [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
+        data = [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
     }
     
     if( *( error ) != NULL && *( error ) != nil )
@@ -139,7 +140,31 @@
     {
         statusText = [ [ response allHeaderFields ] objectForKey: @"Status" ];
         
-        [ self createError: error withText: [ NSString stringWithFormat: @"Bad response: %lu (%@)", ( unsigned long )( response.statusCode ), ( statusText ) ? statusText : @"unknown" ] ];
+        {
+            NSString * body;
+            NSString * errorText;
+            NSString * header;
+            
+            body      = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+            errorText = [ NSString stringWithFormat: @"Bad response: %lu (%@)", ( unsigned long )( response.statusCode ), ( statusText ) ? statusText : @"unknown" ];
+            
+            if( response.allHeaderFields.count > 0 )
+            {
+                errorText = [ errorText stringByAppendingString: @"\n" ];
+                
+                for( header in response.allHeaderFields )
+                {
+                    errorText = [ errorText stringByAppendingFormat: @"\n%@: %@", header, [ response.allHeaderFields objectForKey: header ] ];
+                }
+            }
+            
+            if( body.length > 0 )
+            {
+                errorText = [ errorText stringByAppendingFormat: @"\n\n%@", body ];
+            }
+            
+            [ self createError: error withText: errorText ];
+        }
         
         return NO;
     }
