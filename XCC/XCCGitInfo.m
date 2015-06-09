@@ -28,8 +28,11 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpadded"
 #pragma clang diagnostic ignored "-Wdocumentation"
-#pragma clang diagnostic ignored "-Wreserved-id-macro"
 #pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+
+#if __clang_major__ >= 7
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#endif
 
 #endif
 

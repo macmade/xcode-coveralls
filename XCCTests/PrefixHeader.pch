@@ -35,12 +35,17 @@
 #import "XCC.h"
 
 #ifdef __clang__
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wvariadic-macros"
 #pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
-#pragma clang diagnostic ignored "-Wreserved-id-macro"
 #pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+
+#if __clang_major__ >= 7
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#endif
+
 #endif
 
 #import <XCTest/XCTest.h>
