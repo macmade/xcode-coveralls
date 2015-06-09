@@ -41,6 +41,11 @@
 
 @implementation XCCGCovHelper
 
+- ( instancetype )init
+{
+    return [ self initWithArguments: nil ];
+}
+
 - ( instancetype )initWithArguments: ( XCCArguments * )args
 {
     if( ( self = [ super init ] ) )

@@ -40,6 +40,11 @@
 
 @implementation XCCCoverallsRequest
 
+- ( instancetype )init
+{
+    return [ self initWithFiles: nil arguments: nil ];
+}
+
 - ( instancetype )initWithFiles: ( NSArray * )files arguments: ( XCCArguments * )args
 {
     NSMutableDictionary * dict;

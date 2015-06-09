@@ -35,6 +35,11 @@
 
 @implementation XCCGCovFileLine
 
+- ( instancetype )init
+{
+    return [ self initWithCode: @"" hits: 0 lineNumber: 0 relevant: NO ];
+}
+
 - ( instancetype )initWithCode: ( NSString * )code hits: ( NSUInteger )hits lineNumber: ( NSUInteger )lineNumber relevant: ( BOOL )relevant
 {
     if( ( self = [ super init ] ) )

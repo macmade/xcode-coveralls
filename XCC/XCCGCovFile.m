@@ -45,6 +45,11 @@
 
 @implementation XCCGCovFile
 
+- ( instancetype )init
+{
+    return [ self initWithPath: nil ];
+}
+
 - ( instancetype )initWithPath: ( NSString * )path
 {
     return [ self initWithPath: path arguments: nil ];

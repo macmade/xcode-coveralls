@@ -55,6 +55,11 @@
 
 @implementation XCCGitInfo
 
+- ( instancetype )init
+{
+    return [ self initWithRepositoryPath: nil ];
+}
+
 - ( instancetype )initWithRepositoryPath: ( NSString * )path
 {
     if( ( self = [ super init ] ) )

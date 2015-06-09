@@ -42,6 +42,13 @@
 
 @implementation XCCArguments
 
+- ( instancetype )init
+{
+    const char * argv[ 1 ] = { "" };
+    
+    return [ self initWithArguments: argv count: 1 ];
+}
+
 - ( instancetype )initWithArguments: ( const char ** )arguments count: ( NSUInteger )count
 {
     NSUInteger       i;
