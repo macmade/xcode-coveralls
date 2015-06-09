@@ -1,7 +1,7 @@
 language: objective-c
 xcode_project: xcode-coveralls.xcodeproj
 xcode_scheme: xcode-coveralls
-ibefore_install:
+before_install:
 - clang -x c /dev/null -dM -E
 after_success:
 - mv Scripts/xcenv.sh Scripts/xcenv.sh.bak
