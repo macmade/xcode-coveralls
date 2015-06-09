@@ -31,7 +31,7 @@
 #define __XCC_TESTS_PREFIX_H__
 
 #import <Foundation/Foundation.h>
-#import "Clang-Warnings.h"
+#import "../Submodules/SeriousCode/clang-warnings.h"
 #import "XCC.h"
 
 #ifdef __clang__
@@ -39,6 +39,8 @@
 #pragma clang diagnostic ignored "-Wvariadic-macros"
 #pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
 #endif
 
 #import <XCTest/XCTest.h>

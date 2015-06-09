@@ -31,6 +31,6 @@
 #define __XCC_PREFIX_H__
 
 #import <Foundation/Foundation.h>
-#import "Clang-Warnings.h"
+#import "../Submodules/SeriousCode/clang-warnings.h"
 
 #endif /* __XCC_PREFIX_H__ */

@@ -14,7 +14,6 @@
 		054513A81A6CA9D3002B8F92 /* libXCC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 054513881A6CA92A002B8F92 /* libXCC.a */; };
 		054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513AF1A6D5752002B8F92 /* XCCHelpTests.m */; };
 		054513B41A6D57B9002B8F92 /* XCCHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513B21A6D57B9002B8F92 /* XCCHelp.m */; };
-		054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */ = {isa = PBXBuildFile; fileRef = 054513B71A6D5C68002B8F92 /* Clang-Warnings.h */; };
 		054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */; };
 		054513CB1A6D6953002B8F92 /* XCCGCovHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513C91A6D6953002B8F92 /* XCCGCovHelper.m */; };
 		054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */; };
@@ -83,7 +82,6 @@
 		054513AF1A6D5752002B8F92 /* XCCHelpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCHelpTests.m; sourceTree = "<group>"; };
 		054513B11A6D57B9002B8F92 /* XCCHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCHelp.h; sourceTree = "<group>"; };
 		054513B21A6D57B9002B8F92 /* XCCHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCHelp.m; sourceTree = "<group>"; };
-		054513B71A6D5C68002B8F92 /* Clang-Warnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Clang-Warnings.h"; sourceTree = "<group>"; };
 		054513B91A6D5C94002B8F92 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		054513BB1A6D5C9C002B8F92 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		054513BD1A6D5CA1002B8F92 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 		0545132E1A6C9FD4002B8F92 = {
 			isa = PBXGroup;
 			children = (
-				054513B71A6D5C68002B8F92 /* Clang-Warnings.h */,
 				054513AC1A6D55EC002B8F92 /* README.md */,
 				054513391A6C9FD4002B8F92 /* xcode-coverall */,
 				054513891A6CA92A002B8F92 /* XCC */,
@@ -284,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				058258CC1AA316B30024B3AE /* XCCGitInfo.h in Headers */,
-				054513B81A6D5C68002B8F92 /* Clang-Warnings.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
