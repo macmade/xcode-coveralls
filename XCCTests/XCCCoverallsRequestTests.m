@@ -98,7 +98,7 @@
     
     if( response != NULL )
     {
-        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: nil statusCode: 200 HTTPVersion: nil headerFields: nil ];
+        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: [ NSURL URLWithString: @"http://www.xs-labs.com/" ] statusCode: 200 HTTPVersion: nil headerFields: nil ];
     }
     
     return nil;
