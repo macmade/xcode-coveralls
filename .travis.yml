@@ -1,6 +1,8 @@
 language: objective-c
 xcode_project: xcode-coveralls.xcodeproj
 xcode_scheme: xcode-coveralls
+ibefore_install:
+- clang -x c /dev/null -dM -E
 after_success:
 - mv Scripts/xcenv.sh Scripts/xcenv.sh.bak
 - sudo xctool --project xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
