@@ -34,4 +34,19 @@
     XCTAssertEqual( [ XCCHelp sharedInstance ], [ XCCHelp sharedInstance ] );
 }
 
+- ( void )testDisplay
+{
+    XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] display ] );
+}
+
+- ( void )testDisplayWithError
+{
+    XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] displayWithError: [ NSError errorWithDomain: @"com.xs-labs" code: 0 userInfo: nil ] ] );
+}
+
+- ( void )testDisplayWithErrorText
+{
+    XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] displayWithErrorText: @"test" ] );
+}
+
 @end
