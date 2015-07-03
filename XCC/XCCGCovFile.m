@@ -119,18 +119,20 @@
             {
                 if( prev.relevant == NO || cur.relevant == NO )
                 {
-                    continue;
+                    goto next;
                 }
                 
                 if( prev.hits == 0 || cur.hits > 0 )
                 {
-                    continue;
+                    goto next;
                 }
                 
                 if( [ [ cur.code stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceCharacterSet ] ] isEqualToString: @"}" ] )
                 {
                     cur.hits = 1;
                 }
+                
+                next:
                 
                 prev = cur;
             }
