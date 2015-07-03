@@ -24,6 +24,7 @@
 		054513F41A6D9A2A002B8F92 /* test in Resources */ = {isa = PBXBuildFile; fileRef = 054513F01A6D9A22002B8F92 /* test */; };
 		054513F51A6D9A2A002B8F92 /* test.m.gcov in Resources */ = {isa = PBXBuildFile; fileRef = 054513F11A6D9A22002B8F92 /* test.m.gcov */; };
 		054513F91A6DA9A0002B8F92 /* XCCCoverallsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */; };
+		054D7D491B46DEC3006AFF67 /* XCCGCovFileLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 054D7D481B46DEC3006AFF67 /* XCCGCovFileLineTests.m */; };
 		0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */; };
 		058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 058258C61AA30F780024B3AE /* XCCGitInfoTests.m */; };
 		058258C91AA310B20024B3AE /* repos in Resources */ = {isa = PBXBuildFile; fileRef = 058258C81AA310B20024B3AE /* repos */; };
@@ -99,6 +100,7 @@
 		054513F11A6D9A22002B8F92 /* test.m.gcov */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.m.gcov; sourceTree = "<group>"; };
 		054513F61A6DA9A0002B8F92 /* XCCCoverallsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCCCoverallsRequest.h; sourceTree = "<group>"; };
 		054513F71A6DA9A0002B8F92 /* XCCCoverallsRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequest.m; sourceTree = "<group>"; };
+		054D7D481B46DEC3006AFF67 /* XCCGCovFileLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGCovFileLineTests.m; sourceTree = "<group>"; };
 		0552BFA41A6ED80A007F1099 /* coveralls.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = coveralls.sh; sourceTree = "<group>"; };
 		0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCCoverallsRequestTests.m; sourceTree = "<group>"; };
 		058258C61AA30F780024B3AE /* XCCGitInfoTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCCGitInfoTests.m; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				054513AF1A6D5752002B8F92 /* XCCHelpTests.m */,
 				054513C61A6D64C0002B8F92 /* XCCGCovHelperTests.m */,
 				054513D21A6D7F8F002B8F92 /* XCCGCovFileTests.m */,
+				054D7D481B46DEC3006AFF67 /* XCCGCovFileLineTests.m */,
 				0552BFAB1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m */,
 				058258C61AA30F780024B3AE /* XCCGitInfoTests.m */,
 				054513971A6CA92A002B8F92 /* Supporting Files */,
@@ -441,6 +444,7 @@
 				054513C71A6D64C0002B8F92 /* XCCGCovHelperTests.m in Sources */,
 				058258C71AA30F780024B3AE /* XCCGitInfoTests.m in Sources */,
 				054513D31A6D7F8F002B8F92 /* XCCGCovFileTests.m in Sources */,
+				054D7D491B46DEC3006AFF67 /* XCCGCovFileLineTests.m in Sources */,
 				0552BFAC1A6EE7FA007F1099 /* XCCCoverallsRequestTests.m in Sources */,
 				054513B01A6D5752002B8F92 /* XCCHelpTests.m in Sources */,
 				054513A11A6CA962002B8F92 /* XCCArgumentsTests.m in Sources */,

@@ -37,6 +37,15 @@
     self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
 }
 
+- ( void )testInit
+{
+    XCCGCovFile * file;
+    
+    file = [ [ XCCGCovFile alloc ] init ];
+    
+    XCTAssertNil( file );
+}
+
 - ( void )testInvalidFile
 {
     XCCGCovFile * file;
