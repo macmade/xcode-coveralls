@@ -131,6 +131,8 @@
                 {
                     cur.hits = 1;
                 }
+                
+                prev = cur;
             }
         }
     }
