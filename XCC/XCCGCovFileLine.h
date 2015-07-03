@@ -26,10 +26,10 @@
 
 @interface XCCGCovFileLine: NSObject
 
-@property( atomic, readonly ) NSString * code;
-@property( atomic, readonly ) NSUInteger hits;
-@property( atomic, readonly ) NSUInteger lineNumber;
-@property( atomic, readonly ) BOOL       relevant;
+@property( atomic, readonly          ) NSString * code;
+@property( atomic, readwrite, assign ) NSUInteger hits;
+@property( atomic, readonly          ) NSUInteger lineNumber;
+@property( atomic, readonly          ) BOOL       relevant;
 
 - ( instancetype )initWithCode: ( NSString * )code hits: ( NSUInteger )hits lineNumber: ( NSUInteger )lineNumber relevant: ( BOOL )relevant NS_DESIGNATED_INITIALIZER;
 

@@ -27,7 +27,6 @@
 @interface XCCGCovFileLine()
 
 @property( atomic, readwrite, strong ) NSString * code;
-@property( atomic, readwrite, assign ) NSUInteger hits;
 @property( atomic, readwrite, assign ) NSUInteger lineNumber;
 @property( atomic, readwrite, assign ) BOOL       relevant;
 

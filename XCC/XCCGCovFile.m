@@ -107,6 +107,32 @@
         {
             return NO;
         }
+        
+        /* Fix for GCov sometimes reporting a function's end brace has not hit */
+        {
+            XCCGCovFileLine * cur;
+            XCCGCovFileLine * prev;
+            
+            prev = nil;
+            
+            for( cur in array )
+            {
+                if( prev.relevant == NO || cur.relevant == NO )
+                {
+                    continue;
+                }
+                
+                if( prev.hits == 0 || cur.hits > 0 )
+                {
+                    continue;
+                }
+                
+                if( [ [ cur.code stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceCharacterSet ] ] isEqualToString: @"}" ] )
+                {
+                    cur.hits = 1;
+                }
+            }
+        }
     }
     
     self.lines = [ NSArray arrayWithArray: array ];
