@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>xcode-coveralls by macmade</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>xcode-coveralls</h1>
+        <h2>coveralls.io support for Xcode</h2>
+        <a href="https://github.com/macmade/xcode-coveralls" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="xcode-coveralls" class="anchor" href="#xcode-coveralls" aria-hidden="true"><span class="octicon octicon-link"></span></a>xcode-coveralls</h1>
+
+<p><a href="https://travis-ci.org/macmade/xcode-coveralls"><img src="https://img.shields.io/travis/macmade/xcode-coveralls.svg?branch=master&amp;style=flat" alt="Build Status"></a>
+<a href="https://coveralls.io/r/macmade/xcode-coveralls"><img src="https://img.shields.io/coveralls/macmade/xcode-coveralls.svg?branch=master&amp;style=flat" alt="Coverage Status"></a>
+<a href="https://github.com/macmade/xcode-coveralls/issues"><img src="http://img.shields.io/github/issues/macmade/xcode-coveralls.svg?style=flat" alt="Issues"></a>
+<img src="https://img.shields.io/badge/status-active-brightgreen.svg?style=flat" alt="Status">
+<img src="https://img.shields.io/badge/license-mit-brightgreen.svg?style=flat" alt="License">
+<a href="https://twitter.com/macmade"><img src="https://img.shields.io/badge/contact-@macmade-blue.svg?style=flat" alt="Contact"></a></p>
+
+<h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p><code>xcode-coveralls</code> is a command line helper tool to upload code coverage data from Xcode projects to <a href="https://coveralls.io">coveralls.io</a>.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>The <code>xcode-coveralls</code> command needs to be invoked from your <strong>repository/project root directory</strong>.<br>
+Note that if your Xcode project file is in a sub directory, you'll need to specify its path with the <code>--project</code> option.</p>
+
+<p>If you don't use <a href="http://travis-ci.org">Travis CI</a>, you may also specify a service name and job ID with the <code>--service</code> and <code>--id</code> options. 
+Builds on <a href="http://travis-ci.org">Travis CI</a> will automatically detect those values.<br>
+You may also use the <code>--token</code> option, if you're not using a service compatible with <a href="https://coveralls.io">coveralls.io</a>.</p>
+
+<p>You may also include/exclude specific paths from your sources with the <code>--include</code> and <code>--exclude</code> options.<br>
+Those paths may be full paths or paths relative to the repository/project root directory.</p>
+
+<p>The only mandatory argument is the Xcode build directory, containing the <code>.gcda</code> and <code>.gcno</code> files to process.<br>
+Please read the following section to learn how to generate those files with Xcode.</p>
+
+<h2>
+<a id="project-configuration" class="anchor" href="#project-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Configuration</h2>
+
+<p>In order to use <code>xcode-coveralls</code>, your Xcode targets needs to be configured to produce code coverage data files.</p>
+
+<p>This can be done from a target's build settings.<br>
+Two options needs to be activated:</p>
+
+<ul>
+<li>
+<strong>Generate Test Coverage Files</strong> (<code>GCC_GENERATE_TEST_COVERAGE_FILES</code>)</li>
+<li>
+<strong>Instrument Program Flow</strong> (<code>GCC_INSTRUMENT_PROGRAM_FLOW_ARCS</code>)</li>
+</ul>
+
+<p>Although the options are prefixed with <code>GCC</code>, they are completely compatible with Clang/LLVM.</p>
+
+<p>Note that turning those options on will reduce the compilation time, so you might create a specific build configuration for this, and enable it for your unit tests only.</p>
+
+<h3>
+<a id="build-directory" class="anchor" href="#build-directory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Directory</h3>
+
+<p>The <code>xcode-coveralls</code> command needs to be invoked with the Xcode build directory, usually in <code>~/Library/Developer/Xcode/DerivedData/</code>.</p>
+
+<p>The best way to get this directory is to add a <strong>Run Script</strong> phase in the target for which you want coverage reports:</p>
+
+<pre><code>export | egrep '(BUILT_PRODUCTS_DIR)|(CURRENT_ARCH)|(OBJECT_FILE_DIR_normal)|(SRCROOT)|(OBJROOT)' &gt; xcenv.sh
+</code></pre>
+
+<p>This will create an <code>xcenv.sh</code> file with the necessary environment variables to find the Xcode build directory.<br>
+If using an version control system, you may ignore this specific file.</p>
+
+<p>You may then use this variables in a shell script, in order to invoke <code>xcode-coveralls</code>:</p>
+
+<pre><code>#!/bin/bash
+
+source xcenv.sh
+declare -r DIR_BUILD="${OBJECT_FILE_DIR_normal}/${CURRENT_ARCH}/"
+xcode-coveralls "${DIR_BUILD}"
+</code></pre>
+
+<h2>
+<a id="command-options" class="anchor" href="#command-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command Options</h2>
+
+<pre><code>Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY [BUILD_DIRECTORY ...]
+
+Options:
+
+    --help       Shows this help dialog
+    --version    Prints the version number
+    --verbose    Turns on extra logging
+    --gcov       Path or command for invoking the gcov utility
+                 (defaults to /usr/bin/gcov)
+    --include    Paths to include from the sources
+    --exclude    Paths to exclude from the sources
+    --project    Path to the Xcode project file, if not at the directory root
+    --service    The service name to use
+                 (defaults to 'travis-ci')
+    --id         The service job ID
+                 (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)
+    --token      The repository token (optional)
+    --dry-run    Do not actually send data to coveralls.io
+</code></pre>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><code>xcode-coveralls</code> may be installed by cloning its <a href="https://github.com/macmade/xcode-coveralls">GitHub repository</a> and running <code>xcodebuild</code> or <code>xctool</code>.</p>
+
+<p>The default location is <code>/usr/local/bin</code>.</p>
+
+<p>Here's an example with <code>xctool</code>:</p>
+
+<pre><code>git clone https://github.com/macmade/xcode-coveralls.git /tmp/xcode-coveralls
+sudo xctool --project /tmp/xcode-coveralls/xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
+</code></pre>
+
+<p>Note that you can use this on Travis builds (for instance in <code>before_install</code>) in order to get coverage reports for your project.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>xcode-coveralls is released under the terms of the MIT License.</p>
+
+<h2>
+<a id="repository-infos" class="anchor" href="#repository-infos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository Infos</h2>
+
+<pre><code>Owner:          Jean-David Gadina - XS-Labs
+Web:            www.xs-labs.com
+Blog:           www.noxeos.com
+Twitter:        @macmade
+GitHub:         github.com/macmade
+LinkedIn:       ch.linkedin.com/in/macmade/
+StackOverflow:  stackoverflow.com/users/182676/macmade
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/macmade/xcode-coveralls/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/macmade/xcode-coveralls/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/macmade/xcode-coveralls"></a> is maintained by <a href="https://github.com/macmade">macmade</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
