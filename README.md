@@ -71,6 +71,7 @@ Command Options
     Options:
         
         --help       Shows this help dialog
+        --version    Prints the version number
         --verbose    Turns on extra logging
         --gcov       Path or command for invoking the gcov utility
                      (defaults to /usr/bin/gcov)

@@ -62,6 +62,16 @@
     XCTAssertTrue( args.showHelp );
 }
 
+- ( void )testShowVersion
+{
+    XCCArguments * args;
+    const char   * argv[] = { "", "--version" };
+    
+    args = [ [ XCCArguments alloc ] initWithArguments: argv count: 2 ];
+    
+    XCTAssertTrue( args.showVersion );
+}
+
 - ( void )testVerbose
 {
     XCCArguments * args;

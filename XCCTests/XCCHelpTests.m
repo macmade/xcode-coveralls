@@ -39,6 +39,11 @@
     XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] display ] );
 }
 
+- ( void )testDisplayVersion
+{
+    XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] displayVersion ] );
+}
+
 - ( void )testDisplayWithError
 {
     XCTAssertNoThrow( [ [ XCCHelp sharedInstance ] displayWithError: [ NSError errorWithDomain: @"com.xs-labs" code: 0 userInfo: nil ] ] );

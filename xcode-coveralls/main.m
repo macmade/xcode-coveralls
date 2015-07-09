@@ -38,6 +38,13 @@ int main( int argc, const char * argv[] )
         {
             args = [ [ XCCArguments alloc ] initWithArguments: argv count: ( NSUInteger )argc ];
             
+            if( args.showVersion )
+            {
+                [ [ XCCHelp sharedInstance ] displayVersion ];
+                
+                return EXIT_SUCCESS;
+            }
+            
             if( args.showHelp )
             {
                 [ [ XCCHelp sharedInstance ] display ];

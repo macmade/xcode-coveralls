@@ -27,6 +27,7 @@
 @interface XCCArguments: NSObject
 
 @property( atomic, readonly ) BOOL         showHelp;
+@property( atomic, readonly ) BOOL         showVersion;
 @property( atomic, readonly ) BOOL         verbose;
 @property( atomic, readonly ) BOOL         dryRun;
 @property( atomic, readonly ) NSArray    * buildDirectories;

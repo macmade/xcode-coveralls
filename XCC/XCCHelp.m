@@ -24,8 +24,9 @@
 
 #import "XCCHelp.h"
 
-static dispatch_once_t __once;
-static XCCHelp *       __sharedInstance;
+static dispatch_once_t  __once;
+static XCCHelp  *       __sharedInstance    = nil;
+static NSString * const __version           = @"0.1.0";
 
 @interface XCCHelp()
 
@@ -52,11 +53,14 @@ static XCCHelp *       __sharedInstance;
     fprintf
     (
         stdout,
+        "xcode-coveralls %s\n"
+        "\n"
         "Usage: xcode-coveralls [OPTIONS] BUILD_DIRECTORY [BUILD_DIRECTORY ...]\n"
         "\n"
         "Options:\n"
         "\n"
         "    --help       Shows this help dialog\n"
+        "    --version    Prints the version number\n"
         "    --verbose    Turns on extra logging\n"
         "    --gcov       Path or command for invoking the gcov utility\n"
         "                 (defaults to /usr/bin/gcov)\n"
@@ -68,7 +72,18 @@ static XCCHelp *       __sharedInstance;
         "    --id         The service job ID\n"
         "                 (if not specified, defaults to the 'TRAVIS_JOB_ID' environment variable, or zero)\n"
         "    --token      The repository token (optional)\n"
-        "    --dry-run    Do not actually send data to coveralls.io\n"
+        "    --dry-run    Do not actually send data to coveralls.io\n",
+        __version.UTF8String
+    );
+}
+
+- ( void )displayVersion
+{
+    fprintf
+    (
+        stdout,
+        "xcode-coveralls %s\n",
+        __version.UTF8String
     );
 }
 

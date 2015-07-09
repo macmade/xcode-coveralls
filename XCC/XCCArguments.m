@@ -27,6 +27,7 @@
 @interface XCCArguments()
 
 @property( atomic, readwrite, assign ) BOOL       showHelp;
+@property( atomic, readwrite, assign ) BOOL       showVersion;
 @property( atomic, readwrite, assign ) BOOL       verbose;
 @property( atomic, readwrite, assign ) BOOL       dryRun;
 @property( atomic, readwrite, strong ) NSArray  * buildDirectories;
@@ -88,7 +89,11 @@
                     break;
                 }
                 
-                if( [ arg isEqualToString: @"--help" ] )
+                if( [ arg isEqualToString: @"--version" ] )
+                {
+                    self.showVersion = YES;
+                }
+                else if( [ arg isEqualToString: @"--help" ] )
                 {
                     self.showHelp = YES;
                 }
