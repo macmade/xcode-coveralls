@@ -13,8 +13,19 @@ About
 
 `xcode-coveralls` is a command line helper tool to upload code coverage data from Xcode projects to [coveralls.io](https://coveralls.io).
 
-Usage
------
+Table of Contents
+-----------------
+
+  1. [Usage](#1)
+  2. [Project Configuration](#2)
+  3. [Command Options](#3)
+  4. [Installing](#4)
+  8. [License](#5)
+  9. [Repository Infos](#6)
+
+<a name="1"></a>
+1 - Usage
+---------
 
 The `xcode-coveralls` command needs to be invoked from your **repository/project root directory**.  
 Note that if your Xcode project file is in a sub directory, you'll need to specify its path with the `--project` option.
@@ -29,8 +40,9 @@ Those paths may be full paths or paths relative to the repository/project root d
 The only mandatory argument is the Xcode build directory, containing the `.gcda` and `.gcno` files to process.  
 Please read the following section to learn how to generate those files with Xcode.
 
-Project Configuration
----------------------
+<a name="2"></a>
+2 - Project Configuration
+-------------------------
 
 In order to use `xcode-coveralls`, your Xcode targets needs to be configured to produce code coverage data files.
 
@@ -63,6 +75,7 @@ You may then use this variables in a shell script, in order to invoke `xcode-cov
     declare -r DIR_BUILD="${OBJECT_FILE_DIR_normal}/${CURRENT_ARCH}/"
     xcode-coveralls "${DIR_BUILD}"
 
+<a name="3"></a>
 Command Options
 ---------------
 
@@ -85,10 +98,19 @@ Command Options
         --token      The repository token (optional)
         --dry-run    Do not actually send data to coveralls.io
 
-Installation
-------------
+<a name="4"></a>
+Installing
+----------
 
-`xcode-coveralls` may be installed by cloning its [GitHub repository](https://github.com/macmade/xcode-coveralls) and running `xcodebuild` or `xctool`.
+### Installing with Homebrew
+
+`xcode-coveralls` may be installed with [Homebrew](http://brew.sh):
+
+    brew install macmade/tap/xcode-coveralls
+
+### Manual installation
+
+`xcode-coveralls` may be installed manually by cloning its [GitHub repository](https://github.com/macmade/xcode-coveralls) and running `xcodebuild` or `xctool`.
 
 The default location is `/usr/local/bin`.
 
@@ -104,11 +126,13 @@ And here's an example with `xctool`:
     
 Note that you can use this on Travis builds (for instance in `before_install`) in order to get coverage reports for your project.
 
+<a name="5"></a>
 License
 -------
 
 xcode-coveralls is released under the terms of the MIT License.
 
+<a name="6"></a>
 Repository Infos
 ----------------
 
