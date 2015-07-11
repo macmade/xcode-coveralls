@@ -35,7 +35,21 @@
 <p><code>xcode-coveralls</code> is a command line helper tool to upload code coverage data from Xcode projects to <a href="https://coveralls.io">coveralls.io</a>.</p>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ol>
+<li><a href="#1">Usage</a></li>
+<li><a href="#2">Project Configuration</a></li>
+<li><a href="#3">Command Options</a></li>
+<li><a href="#4">Installing</a></li>
+<li><a href="#5">License</a></li>
+<li><a href="#6">Repository Infos</a></li>
+</ol>
+
+<p><a name="1"></a></p>
+
+<h2>
+<a id="1---usage" class="anchor" href="#1---usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>1 - Usage</h2>
 
 <p>The <code>xcode-coveralls</code> command needs to be invoked from your <strong>repository/project root directory</strong>.<br>
 Note that if your Xcode project file is in a sub directory, you'll need to specify its path with the <code>--project</code> option.</p>
@@ -50,8 +64,10 @@ Those paths may be full paths or paths relative to the repository/project root d
 <p>The only mandatory argument is the Xcode build directory, containing the <code>.gcda</code> and <code>.gcno</code> files to process.<br>
 Please read the following section to learn how to generate those files with Xcode.</p>
 
+<p><a name="2"></a></p>
+
 <h2>
-<a id="project-configuration" class="anchor" href="#project-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Configuration</h2>
+<a id="2---project-configuration" class="anchor" href="#2---project-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>2 - Project Configuration</h2>
 
 <p>In order to use <code>xcode-coveralls</code>, your Xcode targets needs to be configured to produce code coverage data files.</p>
 
@@ -91,6 +107,8 @@ declare -r DIR_BUILD="${OBJECT_FILE_DIR_normal}/${CURRENT_ARCH}/"
 xcode-coveralls "${DIR_BUILD}"
 </code></pre>
 
+<p><a name="3"></a></p>
+
 <h2>
 <a id="command-options" class="anchor" href="#command-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command Options</h2>
 
@@ -114,10 +132,23 @@ Options:
     --dry-run    Do not actually send data to coveralls.io
 </code></pre>
 
-<h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<p><a name="4"></a></p>
 
-<p><code>xcode-coveralls</code> may be installed by cloning its <a href="https://github.com/macmade/xcode-coveralls">GitHub repository</a> and running <code>xcodebuild</code> or <code>xctool</code>.</p>
+<h2>
+<a id="installing" class="anchor" href="#installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing</h2>
+
+<h3>
+<a id="installing-with-homebrew" class="anchor" href="#installing-with-homebrew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing with Homebrew</h3>
+
+<p><code>xcode-coveralls</code> may be installed with <a href="http://brew.sh">Homebrew</a>:</p>
+
+<pre><code>brew install macmade/tap/xcode-coveralls
+</code></pre>
+
+<h3>
+<a id="manual-installation" class="anchor" href="#manual-installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Manual installation</h3>
+
+<p><code>xcode-coveralls</code> may be installed manually by cloning its <a href="https://github.com/macmade/xcode-coveralls">GitHub repository</a> and running <code>xcodebuild</code> or <code>xctool</code>.</p>
 
 <p>The default location is <code>/usr/local/bin</code>.</p>
 
@@ -135,10 +166,14 @@ sudo xctool --project /tmp/xcode-coveralls/xcode-coveralls.xcodeproj --scheme xc
 
 <p>Note that you can use this on Travis builds (for instance in <code>before_install</code>) in order to get coverage reports for your project.</p>
 
+<p><a name="5"></a></p>
+
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>xcode-coveralls is released under the terms of the MIT License.</p>
+
+<p><a name="6"></a></p>
 
 <h2>
 <a id="repository-infos" class="anchor" href="#repository-infos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository Infos</h2>
