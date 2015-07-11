@@ -24,8 +24,8 @@ Table of Contents
   9. [Repository Infos](#6)
 
 <a name="1"></a>
-1 - Usage
----------
+Usage
+-----
 
 The `xcode-coveralls` command needs to be invoked from your **repository/project root directory**.  
 Note that if your Xcode project file is in a sub directory, you'll need to specify its path with the `--project` option.
@@ -41,8 +41,8 @@ The only mandatory argument is the Xcode build directory, containing the `.gcda`
 Please read the following section to learn how to generate those files with Xcode.
 
 <a name="2"></a>
-2 - Project Configuration
--------------------------
+Project Configuration
+---------------------
 
 In order to use `xcode-coveralls`, your Xcode targets needs to be configured to produce code coverage data files.
 
