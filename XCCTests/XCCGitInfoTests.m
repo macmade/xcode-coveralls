@@ -207,7 +207,7 @@
     
     git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
     
-    XCTAssertTrue( [ git.branch isEqualToString: @"master" ] );
+    XCTAssertTrue( [ git.branch isEqualToString: @"test" ] );
 }
 
 - ( void )testRemotes
@@ -253,7 +253,7 @@
     XCTAssertTrue( [ headDict[ @"committer_name" ]  isEqualToString: @"macmade" ] );
     XCTAssertTrue( [ headDict[ @"committer_email" ] isEqualToString: email ] );
     XCTAssertTrue( [ headDict[ @"message" ]         isEqualToString: @"Initial commit...\n" ] );
-    XCTAssertTrue( [ gitDict[ @"branch" ]           isEqualToString: @"master" ] );
+    XCTAssertTrue( [ gitDict[ @"branch" ]           isEqualToString: @"test" ] );
     XCTAssertTrue( [ remoteDict[ @"name" ]          isEqualToString: @"origin" ] );
     XCTAssertTrue( [ remoteDict[ @"url" ]           isEqualToString: @"https://github.com/macmade/test.git" ] );
 }
