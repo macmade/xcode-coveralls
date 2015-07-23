@@ -146,18 +146,6 @@
     self.message        = [ NSString stringWithCString: message          encoding: NSUTF8StringEncoding ];
     self.time           = ( NSInteger )( committer->when.time );
     
-    if( git_reference_is_branch( head ) )
-    {
-        err = git_branch_name( &branchName, head );
-        
-        if( err || branchName == NULL )
-        {
-            goto fail;
-        }
-        
-        self.branch = [ NSString stringWithCString: branchName encoding: NSUTF8StringEncoding ];
-    }
-    
     err = git_remote_list( &remoteNames, repos );
     
     if( err )
@@ -193,6 +181,15 @@
     }
     
     self.remotes = [ NSArray arrayWithArray: remotes ];
+    
+    err = git_branch_name( &branchName, head );
+    
+    if( err || branchName == NULL )
+    {
+        goto fail;
+    }
+    
+    self.branch = [ NSString stringWithCString: branchName encoding: NSUTF8StringEncoding ];
     
     ret = YES;
     
