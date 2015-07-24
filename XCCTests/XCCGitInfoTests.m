@@ -121,7 +121,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertNotNil( git );
 }
@@ -130,7 +130,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.invalidReposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.invalidReposPath arguments: nil ];
     
     XCTAssertNil( git );
 }
@@ -139,7 +139,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertTrue( [ git.sha1 isEqualToString: @"d6cfda0806def20a442b7378bc1b8bdb113df65f" ] );
 }
@@ -148,7 +148,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertTrue( [ git.authorName isEqualToString: @"macmade" ] );
 }
@@ -158,7 +158,7 @@
     XCCGitInfo * git;
     NSString   * email;
     
-    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     email = [ git.authorEmail stringByReplacingOccurrencesOfString: @"@" withString: @"." ];
     
     XCTAssertTrue( [ email isEqualToString: @"macmade.xs-labs.com" ] );
@@ -168,7 +168,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertTrue( [ git.committerName isEqualToString: @"macmade" ] );
 }
@@ -178,7 +178,7 @@
     XCCGitInfo * git;
     NSString   * email;
     
-    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     email = [ git.committerEmail stringByReplacingOccurrencesOfString: @"@" withString: @"." ];
     
     XCTAssertTrue( [ email isEqualToString: @"macmade.xs-labs.com" ] );
@@ -188,7 +188,7 @@
 {
     XCCGitInfo * git;
     
-    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git   = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     XCTAssertEqual( git.time, 1425201366 );
 }
 
@@ -196,7 +196,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertTrue( [ git.message isEqualToString: @"Initial commit...\n" ] );
 }
@@ -205,7 +205,7 @@
 {
     XCCGitInfo * git;
     
-    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     
     XCTAssertTrue( [ git.branch isEqualToString: @"test" ] );
 }
@@ -216,7 +216,7 @@
     NSArray      * remotes;
     NSDictionary * remote;
     
-    git     = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git     = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     remotes = git.remotes;
     remote  = git.remotes.firstObject;
     
@@ -234,7 +234,7 @@
     NSDictionary * remoteDict;
     NSString     * email;
     
-    git         = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath ];
+    git         = [ [ XCCGitInfo alloc ] initWithRepositoryPath: self.reposPath arguments: nil ];
     gitDict     = git.dictionaryRepresentation;
     headDict    = gitDict[ @"head" ];
     remotes     = gitDict[ @"remotes" ];
