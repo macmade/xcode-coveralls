@@ -26,7 +26,7 @@
 
 static dispatch_once_t  __once;
 static XCCHelp  *       __sharedInstance    = nil;
-static NSString * const __version           = @"0.1.1";
+static NSString * const __version           = @"0.1.2";
 
 @interface XCCHelp()
 

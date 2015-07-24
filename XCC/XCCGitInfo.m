@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #import "XCCGitInfo.h"
+#import "XCCArguments.h"
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -54,8 +55,10 @@
 @property( atomic, readwrite, strong ) NSString       * message;
 @property( atomic, readwrite, strong ) NSString       * branch;
 @property( atomic, readwrite, strong ) NSArray        * remotes;
+@property( atomic, readwrite, strong ) XCCArguments   * arguments;
 
 - ( BOOL )getGitInfos: ( NSString * )path;
+- ( void )error: ( NSString * )message status: ( int )err;
 
 @end
 
@@ -63,13 +66,15 @@
 
 - ( instancetype )init
 {
-    return [ self initWithRepositoryPath: nil ];
+    return [ self initWithRepositoryPath: nil arguments: nil ];
 }
 
-- ( instancetype )initWithRepositoryPath: ( NSString * )path
+- ( instancetype )initWithRepositoryPath: ( NSString * )path arguments: ( XCCArguments * )args
 {
     if( ( self = [ super init ] ) )
     {
+        self.arguments = args;
+        
         if( [ self getGitInfos: path ] == NO )
         {
             return nil;
@@ -113,6 +118,8 @@
     
     if( err || repos == NULL )
     {
+        [ self error: [ NSString stringWithFormat: @"unable to open repository GIT repository %@", path ] status: err ];
+        
         goto fail;
     }
     
@@ -120,6 +127,8 @@
     
     if( err || head == NULL )
     {
+        [ self error: @"unable to retrieve the repository HEAD" status: err ];
+        
         goto fail;
     }
     
@@ -128,6 +137,8 @@
     
     if( err || commit == NULL )
     {
+        [ self error: @"unable to retrieve the last commit" status: err ];
+        
         goto fail;
     }
     
@@ -146,11 +157,26 @@
     self.message        = [ NSString stringWithCString: message          encoding: NSUTF8StringEncoding ];
     self.time           = ( NSInteger )( committer->when.time );
     
+    err = git_branch_name( &branchName, head );
+    
+    if( err || branchName == NULL )
+    {
+        [ self error: @"unable to retrieve the branch name" status: err ];
+        
+        goto remotes;
+    }
+    
+    self.branch = [ NSString stringWithCString: branchName encoding: NSUTF8StringEncoding ];
+    
+    remotes:
+    
     err = git_remote_list( &remoteNames, repos );
     
     if( err )
     {
-        goto fail;
+        [ self error: @"unable to retrieve the list of remotes" status: err ];
+        
+        goto end;
     }
     
     remotes = [ [ NSMutableArray alloc ] initWithCapacity: ( NSUInteger )( remoteNames.count ) ];
@@ -161,7 +187,9 @@
         
         if( err )
         {
-            goto fail;
+            [ self error: @"unable to load remote" status: err ];
+            
+            continue;
         }
         
         {
@@ -182,14 +210,7 @@
     
     self.remotes = [ NSArray arrayWithArray: remotes ];
     
-    err = git_branch_name( &branchName, head );
-    
-    if( err || branchName == NULL )
-    {
-        goto fail;
-    }
-    
-    self.branch = [ NSString stringWithCString: branchName encoding: NSUTF8StringEncoding ];
+    end:
     
     ret = YES;
     
@@ -252,6 +273,23 @@
         if( remotes ) { [ git setObject: remotes forKey: @"remotes" ]; }
         
         return [ NSDictionary dictionaryWithDictionary: git ];
+    }
+}
+
+- ( void )error: ( NSString * )message status: ( int )err
+{
+    const git_error * e;
+    
+    if( self.arguments.verbose )
+    {
+        e = giterr_last();
+        
+        fprintf( stdout, "GIT error (%i): %s\n", err, message.UTF8String );
+        
+        if( e != NULL && e->message != NULL && strlen( e->message ) > 0 )
+        {
+            fprintf( stdout, "    - %s\n", e->message );
+        }
     }
 }
 
