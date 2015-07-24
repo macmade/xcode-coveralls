@@ -79,7 +79,7 @@
         
         [ dict setObject: sourceFiles forKey: @"source_files" ];
         
-        gitInfo = [ [ XCCGitInfo alloc ] initWithRepositoryPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] ];
+        gitInfo = [ [ XCCGitInfo alloc ] initWithRepositoryPath: [ [ NSFileManager defaultManager ] currentDirectoryPath ] arguments: args ];
         info    = gitInfo.dictionaryRepresentation;
         
         if( info )

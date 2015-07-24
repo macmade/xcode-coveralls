@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class XCCArguments;
+
 @interface XCCGitInfo: NSObject
 
 @property( atomic, readonly ) NSString      * sha1;
@@ -37,6 +39,6 @@
 @property( atomic, readonly ) NSArray       * remotes;
 @property( atomic, readonly ) NSDictionary  * dictionaryRepresentation;
 
-- ( instancetype )initWithRepositoryPath: ( NSString * )path NS_DESIGNATED_INITIALIZER;
+- ( instancetype )initWithRepositoryPath: ( NSString * )path arguments: ( XCCArguments * )args NS_DESIGNATED_INITIALIZER;
 
 @end
