@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #import <Foundation/Foundation.h>
+#import <clang-warnings.h>
 #import "XCC.h"
 
 int main( int argc, const char * argv[] )

@@ -1,9 +1,23 @@
 language: objective-c
-xcode_project: xcode-coveralls.xcodeproj
-xcode_scheme: xcode-coveralls
+cache:
+    directories:
+    - $HOME/.ccache
+install:
+- gem install xcpretty
+- brew install ccache
+- PATH=$PATH:/usr/local/opt/ccache/libexec
+script:
+- set -o pipefail && xcodebuild -project "xcode-coveralls.xcodeproj" -scheme "xcode-coveralls" build analyze test | xcpretty
+before_script:
+- ccache -s
+- ccache -z
+after_script:
+- ccache -s
 after_success:
 - mv Scripts/xcenv.sh Scripts/xcenv.sh.bak
 - sudo xctool --project xcode-coveralls.xcodeproj --scheme xcode-coveralls DSTROOT=/ install
 - rm -f Scripts/xcenv.sh
 - mv Scripts/xcenv.sh.bak Scripts/xcenv.sh
 - bash Scripts/coveralls.sh
+notifications:
+    slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI

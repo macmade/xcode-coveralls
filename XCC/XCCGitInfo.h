@@ -23,6 +23,7 @@
  ******************************************************************************/
 
 #import <Foundation/Foundation.h>
+#import <clang-warnings.h>
 
 @class XCCArguments;
 
