@@ -47,7 +47,7 @@
 
 - ( instancetype )init
 {
-    return [ self initWithPath: nil ];
+    return [ self initWithPath: @"" ];
 }
 
 - ( instancetype )initWithPath: ( NSString * )path

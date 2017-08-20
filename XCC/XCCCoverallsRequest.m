@@ -109,7 +109,7 @@
         *( error ) = nil;
     }
     
-    req            = [ [ NSMutableURLRequest alloc ] initWithURL: [ NSURL URLWithString: @"https://coveralls.io/api/v1/jobs" ] ];
+    req            = [ [ NSMutableURLRequest alloc ] initWithURL: ( id )[ NSURL URLWithString: @"https://coveralls.io/api/v1/jobs" ] ];
     jsonData       = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: ( NSJSONWritingOptions )0 error: error ];
     jsonDataPretty = [ NSJSONSerialization dataWithJSONObject: self.dictionary options: NSJSONWritingPrettyPrinted error: error ];
     jsonTextPretty = [ [ NSString alloc ] initWithData: jsonDataPretty encoding: NSUTF8StringEncoding ];
@@ -127,6 +127,10 @@
     if( self.arguments.dryRun == NO )
     {
         data = [ NSURLConnection sendSynchronousRequest: req returningResponse: &response error: error ];
+    }
+    else
+    {
+        data = [ NSData data ];
     }
     
     if( *( error ) != NULL && *( error ) != nil )
@@ -192,11 +196,11 @@
     
     body = [ NSMutableData new ];
     
-    [ body appendData: [ [ NSString stringWithFormat: @"\r\n--%@\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
-    [ body appendData: [ @"Content-Disposition: form-data; name=\"json_file\"; filename=\"json_file\"\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
-    [ body appendData: [ @"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: ( id )[ [ NSString stringWithFormat: @"\r\n--%@\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: ( id )[ @"Content-Disposition: form-data; name=\"json_file\"; filename=\"json_file\"\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: ( id )[ @"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding: NSUTF8StringEncoding ] ];
     [ body appendData: data ];
-    [ body appendData: [ [ NSString stringWithFormat: @"\r\n--%@--\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
+    [ body appendData: ( id )[ [ NSString stringWithFormat: @"\r\n--%@--\r\n", boundary ] dataUsingEncoding: NSUTF8StringEncoding ] ];
     
     [ request setHTTPBody: body ];
 }
