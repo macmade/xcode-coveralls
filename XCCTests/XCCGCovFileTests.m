@@ -23,7 +23,6 @@
  ******************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import <clang-warnings.h>
 #import "XCC.h"
 
 #ifdef __clang__
