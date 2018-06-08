@@ -118,7 +118,7 @@
     
     if( response != NULL )
     {
-        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: [ NSURL URLWithString: @"http://www.xs-labs.com/" ] statusCode: 200 HTTPVersion: nil headerFields: nil ];
+        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: ( id )[ NSURL URLWithString: @"http://www.xs-labs.com/" ] statusCode: 200 HTTPVersion: nil headerFields: nil ];
     }
     
     return nil;
@@ -135,7 +135,7 @@
     
     if( response != NULL )
     {
-        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: [ NSURL URLWithString: @"http://www.xs-labs.com/" ] statusCode: 404 HTTPVersion: @"HTTP/1.1" headerFields: @{} ];
+        *( response ) = [ [ NSHTTPURLResponse alloc ] initWithURL: ( id )[ NSURL URLWithString: @"http://www.xs-labs.com/" ] statusCode: 404 HTTPVersion: @"HTTP/1.1" headerFields: @{} ];
     }
     
     return nil;

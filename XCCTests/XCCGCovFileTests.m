@@ -54,7 +54,7 @@
 {
     [ super setUp ];
     
-    self.path = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
+    self.path = ( id )[ [ NSBundle bundleForClass: self.class ] pathForResource: @"test.m" ofType: @"gcov" ];
 }
 
 - ( void )testInit

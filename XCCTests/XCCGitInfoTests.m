@@ -80,7 +80,7 @@
         return;
     }
     
-    bundleReposPath       = [ [ NSBundle bundleForClass: self.class ] pathForResource: @"repos" ofType: @"" ];
+    bundleReposPath       = ( id )[ [ NSBundle bundleForClass: self.class ] pathForResource: @"repos" ofType: @"" ];
     self.tempPath         = [ [ NSFileManager defaultManager ] stringWithFileSystemRepresentation: result length: strlen( result ) ];
     self.reposPath        = [ self.tempPath stringByAppendingPathComponent: @"repos" ];
     self.invalidReposPath = [ self.tempPath stringByAppendingPathComponent: @"invalid" ];

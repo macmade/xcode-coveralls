@@ -90,9 +90,9 @@
     self.emptyDirPath   = [ self.tempPath stringByAppendingPathComponent: @"empty" ];
     self.filePath       = [ self.tempPath stringByAppendingPathComponent: @"file" ];
     
-    gcdaData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcda" ] ];
-    gcnoData = [ NSData dataWithContentsOfFile: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcno" ] ];
-    codeData = [ [ NSFileManager defaultManager ] contentsAtPath: [ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"" ] ];
+    gcdaData = [ NSData dataWithContentsOfFile: ( id )[ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcda" ] ];
+    gcnoData = [ NSData dataWithContentsOfFile: ( id )[ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"gcno" ] ];
+    codeData = [ [ NSFileManager defaultManager ] contentsAtPath: ( id )[ [ NSBundle bundleForClass: self.class ] pathForResource: @"test" ofType: @"" ] ];
     
     [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.dirPath        withIntermediateDirectories: YES attributes: nil error: NULL ];
     [ [ NSFileManager defaultManager ] createDirectoryAtPath: self.invalidDirPath withIntermediateDirectories: YES attributes: nil error: NULL ];
