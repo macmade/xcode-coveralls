@@ -604,7 +604,7 @@
 /* Begin XCBuildConfiguration section */
 		0545133C1A6C9FD4002B8F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05C022BA20CB1351008F622D /* Debug - ccache.xcconfig */;
+			baseConfigurationReference = 05C022BB20CB1351008F622D /* Debug.xcconfig */;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					Libraries/libgit2/,
@@ -616,7 +616,7 @@
 		};
 		0545133D1A6C9FD4002B8F92 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05C022B820CB1351008F622D /* Release - ccache.xcconfig */;
+			baseConfigurationReference = 05C022BC20CB1351008F622D /* Release.xcconfig */;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					Libraries/libgit2/,
@@ -704,7 +704,7 @@
 		};
 		054513C11A6D6247002B8F92 /* GCov */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05C022BA20CB1351008F622D /* Debug - ccache.xcconfig */;
+			baseConfigurationReference = 05C022BB20CB1351008F622D /* Debug.xcconfig */;
 			buildSettings = {
 				LIBRARY_SEARCH_PATHS = (
 					Libraries/libgit2/,

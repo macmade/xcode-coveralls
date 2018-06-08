@@ -154,7 +154,7 @@
             NSString * errorText;
             NSString * header;
             
-            body      = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+            body      = [ [ NSString alloc ] initWithData: ( data ) ? data : [ NSData data ] encoding: NSUTF8StringEncoding ];
             errorText = [ NSString stringWithFormat: @"Bad response: %lu (%@)", ( unsigned long )( response.statusCode ), ( statusText ) ? statusText : @"unknown" ];
             
             if( response.allHeaderFields.count > 0 )
