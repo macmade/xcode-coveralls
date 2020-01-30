@@ -504,6 +504,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 0545132E1A6C9FD4002B8F92;
@@ -629,6 +630,8 @@
 		0545133F1A6C9FD4002B8F92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = "";
 				OTHER_LDFLAGS = (
 					"-lgit2",
 					"-lcrypto",
@@ -641,6 +644,8 @@
 		054513401A6C9FD4002B8F92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = "";
 				OTHER_LDFLAGS = (
 					"-lgit2",
 					"-lcrypto",
@@ -717,6 +722,8 @@
 		054513C21A6D6247002B8F92 /* GCov */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = "";
 				OTHER_LDFLAGS = (
 					"-lgit2",
 					"-lcrypto",
